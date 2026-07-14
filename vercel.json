@@ -1,7 +1,6 @@
 {
-  "projectName": "contactvox-landing",
   "buildCommand": "echo 'No build required'",
-  "outputDirectory": "public",
+  "outputDirectory": ".",
   "env": [],
   "regions": ["sfo1", "iad1", "lla1"],
   "functions": {
