@@ -1,7 +1,7 @@
 {
   "buildCommand": "echo 'No build required'",
   "outputDirectory": ".",
-  "env": [],
+  "env": {},
   "regions": ["sfo1", "iad1", "lla1"],
   "functions": {
     "api/**/*.js": {
