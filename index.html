@@ -24,11 +24,8 @@
   --enterprise: #1C2B4A;
   --wa-green: #25D366;
   --neon-green: #34E27A;
-  --neon-green-glow: rgba(52,226,122,0.35);
   --aqua: #00D4FF;
-  --aqua-glow: rgba(0,212,255,0.22);
   --purple: #8B5CF6;
-  --orange: #F97316;
   --red: #EF4444;
   --bg-light: #F7F9FC;
   --bg-white: #FFFFFF;
@@ -42,9 +39,9 @@
   --r-lg: 22px;
   --shadow-card: 0 12px 35px rgba(15,23,42,0.08);
   --glow-green: 0 0 35px rgba(37,211,102,0.35);
-  --glow-blue: 0 0 45px rgba(0,212,255,0.22);
   --font-head: 'Poppins', sans-serif;
   --font-body: 'Nunito', sans-serif;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
@@ -53,6 +50,8 @@ a { text-decoration: none; color: inherit; }
 img { max-width: 100%; }
 ul { list-style: none; }
 section { scroll-margin-top: 78px; }
+button { font-family: inherit; }
+:focus-visible { outline: 3px solid var(--aqua); outline-offset: 2px; border-radius: 4px; }
 .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
 .section-pad { padding: 80px 0; }
 .section-pad-sm { padding: 56px 0; }
@@ -63,140 +62,238 @@ h1,h2,h3 { font-family: var(--font-head); color: var(--text-dark); }
 .sec-title { font-size: 30px; font-weight: 700; line-height: 1.3; margin-bottom: 14px; }
 .sec-intro { font-size: 16px; color: var(--text-gray); max-width: 680px; margin-bottom: 40px; }
 .center { text-align: center; margin-left: auto; margin-right: auto; }
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: var(--font-head); font-weight: 600; font-size: 15px; padding: 15px 30px; border-radius: var(--r-btn); cursor: pointer; border: none; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+
+/* ---- BOTONES + MICROINTERACCIONES ---- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: var(--font-head); font-weight: 600; font-size: 15px; padding: 15px 30px; border-radius: var(--r-btn); cursor: pointer; border: none; transition: transform 0.18s var(--ease-out), box-shadow 0.18s ease, background 0.18s ease; will-change: transform; }
 .btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(0) scale(0.97); }
 .btn-primary { background: var(--neon-green); color: var(--midnight); box-shadow: var(--glow-green); }
+.btn-primary:hover { box-shadow: 0 0 50px rgba(37,211,102,0.5); }
 .btn-outline { background: transparent; color: var(--text-white); border: 1.5px solid rgba(255,255,255,0.35); }
+.btn-outline:hover { border-color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.06); }
 .btn-outline-dark { background: transparent; color: var(--enterprise); border: 1.5px solid rgba(28,43,74,0.3); }
+.btn-outline-dark:hover { border-color: var(--enterprise); background: rgba(28,43,74,0.05); }
 .btn-block { width: 100%; }
 
-/* NAV */
+/* ---- REVEALS (scroll) ---- */
+.rv { opacity: 0; transform: translateY(22px); transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out); transition-delay: var(--d, 0ms); will-change: opacity, transform; }
+.rv.on { opacity: 1; transform: none; }
+
+/* ---- NAV ---- */
 .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 999; background: rgba(11,15,26,0.88); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.08); }
 .nav-inner { max-width: 1180px; margin: 0 auto; padding: 0 24px; height: 72px; display: flex; align-items: center; justify-content: space-between; }
 .logo { font-family: var(--font-head); font-weight: 800; font-size: 20px; color: var(--text-white); }
 .logo span { color: var(--neon-green); }
-.nav-links { display: flex; gap: 28px; align-items: center; }
-.nav-links a { font-size: 14px; font-weight: 600; color: var(--text-muted); transition: color 0.15s; }
-.nav-links a:hover { color: var(--text-white); }
-.nav-cta { display: none; }
-.nav-toggle { display: none; background: none; border: none; color: var(--text-white); font-size: 26px; cursor: pointer; }
+.nav-links { display: flex; gap: 26px; align-items: center; }
+.nav-links a:not(.btn) { font-size: 14px; font-weight: 600; color: var(--text-muted); transition: color 0.18s; position: relative; padding: 4px 0; }
+.nav-links a:not(.btn)::after { content: ""; position: absolute; left: 0; right: 100%; bottom: -2px; height: 2px; background: var(--neon-green); transition: right 0.25s var(--ease-out); }
+.nav-links a:not(.btn):hover { color: var(--text-white); }
+.nav-links a:not(.btn).active { color: var(--text-white); }
+.nav-links a:not(.btn).active::after { right: 0; }
+.nav-toggle { display: none; background: none; border: none; color: var(--text-white); font-size: 26px; cursor: pointer; padding: 6px 10px; }
 @media (max-width: 900px) {
-  .nav-links { position: fixed; top: 72px; left: 0; right: 0; background: var(--midnight); flex-direction: column; align-items: flex-start; padding: 20px 24px 28px; gap: 18px; display: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
-  .nav-links.open { display: flex; }
+  .nav-links { position: fixed; top: 72px; left: 0; right: 0; background: var(--midnight); flex-direction: column; align-items: flex-start; padding: 20px 24px 28px; gap: 18px; display: flex; border-bottom: 1px solid rgba(255,255,255,0.08); transform: translateY(-8px); opacity: 0; pointer-events: none; transition: opacity 0.22s ease, transform 0.22s var(--ease-out); }
+  .nav-links.open { opacity: 1; transform: none; pointer-events: auto; }
   .nav-toggle { display: block; }
-  .nav-cta-desktop { display: none; }
 }
-@media (min-width: 901px) { .nav-cta-desktop { display: inline-flex; } }
 
-/* HERO */
-.hero { background: radial-gradient(circle at 25% 20%, rgba(0,212,255,0.16), transparent 55%), radial-gradient(circle at 80% 70%, rgba(52,226,122,0.14), transparent 50%), var(--midnight); padding: 150px 0 80px; }
-.hero-inner { max-width: 780px; margin: 0 auto; text-align: center; }
+/* ---- CTA FIJO MÓVIL ---- */
+.sticky-cta { position: fixed; left: 0; right: 0; bottom: 0; z-index: 998; padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: rgba(11,15,26,0.92); backdrop-filter: blur(8px); border-top: 1px solid rgba(255,255,255,0.1); transform: translateY(110%); transition: transform 0.3s var(--ease-out); display: none; }
+.sticky-cta.show { transform: none; }
+.sticky-cta .btn { width: 100%; padding: 13px 20px; font-size: 14.5px; }
+@media (max-width: 900px) { .sticky-cta { display: block; } body.cta-visible { padding-bottom: 74px; } }
+
+/* ---- HERO ---- */
+.hero { position: relative; background: var(--midnight); padding: 150px 0 90px; overflow: hidden; }
+.hero-glow { position: absolute; border-radius: 50%; filter: blur(70px); pointer-events: none; }
+.hero-glow.g1 { width: 480px; height: 480px; background: rgba(0,212,255,0.14); top: -120px; left: 8%; animation: drift1 18s ease-in-out infinite alternate; }
+.hero-glow.g2 { width: 420px; height: 420px; background: rgba(52,226,122,0.13); bottom: -140px; right: 6%; animation: drift2 22s ease-in-out infinite alternate; }
+@keyframes drift1 { from { transform: translate(0,0); } to { transform: translate(60px, 40px); } }
+@keyframes drift2 { from { transform: translate(0,0); } to { transform: translate(-50px, -35px); } }
+.hero-inner { position: relative; max-width: 780px; margin: 0 auto; text-align: center; }
 .hero h1 { font-size: 42px; font-weight: 800; color: var(--text-white); line-height: 1.22; margin: 20px 0 20px; }
 .hero p.sub { font-size: 17px; color: var(--text-muted); max-width: 620px; margin: 0 auto 32px; }
 .hero-ctas { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 16px; }
 .hero-micro { font-size: 13px; color: var(--text-muted); margin-bottom: 40px; }
 .chip-row { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
 .chip { font-size: 13px; font-weight: 600; color: var(--text-white); background: var(--bg-card-dark); border: 1px solid rgba(255,255,255,0.12); padding: 8px 16px; border-radius: 30px; }
+.hero-entrance { opacity: 0; transform: translateY(18px); animation: heroIn 0.7s var(--ease-out) forwards; animation-delay: var(--hd, 0ms); }
+@keyframes heroIn { to { opacity: 1; transform: none; } }
+.scroll-hint { margin: 44px auto 0; width: 26px; height: 42px; border: 2px solid rgba(255,255,255,0.3); border-radius: 16px; position: relative; }
+.scroll-hint::before { content: ""; position: absolute; left: 50%; top: 8px; width: 4px; height: 8px; margin-left: -2px; border-radius: 2px; background: var(--neon-green); animation: hintDot 1.8s ease-in-out infinite; }
+@keyframes hintDot { 0% { transform: translateY(0); opacity: 1; } 60% { transform: translateY(14px); opacity: 0; } 100% { transform: translateY(0); opacity: 0; } }
 @media (max-width: 640px) { .hero h1 { font-size: 30px; } .hero { padding-top: 128px; } }
 
-/* FLOW / COMO FUNCIONA */
+/* ---- ARQUITECTURA / FLOW ---- */
 .flow-wrap { max-width: 900px; margin: 0 auto; position: relative; }
-.ia-band { text-align: center; background: linear-gradient(90deg, rgba(139,92,246,0.12), rgba(0,212,255,0.12)); border: 1px solid rgba(139,92,246,0.3); border-radius: var(--r-lg); padding: 14px 20px; margin-bottom: 28px; font-family: var(--font-head); font-weight: 700; font-size: 13px; letter-spacing: 0.4px; color: var(--purple); text-transform: uppercase; }
-.layer-card { background: var(--bg-white); border: 1px solid rgba(17,24,39,0.08); border-radius: var(--r-card); box-shadow: var(--shadow-card); padding: 28px 30px; margin-bottom: 18px; }
+.ia-band { position: sticky; top: 84px; z-index: 5; text-align: center; background: linear-gradient(90deg, rgba(139,92,246,0.95), rgba(0,212,255,0.85)); border-radius: var(--r-lg); padding: 13px 20px; margin-bottom: 28px; font-family: var(--font-head); font-weight: 700; font-size: 13px; letter-spacing: 0.4px; color: #fff; text-transform: uppercase; box-shadow: 0 8px 24px rgba(139,92,246,0.25); }
+.ia-band .ia-pulse { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #fff; margin-right: 9px; vertical-align: 1px; animation: iaPulse 2s ease-in-out infinite; }
+@keyframes iaPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.5); } 50% { box-shadow: 0 0 0 7px rgba(255,255,255,0); } }
+.layer-card { background: var(--bg-white); border: 1.5px solid rgba(17,24,39,0.08); border-radius: var(--r-card); box-shadow: var(--shadow-card); padding: 28px 30px; transition: border-color 0.5s ease, box-shadow 0.5s ease; }
+.layer-card.on { border-color: rgba(52,226,122,0.55); box-shadow: 0 12px 35px rgba(15,23,42,0.08), 0 0 0 4px rgba(52,226,122,0.07); }
 .layer-card h3 { font-size: 19px; margin-bottom: 6px; }
-.layer-card .layer-num { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 8px; background: rgba(52,226,122,0.14); color: var(--enterprise); font-weight: 700; font-size: 14px; margin-bottom: 12px; }
+.layer-num { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 8px; background: rgba(52,226,122,0.14); color: var(--enterprise); font-weight: 700; font-size: 14px; margin-bottom: 12px; font-family: var(--font-head); }
 .layer-card p.desc { color: var(--text-gray); font-size: 15px; margin-bottom: 14px; }
-.pill-list { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
-.pill-list span { font-size: 12.5px; background: var(--bg-light); border: 1px solid rgba(17,24,39,0.08); padding: 6px 13px; border-radius: 20px; color: var(--text-dark); }
 .layer-value { font-size: 13.5px; color: var(--enterprise); font-weight: 600; padding-top: 10px; border-top: 1px dashed rgba(17,24,39,0.12); }
-.flow-arrow { text-align: center; color: rgba(17,24,39,0.25); font-size: 22px; margin: -6px 0 4px; }
-.result-flow { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; margin-top: 36px; }
-.result-flow .rf-item { background: var(--enterprise); color: var(--text-white); font-size: 13px; font-weight: 600; padding: 10px 18px; border-radius: 30px; }
-.result-flow .rf-item.final { background: var(--neon-green); color: var(--midnight); }
-.result-flow .rf-sep { color: var(--text-gray); font-size: 16px; }
+.flow-connector { width: 3px; height: 46px; margin: 0 auto; background: rgba(17,24,39,0.1); border-radius: 2px; position: relative; overflow: hidden; }
+.flow-connector::after { content: ""; position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: linear-gradient(180deg, var(--neon-green), var(--aqua)); transform: scaleY(0); transform-origin: top; transition: transform 0.6s var(--ease-out); }
+.flow-connector.on::after { transform: scaleY(1); }
+.result-flow { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; margin-top: 40px; }
+.rf-item { background: var(--enterprise); color: var(--text-white); font-size: 13px; font-weight: 600; padding: 10px 18px; border-radius: 30px; }
+.rf-item.final { background: var(--neon-green); color: var(--midnight); }
+.rf-sep { color: var(--text-gray); font-size: 16px; }
 
-/* GRID CARDS */
+/* ---- CAPACIDADES (tarjetas expandibles) ---- */
 .grid { display: grid; gap: 20px; }
 .grid-3 { grid-template-columns: repeat(3, 1fr); }
 .grid-4 { grid-template-columns: repeat(4, 1fr); }
-.grid-2 { grid-template-columns: repeat(2, 1fr); }
 @media (max-width: 900px) { .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 600px) { .grid-3, .grid-4, .grid-2 { grid-template-columns: 1fr; } }
+@media (max-width: 600px) { .grid-3, .grid-4 { grid-template-columns: 1fr; } }
+.cap-card { background: var(--bg-white); border: 1.5px solid rgba(17,24,39,0.08); border-radius: var(--r-card); box-shadow: var(--shadow-card); overflow: hidden; transition: border-color 0.25s ease, transform 0.25s var(--ease-out); }
+.cap-card:hover { transform: translateY(-3px); }
+.cap-card.expanded { border-color: var(--aqua); }
+.cap-head { width: 100%; background: none; border: none; text-align: left; padding: 26px 24px; cursor: pointer; display: block; }
+.cap-head .icon-badge { width: 42px; height: 42px; border-radius: 10px; background: rgba(0,212,255,0.12); color: #0284a8; display: flex; align-items: center; justify-content: center; font-family: var(--font-head); font-weight: 700; margin-bottom: 14px; transition: transform 0.25s var(--ease-out); }
+.cap-card.expanded .icon-badge, .cap-card:hover .icon-badge { transform: scale(1.08); }
+.cap-head h3 { font-size: 17px; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.cap-head h3 .chev { font-size: 13px; color: var(--text-gray); transition: transform 0.3s var(--ease-out); flex-shrink: 0; }
+.cap-card.expanded .chev { transform: rotate(180deg); }
+.cap-head p { font-size: 14.5px; color: var(--text-gray); font-family: var(--font-body); font-weight: 400; }
+.cap-more { max-height: 0; overflow: hidden; transition: max-height 0.45s var(--ease-out); }
+.cap-more-inner { padding: 0 24px 24px; border-top: 1px dashed rgba(17,24,39,0.1); }
+.cap-more-inner p { font-size: 14px; color: var(--text-gray); padding-top: 14px; margin-bottom: 14px; }
+.cap-shot { height: 120px; border: 1.5px dashed rgba(17,24,39,0.15); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 12.5px; color: var(--text-gray); background: var(--bg-light); }
 
-.cap-card { background: var(--bg-white); border: 1px solid rgba(17,24,39,0.08); border-radius: var(--r-card); padding: 26px 24px; box-shadow: var(--shadow-card); }
-.cap-card .icon-badge { width: 42px; height: 42px; border-radius: 10px; background: rgba(0,212,255,0.12); color: var(--aqua); display: flex; align-items: center; justify-content: center; font-family: var(--font-head); font-weight: 700; margin-bottom: 14px; }
-.cap-card h3 { font-size: 17px; margin-bottom: 8px; }
-.cap-card p { font-size: 14.5px; color: var(--text-gray); }
-
-/* IA SECTION */
+/* ---- IA DEMO ---- */
 .ia-section { background: var(--enterprise); color: var(--text-white); }
-.ia-section .sec-title, .ia-section h3 { color: var(--text-white); }
-.ia-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin-bottom: 36px; }
-@media (max-width: 800px) { .ia-grid { grid-template-columns: 1fr; } }
-.ia-list { display: flex; flex-direction: column; gap: 10px; }
-.ia-list li { font-size: 14.5px; color: var(--text-muted); padding-left: 20px; position: relative; }
-.ia-list li::before { content: "→"; position: absolute; left: 0; color: var(--neon-green); }
-.ia-tags { display: flex; flex-wrap: wrap; gap: 9px; }
-.ia-tags span { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14); font-size: 12.5px; padding: 7px 14px; border-radius: 20px; }
-.ia-quote { border-left: 3px solid var(--neon-green); padding-left: 18px; font-size: 16px; color: var(--text-white); font-style: italic; margin-top: 10px; max-width: 720px; }
+.ia-section .sec-title { color: var(--text-white); }
+.ia-demo { display: grid; grid-template-columns: 1.1fr 1fr; gap: 26px; align-items: start; max-width: 980px; margin: 0 auto; }
+@media (max-width: 820px) { .ia-demo { grid-template-columns: 1fr; } }
+.chat-panel { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); border-radius: var(--r-card); padding: 22px; }
+.chat-panel .panel-title { font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 16px; font-family: var(--font-head); }
+.msg { max-width: 88%; padding: 11px 15px; border-radius: 14px; font-size: 14px; line-height: 1.55; margin-bottom: 10px; opacity: 0; transform: translateY(10px); transition: opacity 0.45s var(--ease-out), transform 0.45s var(--ease-out); }
+.msg.show { opacity: 1; transform: none; }
+.msg.agent { background: rgba(255,255,255,0.1); border-bottom-left-radius: 4px; }
+.msg.client { background: rgba(37,211,102,0.18); border: 1px solid rgba(37,211,102,0.3); margin-left: auto; border-bottom-right-radius: 4px; }
+.msg .hl { background: transparent; color: inherit; border-radius: 4px; padding: 1px 3px; transition: background 0.5s ease, color 0.5s ease; }
+.msg .hl.lit-promise { background: rgba(52,226,122,0.35); color: #fff; }
+.msg .hl.lit-date { background: rgba(0,212,255,0.35); color: #fff; }
+.msg .hl.lit-obj { background: rgba(249,115,22,0.4); color: #fff; }
+.insight-panel { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); border-radius: var(--r-card); padding: 22px; }
+.insight-panel .panel-title { font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 16px; font-family: var(--font-head); display: flex; align-items: center; gap: 8px; }
+.insight-panel .panel-title .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--purple); animation: iaPulse 2s ease-in-out infinite; }
+.insight { display: flex; gap: 10px; align-items: flex-start; padding: 9px 12px; border-radius: 10px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); margin-bottom: 8px; opacity: 0; transform: translateX(14px); transition: opacity 0.45s var(--ease-out), transform 0.45s var(--ease-out); }
+.insight.show { opacity: 1; transform: none; }
+.insight .k { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; font-family: var(--font-head); padding: 3px 9px; border-radius: 20px; white-space: nowrap; }
+.insight .v { font-size: 13.5px; color: var(--text-muted); line-height: 1.5; }
+.k-int { background: rgba(139,92,246,0.25); color: #C4B5FD; }
+.k-obj { background: rgba(249,115,22,0.25); color: #FDBA74; }
+.k-pro { background: rgba(52,226,122,0.22); color: var(--neon-green); }
+.k-fec { background: rgba(0,212,255,0.22); color: var(--aqua); }
+.k-res { background: rgba(255,255,255,0.12); color: #E5E7EB; }
+.k-acc { background: rgba(52,226,122,0.22); color: var(--neon-green); }
+.insight-action { margin-top: 14px; padding: 13px 15px; border-radius: 12px; background: rgba(52,226,122,0.12); border: 1px solid rgba(52,226,122,0.35); font-size: 13.5px; opacity: 0; transform: translateY(10px); transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out); }
+.insight-action.show { opacity: 1; transform: none; }
+.insight-action strong { color: var(--neon-green); font-family: var(--font-head); font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.4px; display: block; margin-bottom: 4px; }
+.ia-replay { margin-top: 18px; background: none; border: 1px solid rgba(255,255,255,0.25); color: var(--text-muted); font-size: 13px; font-weight: 600; padding: 9px 18px; border-radius: 20px; cursor: pointer; transition: color 0.18s, border-color 0.18s; }
+.ia-replay:hover { color: var(--text-white); border-color: rgba(255,255,255,0.6); }
+.ia-quote { border-left: 3px solid var(--neon-green); padding-left: 18px; font-size: 16px; color: var(--text-white); font-style: italic; margin: 36px auto 0; max-width: 720px; }
 
-/* BENEFICIOS */
-.benefit-card { text-align: left; }
-.benefit-card .icon-badge { background: rgba(52,226,122,0.14); color: var(--enterprise); }
+/* ---- BENEFICIOS ---- */
+.benefit-card { background: var(--bg-white); border: 1.5px solid rgba(17,24,39,0.08); border-radius: var(--r-card); padding: 26px 24px; box-shadow: var(--shadow-card); }
+.benefit-card .icon-badge { width: 42px; height: 42px; border-radius: 10px; background: rgba(52,226,122,0.14); color: var(--enterprise); display: flex; align-items: center; justify-content: center; font-weight: 700; margin-bottom: 14px; font-size: 18px; transition: transform 0.3s var(--ease-out), background 0.3s ease; }
+.benefit-card:hover .icon-badge { transform: scale(1.12) rotate(-4deg); background: rgba(52,226,122,0.25); }
+.benefit-card h3 { font-size: 17px; margin-bottom: 8px; }
+.benefit-card p { font-size: 14.5px; color: var(--text-gray); }
 
-/* CLIENTES */
+/* ---- CLIENTES ---- */
 .logos-row { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; margin-bottom: 40px; }
 .logo-placeholder { width: 150px; height: 64px; border: 1.5px dashed rgba(17,24,39,0.18); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 12.5px; color: var(--text-gray); text-align: center; padding: 6px; }
-.testimonial-card { background: var(--bg-light); border-radius: var(--r-card); padding: 28px; max-width: 640px; margin: 0 auto; text-align: center; }
-.testimonial-card p { font-size: 15.5px; color: var(--text-gray); font-style: italic; }
-.testimonial-card .who { margin-top: 14px; font-weight: 700; font-size: 14px; color: var(--text-dark); font-style: normal; }
+.testi-wrap { max-width: 640px; margin: 0 auto; position: relative; }
+.testi-card { background: var(--bg-light); border-radius: var(--r-card); padding: 28px; text-align: center; opacity: 0; position: absolute; inset: 0; pointer-events: none; transition: opacity 0.45s ease; }
+.testi-card.active { opacity: 1; position: relative; pointer-events: auto; }
+.testi-card p { font-size: 15.5px; color: var(--text-gray); font-style: italic; }
+.testi-card .who { margin-top: 14px; font-weight: 700; font-size: 14px; color: var(--text-dark); font-style: normal; }
+.testi-dots { display: flex; gap: 8px; justify-content: center; margin-top: 18px; }
+.testi-dots button { width: 10px; height: 10px; border-radius: 50%; border: none; background: rgba(17,24,39,0.18); cursor: pointer; transition: background 0.2s, transform 0.2s; padding: 0; }
+.testi-dots button.active { background: var(--enterprise); transform: scale(1.25); }
 
-/* DIAGNOSTICO / FORM */
+/* ---- DIAGNÓSTICO / FORM ---- */
 .diag-section { background: var(--bg-light); }
 .diag-box { max-width: 720px; margin: 0 auto; background: var(--bg-white); border-radius: var(--r-lg); box-shadow: var(--shadow-card); padding: 40px; }
 @media (max-width: 600px) { .diag-box { padding: 26px 20px; } }
-.step-title { font-size: 15px; font-weight: 700; color: var(--enterprise); margin-bottom: 18px; }
+.progress-track { height: 6px; border-radius: 3px; background: rgba(17,24,39,0.08); margin-bottom: 10px; overflow: hidden; }
+.progress-fill { height: 100%; width: 50%; border-radius: 3px; background: linear-gradient(90deg, var(--neon-green), var(--aqua)); transition: width 0.5s var(--ease-out); }
+.step-title { font-size: 15px; font-weight: 700; color: var(--enterprise); margin-bottom: 18px; font-family: var(--font-head); }
 .reto-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 26px; }
 @media (max-width: 560px) { .reto-grid { grid-template-columns: 1fr; } }
 .reto-opt { position: relative; }
 .reto-opt input { position: absolute; opacity: 0; }
-.reto-opt label { display: block; font-size: 14px; font-weight: 600; padding: 13px 16px; border: 1.5px solid rgba(17,24,39,0.12); border-radius: 12px; cursor: pointer; color: var(--text-dark); transition: all 0.15s; }
+.reto-opt label { display: block; font-size: 14px; font-weight: 600; padding: 13px 16px; border: 1.5px solid rgba(17,24,39,0.12); border-radius: 12px; cursor: pointer; color: var(--text-dark); transition: border-color 0.18s, background 0.18s, transform 0.12s; }
+.reto-opt label:active { transform: scale(0.98); }
 .reto-opt input:checked + label { border-color: var(--neon-green); background: rgba(52,226,122,0.1); color: var(--enterprise); }
-.field { margin-bottom: 16px; }
+.reto-opt input:focus-visible + label { outline: 3px solid var(--aqua); outline-offset: 2px; }
+.field { margin-bottom: 16px; position: relative; }
 .field label { display: block; font-size: 13.5px; font-weight: 700; margin-bottom: 6px; color: var(--text-dark); }
-.field input, .field select { width: 100%; padding: 12px 14px; border: 1.5px solid rgba(17,24,39,0.14); border-radius: 10px; font-family: inherit; font-size: 14.5px; background: var(--bg-white); }
-.field input:focus, .field select:focus { outline: none; border-color: var(--aqua); }
+.field input { width: 100%; padding: 12px 40px 12px 14px; border: 1.5px solid rgba(17,24,39,0.14); border-radius: 10px; font-family: inherit; font-size: 14.5px; background: var(--bg-white); transition: border-color 0.18s, box-shadow 0.18s; }
+.field input:focus { outline: none; border-color: var(--aqua); box-shadow: 0 0 0 3px rgba(0,212,255,0.12); }
+.field.ok input { border-color: var(--neon-green); }
+.field.err input { border-color: var(--red); }
+.field .check { position: absolute; right: 13px; top: 37px; color: var(--wa-green); font-weight: 700; opacity: 0; transform: scale(0.5); transition: opacity 0.25s, transform 0.25s var(--ease-out); }
+.field.ok .check { opacity: 1; transform: scale(1); }
+.field .fmsg { display: none; font-size: 12.5px; color: var(--red); margin-top: 5px; }
+.field.err .fmsg { display: block; }
 .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 @media (max-width: 560px) { .form-row-2 { grid-template-columns: 1fr; } }
-.form-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 22px; gap: 12px; }
-.link-back { font-size: 14px; color: var(--text-gray); font-weight: 600; cursor: pointer; }
+.form-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 22px; gap: 12px; flex-wrap: wrap; }
+.link-back { font-size: 14px; color: var(--text-gray); font-weight: 600; cursor: pointer; background: none; border: none; padding: 8px 4px; }
+.link-back:hover { color: var(--text-dark); }
+.pre-submit { font-size: 13px; color: var(--text-gray); text-align: center; margin-top: 14px; }
+.form-step { animation: stepIn 0.4s var(--ease-out); }
+@keyframes stepIn { from { opacity: 0; transform: translateX(16px); } to { opacity: 1; transform: none; } }
 .thanks-box { display: none; text-align: center; padding: 20px 0; }
+.thanks-box.visible { display: block; animation: stepIn 0.5s var(--ease-out); }
+.check-anim { width: 74px; height: 74px; margin: 0 auto 18px; }
+.check-anim circle { stroke: var(--neon-green); stroke-width: 3; fill: rgba(52,226,122,0.08); stroke-dasharray: 214; stroke-dashoffset: 214; animation: drawCircle 0.7s var(--ease-out) forwards; }
+.check-anim path { stroke: var(--neon-green); stroke-width: 4; fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 48; stroke-dashoffset: 48; animation: drawCheck 0.45s var(--ease-out) 0.55s forwards; }
+@keyframes drawCircle { to { stroke-dashoffset: 0; } }
+@keyframes drawCheck { to { stroke-dashoffset: 0; } }
 .thanks-box h3 { font-size: 22px; margin-bottom: 10px; }
 .thanks-box p { color: var(--text-gray); margin-bottom: 24px; }
 .thanks-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 .obj-note { font-size: 13px; color: var(--text-gray); text-align: center; margin-top: 22px; max-width: 560px; margin-left: auto; margin-right: auto; }
 
-/* SORTEO */
+/* ---- SORTEO ---- */
 .sorteo { background: linear-gradient(120deg, var(--midnight), var(--enterprise)); color: var(--text-white); text-align: center; }
 .sorteo p.lead { font-size: 18px; font-weight: 600; max-width: 620px; margin: 0 auto 10px; }
 .sorteo .fine { font-size: 13px; color: var(--text-muted); max-width: 560px; margin: 14px auto 0; }
 
-/* FOOTER */
+/* ---- FOOTER ---- */
 footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 30px; }
 .footer-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px; margin-bottom: 30px; }
-.footer-brand .logo { margin-bottom: 8px; }
 .footer-brand p { font-size: 13.5px; max-width: 280px; }
 .footer-links { display: flex; gap: 40px; flex-wrap: wrap; }
-.footer-col h4 { font-size: 13px; color: var(--text-white); margin-bottom: 12px; }
+.footer-col h4 { font-size: 13px; color: var(--text-white); margin-bottom: 12px; font-family: var(--font-head); }
 .footer-col a, .footer-col p { display: block; font-size: 13.5px; margin-bottom: 8px; color: var(--text-muted); }
-.footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 20px; font-size: 12.5px; text-align: center; color: var(--text-muted); }
+.footer-col a:hover { color: var(--text-white); }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 20px; font-size: 12.5px; text-align: center; }
+
+/* ---- REDUCED MOTION ---- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.001s !important; animation-iteration-count: 1 !important; transition-duration: 0.001s !important; }
+  .rv, .hero-entrance, .msg, .insight, .insight-action { opacity: 1 !important; transform: none !important; }
+  .flow-connector::after { transform: scaleY(1); }
+  .scroll-hint { display: none; }
+  .hero-glow { animation: none; }
+}
 </style>
 </head>
 <body>
 
-<nav class="nav">
+<nav class="nav" aria-label="Navegación principal">
   <div class="nav-inner">
-    <a href="#inicio" class="logo">CONTACT<span>VOX</span></a>
+    <a href="#inicio" class="logo" aria-label="Contactvox — ir al inicio">CONTACT<span>VOX</span></a>
     <ul class="nav-links" id="navLinks">
       <li><a href="#inicio">Inicio</a></li>
       <li><a href="#como-funciona">Cómo funciona</a></li>
@@ -206,21 +303,27 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
       <li><a href="#clientes">Clientes</a></li>
       <li><a href="#diagnostico" class="btn btn-primary" style="padding:10px 20px;">Diagnóstico gratuito</a></li>
     </ul>
-    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navLinks">☰</button>
   </div>
 </nav>
 
+<div class="sticky-cta" id="stickyCta">
+  <a href="#diagnostico" class="btn btn-primary">Solicitar diagnóstico gratuito</a>
+</div>
+
 <section class="hero" id="inicio">
+  <div class="hero-glow g1" aria-hidden="true"></div>
+  <div class="hero-glow g2" aria-hidden="true"></div>
   <div class="container hero-inner">
-    <span class="tag-label tag-dark">IA conversacional para operaciones de cobranza</span>
-    <h1>Conecta, gestiona, automatiza y analiza toda tu operación de cobranza</h1>
-    <p class="sub">Integra todos tus canales, construye una vista 360° de cada cliente y automatiza procesos desde una sola plataforma. Con inteligencia artificial transversal, Contactvox convierte cada interacción en conocimiento, acciones concretas y mejores resultados de recuperación.</p>
-    <div class="hero-ctas">
+    <span class="tag-label tag-dark hero-entrance" style="--hd:0ms;">IA conversacional para operaciones de cobranza</span>
+    <h1 class="hero-entrance" style="--hd:120ms;">Conecta, gestiona, automatiza y analiza toda tu operación de cobranza</h1>
+    <p class="sub hero-entrance" style="--hd:280ms;">Integra todos tus canales, construye una vista 360° de cada cliente y automatiza procesos desde una sola plataforma. Con inteligencia artificial transversal, Contactvox convierte cada interacción en conocimiento, acciones concretas y mejores resultados de recuperación.</p>
+    <div class="hero-ctas hero-entrance" style="--hd:430ms;">
       <a href="#diagnostico" class="btn btn-primary">Solicitar diagnóstico gratuito de mi operación</a>
       <a href="#como-funciona" class="btn btn-outline">Conocer cómo funciona</a>
     </div>
-    <p class="hero-micro">Sin costo · Sin compromiso · Enfocado en los retos reales de tu operación</p>
-    <div class="chip-row">
+    <p class="hero-micro hero-entrance" style="--hd:530ms;">Sin costo · Sin compromiso · Enfocado en los retos reales de tu operación</p>
+    <div class="chip-row hero-entrance" style="--hd:650ms;">
       <span class="chip">Omnicanalidad</span>
       <span class="chip">Vista 360°</span>
       <span class="chip">CRM</span>
@@ -230,53 +333,54 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
       <span class="chip">Analítica conversacional</span>
       <span class="chip">Auditoría IA</span>
     </div>
+    <div class="scroll-hint hero-entrance" style="--hd:900ms;" aria-hidden="true"></div>
   </div>
 </section>
 
 <section class="section-pad" id="como-funciona">
   <div class="container">
-    <div class="center" style="margin-bottom:44px;">
+    <div class="center rv" style="margin-bottom:44px;">
       <span class="tag-label tag-light">Ecosistema Contactvox</span>
       <h2 class="sec-title" style="margin-top:14px;">De cada interacción a una acción que mejora tus resultados</h2>
       <p class="sec-intro center">Contactvox conecta los diferentes componentes de la operación para que la información no permanezca separada en múltiples herramientas. Cada interacción alimenta una visión completa del cliente y permite automatizar decisiones, seguimientos y procesos.</p>
     </div>
 
     <div class="flow-wrap">
-      <div class="ia-band">Inteligencia artificial — presente en todas las capas</div>
+      <div class="ia-band rv"><span class="ia-pulse" aria-hidden="true"></span>Inteligencia artificial — presente en todas las capas</div>
 
-      <div class="layer-card">
+      <div class="layer-card rv">
         <span class="layer-num">1</span>
-        <h3>Conecta todas tus conversaciones</h3>
+        <h3>Canales — conecta todas tus conversaciones</h3>
         <p class="desc">Centraliza las interacciones provenientes de llamadas, WhatsApp, chat web, correo electrónico, SMS, redes sociales y otros canales integrables.</p>
         <div class="layer-value">Evita que la información de cobranza quede dispersa entre diferentes sistemas, equipos o proveedores.</div>
       </div>
-      <div class="flow-arrow">↓</div>
+      <div class="flow-connector rv" aria-hidden="true"></div>
 
-      <div class="layer-card">
+      <div class="layer-card rv">
         <span class="layer-num">2</span>
-        <h3>Comprende el contexto completo de cada gestión</h3>
+        <h3>Vista 360° — comprende el contexto completo</h3>
         <p class="desc">Consolida datos del cliente, historial de conversaciones, gestiones anteriores, compromisos de pago, casos, campañas e interacciones por canal.</p>
         <div class="layer-value">Cada agente, supervisor o responsable accede al contexto necesario antes de tomar una acción.</div>
       </div>
-      <div class="flow-arrow">↓</div>
+      <div class="flow-connector rv" aria-hidden="true"></div>
 
-      <div class="layer-card">
+      <div class="layer-card rv">
         <span class="layer-num">3</span>
-        <h3>Convierte procesos repetitivos en flujos inteligentes</h3>
+        <h3>Automatización — flujos inteligentes</h3>
         <p class="desc">Automatiza recordatorios, notificaciones, seguimientos, asignaciones, actualización de estados, registro de compromisos y escalamiento de casos.</p>
         <div class="layer-value">Reduce tareas manuales y permite que los equipos se concentren en los casos que requieren intervención humana.</div>
       </div>
 
       <div class="result-flow">
-        <span class="rf-item">Interacciones</span>
-        <span class="rf-sep">→</span>
-        <span class="rf-item">Información centralizada</span>
-        <span class="rf-sep">→</span>
-        <span class="rf-item">Conocimiento</span>
-        <span class="rf-sep">→</span>
-        <span class="rf-item">Acción</span>
-        <span class="rf-sep">→</span>
-        <span class="rf-item final">Mejores resultados</span>
+        <span class="rf-item rv" style="--d:0ms;">Interacciones</span>
+        <span class="rf-sep rv" style="--d:80ms;" aria-hidden="true">→</span>
+        <span class="rf-item rv" style="--d:160ms;">Información centralizada</span>
+        <span class="rf-sep rv" style="--d:240ms;" aria-hidden="true">→</span>
+        <span class="rf-item rv" style="--d:320ms;">Conocimiento</span>
+        <span class="rf-sep rv" style="--d:400ms;" aria-hidden="true">→</span>
+        <span class="rf-item rv" style="--d:480ms;">Acción</span>
+        <span class="rf-sep rv" style="--d:560ms;" aria-hidden="true">→</span>
+        <span class="rf-item final rv" style="--d:640ms;">Mejores resultados</span>
       </div>
     </div>
   </div>
@@ -284,117 +388,193 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
 
 <section class="section-pad" id="plataforma" style="background:var(--bg-light);">
   <div class="container">
-    <div class="center" style="margin-bottom:36px;">
+    <div class="center rv" style="margin-bottom:36px;">
       <span class="tag-label tag-light">Plataforma</span>
       <h2 class="sec-title" style="margin-top:14px;">Todo lo que tu operación necesita, conectado en un solo ecosistema</h2>
-      <p class="sec-intro center">Contactvox cuenta con soluciones propias que trabajan de manera integrada y se adaptan a las necesidades de cada organización.</p>
+      <p class="sec-intro center">Contactvox cuenta con soluciones propias que trabajan de manera integrada y se adaptan a las necesidades de cada organización. Toca cada tarjeta para conocer más.</p>
     </div>
-    <div class="grid grid-3">
-      <div class="cap-card"><div class="icon-badge">Om</div><h3>Omnicanalidad</h3><p>Centraliza conversaciones y permite gestionar diferentes canales desde una misma interfaz.</p></div>
-      <div class="cap-card"><div class="icon-badge">CR</div><h3>CRM adaptable</h3><p>Organiza contactos, casos, campañas, procesos, compromisos y seguimientos según tu operación.</p></div>
-      <div class="cap-card"><div class="icon-badge">CC</div><h3>Call Center</h3><p>Gestiona llamadas entrantes y salientes, campañas, agentes, supervisión y operación telefónica.</p></div>
-      <div class="cap-card"><div class="icon-badge">BS</div><h3>Bot Studio</h3><p>Crea, entrena y administra robots inteligentes de voz y texto para atención y cobranza.</p></div>
-      <div class="cap-card"><div class="icon-badge">AC</div><h3>Analítica conversacional</h3><p>Convierte llamadas y chats en información estructurada: patrones, oportunidades y riesgos.</p></div>
-      <div class="cap-card"><div class="icon-badge">IA</div><h3>Auditoría con IA</h3><p>Analiza interacciones y apoya la evaluación de calidad con una visión más amplia de la operación.</p></div>
-      <div class="cap-card"><div class="icon-badge">DP</div><h3>Desarrollo propio</h3><p>Equipo y plataformas propias para adaptar procesos, integraciones y funcionalidades a tu medida.</p></div>
+    <div class="grid grid-3" id="capGrid">
+      <div class="cap-card rv" style="--d:0ms;">
+        <button class="cap-head" aria-expanded="false">
+          <span class="icon-badge" aria-hidden="true">Om</span>
+          <h3>Omnicanalidad <span class="chev" aria-hidden="true">▼</span></h3>
+          <p>Centraliza conversaciones y gestiona diferentes canales desde una misma interfaz.</p>
+        </button>
+        <div class="cap-more">
+          <div class="cap-more-inner">
+            <p>Unifica WhatsApp, llamadas, chat web, correo, SMS y redes sociales. Cada conversación queda registrada en el historial del cliente, sin importar por dónde llegó.</p>
+            <div class="cap-shot">Captura del módulo (pendiente)</div>
+          </div>
+        </div>
+      </div>
+      <div class="cap-card rv" style="--d:70ms;">
+        <button class="cap-head" aria-expanded="false">
+          <span class="icon-badge" aria-hidden="true">CR</span>
+          <h3>CRM adaptable <span class="chev" aria-hidden="true">▼</span></h3>
+          <p>Organiza contactos, casos, campañas, compromisos y seguimientos según tu operación.</p>
+        </button>
+        <div class="cap-more">
+          <div class="cap-more-inner">
+            <p>Estructura la información de cartera a tu medida: estados, etapas de gestión, compromisos de pago y responsables, con procesos configurables por tipo de operación.</p>
+            <div class="cap-shot">Captura del módulo (pendiente)</div>
+          </div>
+        </div>
+      </div>
+      <div class="cap-card rv" style="--d:140ms;">
+        <button class="cap-head" aria-expanded="false">
+          <span class="icon-badge" aria-hidden="true">CC</span>
+          <h3>Call Center <span class="chev" aria-hidden="true">▼</span></h3>
+          <p>Gestiona llamadas entrantes y salientes, campañas, agentes y supervisión.</p>
+        </button>
+        <div class="cap-more">
+          <div class="cap-more-inner">
+            <p>Operación telefónica completa: marcación, campañas salientes, colas de entrada, monitoreo en vivo y grabación integrada al historial del cliente.</p>
+            <div class="cap-shot">Captura del módulo (pendiente)</div>
+          </div>
+        </div>
+      </div>
+      <div class="cap-card rv" style="--d:0ms;">
+        <button class="cap-head" aria-expanded="false">
+          <span class="icon-badge" aria-hidden="true">BS</span>
+          <h3>Bot Studio <span class="chev" aria-hidden="true">▼</span></h3>
+          <p>Crea, entrena y administra robots inteligentes de voz y texto.</p>
+        </button>
+        <div class="cap-more">
+          <div class="cap-more-inner">
+            <p>Diseña voicebots y chatbots para procesos preventivos, informativos o de seguimiento, entrenados con el contexto de tu operación y conectados a tus flujos.</p>
+            <div class="cap-shot">Captura del módulo (pendiente)</div>
+          </div>
+        </div>
+      </div>
+      <div class="cap-card rv" style="--d:70ms;">
+        <button class="cap-head" aria-expanded="false">
+          <span class="icon-badge" aria-hidden="true">AC</span>
+          <h3>Analítica conversacional <span class="chev" aria-hidden="true">▼</span></h3>
+          <p>Convierte llamadas y chats en información estructurada.</p>
+        </button>
+        <div class="cap-more">
+          <div class="cap-more-inner">
+            <p>Identifica patrones, oportunidades, riesgos y comportamientos a partir de las conversaciones reales de tu operación, sin revisar interacción por interacción.</p>
+            <div class="cap-shot">Captura del módulo (pendiente)</div>
+          </div>
+        </div>
+      </div>
+      <div class="cap-card rv" style="--d:140ms;">
+        <button class="cap-head" aria-expanded="false">
+          <span class="icon-badge" aria-hidden="true">IA</span>
+          <h3>Auditoría con IA <span class="chev" aria-hidden="true">▼</span></h3>
+          <p>Analiza interacciones y apoya la evaluación de calidad.</p>
+        </button>
+        <div class="cap-more">
+          <div class="cap-more-inner">
+            <p>Evalúa la calidad de las gestiones de agentes y bots con criterios consistentes, y obtén una visión amplia de lo que ocurre en toda la operación.</p>
+            <div class="cap-shot">Captura del módulo (pendiente)</div>
+          </div>
+        </div>
+      </div>
     </div>
+    <p class="center rv" style="margin-top:26px;font-size:14px;color:var(--text-gray);max-width:640px;">Además, Contactvox cuenta con equipo de desarrollo y plataformas propias, lo que permite adaptar procesos, integraciones y funcionalidades a los requerimientos de cada cliente.</p>
   </div>
 </section>
 
 <section class="section-pad ia-section" id="inteligencia-artificial">
   <div class="container">
-    <div class="center" style="margin-bottom:36px;">
+    <div class="center rv" style="margin-bottom:36px;">
       <span class="tag-label" style="background:rgba(255,255,255,0.1);color:var(--text-white);border:1px solid rgba(255,255,255,0.2);">Inteligencia Artificial</span>
       <h2 class="sec-title" style="margin-top:14px;">Una IA que entiende el contexto de cada conversación</h2>
-      <p class="sec-intro center" style="color:var(--text-muted);">La inteligencia artificial no trabaja separada de tu operación: aprende de las interacciones, enriquece la información del cliente y activa mejores decisiones.</p>
+      <p class="sec-intro center" style="color:var(--text-muted);">Mira cómo una conversación real de cobranza se convierte en conocimiento y en una acción concreta.</p>
     </div>
 
-    <div class="ia-grid">
-      <div>
-        <h3 style="font-size:16px;margin-bottom:14px;">Tecnología aplicada a los retos reales de cobranza</h3>
-        <ul class="ia-list">
-          <li>Detecta promesas de pago dentro de llamadas o chats</li>
-          <li>Identifica fechas comprometidas por el cliente</li>
-          <li>Registra automáticamente información relevante</li>
-          <li>Reconoce objeciones y motivos de no pago</li>
-          <li>Audita conversaciones de agentes y bots</li>
-          <li>Automatiza recordatorios y seguimientos</li>
-          <li>Prioriza casos que requieren atención</li>
-          <li>Entrega recomendaciones al agente</li>
-        </ul>
+    <div class="ia-demo rv" id="iaDemo">
+      <div class="chat-panel">
+        <div class="panel-title">Conversación de gestión</div>
+        <div class="msg agent" data-step="0">Buenas tardes, le saluda Laura de Servicios Financieros. ¿Hablo con el señor Ramírez?</div>
+        <div class="msg client" data-step="1">Sí, con él. Ya sé por qué me llaman…</div>
+        <div class="msg agent" data-step="2">Le llamo por su obligación pendiente. ¿Podemos revisar juntos una alternativa de pago?</div>
+        <div class="msg client" data-step="3">Mire, <span class="hl" data-hl="lit-obj" data-step="4">este mes tuve una emergencia médica</span>, pero <span class="hl" data-hl="lit-promise" data-step="5">puedo pagar la mitad</span> <span class="hl" data-hl="lit-date" data-step="6">el 15 de agosto</span>.</div>
       </div>
-      <div>
-        <h3 style="font-size:16px;margin-bottom:14px;">Qué puede identificar en cada conversación</h3>
-        <div class="ia-tags">
-          <span>Intención del cliente</span>
-          <span>Motivo de no pago</span>
-          <span>Objeción principal</span>
-          <span>Promesa de pago</span>
-          <span>Fecha comprometida</span>
-          <span>Sentimiento</span>
-          <span>Calidad de la gestión</span>
-          <span>Resumen de la interacción</span>
-          <span>Próxima acción recomendada</span>
-        </div>
+      <div class="insight-panel">
+        <div class="panel-title"><span class="dot" aria-hidden="true"></span>Análisis en tiempo real</div>
+        <div class="insight" data-step="4"><span class="k k-int">Intención</span><span class="v">Cliente dispuesto a negociar un acuerdo de pago</span></div>
+        <div class="insight" data-step="4"><span class="k k-obj">Objeción</span><span class="v">Emergencia médica — dificultad temporal de pago</span></div>
+        <div class="insight" data-step="5"><span class="k k-pro">Promesa de pago</span><span class="v">Pago parcial del 50% de la obligación</span></div>
+        <div class="insight" data-step="6"><span class="k k-fec">Fecha comprometida</span><span class="v">15 de agosto</span></div>
+        <div class="insight" data-step="7"><span class="k k-res">Resumen</span><span class="v">Cliente colaborativo, compromiso de pago parcial con fecha definida</span></div>
+        <div class="insight-action" data-step="8"><strong>Próxima acción — automatizada</strong>Recordatorio programado para el 13 de agosto y compromiso registrado en la vista 360° del cliente.</div>
+        <button class="ia-replay" id="iaReplay" type="button">↻ Volver a reproducir el análisis</button>
       </div>
     </div>
 
-    <p class="ia-quote">"Cada conversación puede generar información valiosa. Contactvox la convierte en conocimiento que tu operación puede utilizar."</p>
+    <p class="ia-quote rv">"Cada conversación puede generar información valiosa. Contactvox la convierte en conocimiento que tu operación puede utilizar."</p>
   </div>
 </section>
 
 <section class="section-pad" id="beneficios">
   <div class="container">
-    <div class="center" style="margin-bottom:36px;">
+    <div class="center rv" style="margin-bottom:36px;">
       <span class="tag-label tag-light">Beneficios</span>
       <h2 class="sec-title" style="margin-top:14px;">Beneficios que fortalecen tu operación</h2>
     </div>
     <div class="grid grid-4">
-      <div class="cap-card benefit-card"><div class="icon-badge">↑</div><h3>Mayor productividad</h3><p>Reduce tareas repetitivas y facilita que los agentes se concentren en gestiones de mayor valor.</p></div>
-      <div class="cap-card benefit-card"><div class="icon-badge">◎</div><h3>Mejor seguimiento</h3><p>Mantiene trazabilidad sobre conversaciones, compromisos, fechas y próximas acciones.</p></div>
-      <div class="cap-card benefit-card"><div class="icon-badge">⬢</div><h3>Información centralizada</h3><p>Evita la dispersión de datos entre diferentes canales, archivos y plataformas.</p></div>
-      <div class="cap-card benefit-card"><div class="icon-badge">◆</div><h3>Mayor control operativo</h3><p>Permite conocer qué ocurre en las conversaciones y cómo se ejecutan los procesos.</p></div>
-      <div class="cap-card benefit-card"><div class="icon-badge">▣</div><h3>Decisiones basadas en datos</h3><p>Transforma interacciones en información útil para supervisores y líderes de operación.</p></div>
-      <div class="cap-card benefit-card"><div class="icon-badge">⟲</div><h3>Automatización con contexto</h3><p>Activa procesos considerando la información disponible del cliente y su historial.</p></div>
-      <div class="cap-card benefit-card"><div class="icon-badge">≈</div><h3>Experiencia más consistente</h3><p>Mantiene continuidad entre canales, agentes, bots y diferentes momentos de contacto.</p></div>
-      <div class="cap-card benefit-card"><div class="icon-badge">✧</div><h3>Plataforma adaptable</h3><p>Ajusta procesos, módulos e integraciones según las necesidades de cada empresa.</p></div>
+      <div class="benefit-card rv" style="--d:0ms;"><div class="icon-badge" aria-hidden="true">↑</div><h3>Mayor productividad</h3><p>Reduce tareas repetitivas y facilita que los agentes se concentren en gestiones de mayor valor.</p></div>
+      <div class="benefit-card rv" style="--d:80ms;"><div class="icon-badge" aria-hidden="true">◎</div><h3>Mejor seguimiento</h3><p>Mantiene trazabilidad sobre conversaciones, compromisos, fechas y próximas acciones.</p></div>
+      <div class="benefit-card rv" style="--d:160ms;"><div class="icon-badge" aria-hidden="true">⬢</div><h3>Información centralizada</h3><p>Evita la dispersión de datos entre diferentes canales, archivos y plataformas.</p></div>
+      <div class="benefit-card rv" style="--d:240ms;"><div class="icon-badge" aria-hidden="true">◆</div><h3>Mayor control operativo</h3><p>Permite conocer qué ocurre en las conversaciones y cómo se ejecutan los procesos.</p></div>
+      <div class="benefit-card rv" style="--d:0ms;"><div class="icon-badge" aria-hidden="true">▣</div><h3>Decisiones basadas en datos</h3><p>Transforma interacciones en información útil para supervisores y líderes de operación.</p></div>
+      <div class="benefit-card rv" style="--d:80ms;"><div class="icon-badge" aria-hidden="true">⟲</div><h3>Automatización con contexto</h3><p>Activa procesos considerando la información disponible del cliente y su historial.</p></div>
+      <div class="benefit-card rv" style="--d:160ms;"><div class="icon-badge" aria-hidden="true">≈</div><h3>Experiencia más consistente</h3><p>Mantiene continuidad entre canales, agentes, bots y diferentes momentos de contacto.</p></div>
+      <div class="benefit-card rv" style="--d:240ms;"><div class="icon-badge" aria-hidden="true">✧</div><h3>Plataforma adaptable</h3><p>Ajusta procesos, módulos e integraciones según las necesidades de cada empresa.</p></div>
     </div>
   </div>
 </section>
 
 <section class="section-pad" id="clientes" style="background:var(--bg-light);">
   <div class="container">
-    <div class="center" style="margin-bottom:32px;">
+    <div class="center rv" style="margin-bottom:32px;">
       <span class="tag-label tag-light">Clientes</span>
       <h2 class="sec-title" style="margin-top:14px;">Empresas que confían en Contactvox</h2>
       <p class="sec-intro center">Organizaciones de diferentes sectores ya utilizan Contactvox para conectar sus canales, centralizar información, automatizar procesos y mejorar la gestión de sus clientes.</p>
     </div>
     <div class="logos-row">
-      <div class="logo-placeholder">Logo cliente (pendiente)</div>
-      <div class="logo-placeholder">Logo cliente (pendiente)</div>
-      <div class="logo-placeholder">Logo cliente (pendiente)</div>
-      <div class="logo-placeholder">Logo cliente (pendiente)</div>
+      <div class="logo-placeholder rv" style="--d:0ms;">Logo cliente (pendiente)</div>
+      <div class="logo-placeholder rv" style="--d:70ms;">Logo cliente (pendiente)</div>
+      <div class="logo-placeholder rv" style="--d:140ms;">Logo cliente (pendiente)</div>
+      <div class="logo-placeholder rv" style="--d:210ms;">Logo cliente (pendiente)</div>
     </div>
-    <div class="testimonial-card">
-      <p>"Espacio reservado para un testimonio real de cliente sobre experiencia, gestión, automatización o resultados operativos."</p>
-      <div class="who">Testimonio pendiente de confirmación</div>
+    <div class="testi-wrap rv" id="testiWrap">
+      <div class="testi-card active">
+        <p>"Espacio reservado para un testimonio real de cliente sobre experiencia, gestión o automatización."</p>
+        <div class="who">Testimonio pendiente de confirmación</div>
+      </div>
+      <div class="testi-card">
+        <p>"Espacio reservado para un segundo testimonio sobre resultados operativos o adopción de la plataforma."</p>
+        <div class="who">Testimonio pendiente de confirmación</div>
+      </div>
+      <div class="testi-card">
+        <p>"Espacio reservado para un tercer testimonio sobre acompañamiento, integración o soporte."</p>
+        <div class="who">Testimonio pendiente de confirmación</div>
+      </div>
+      <div class="testi-dots" role="tablist" aria-label="Testimonios"></div>
     </div>
   </div>
 </section>
 
 <section class="section-pad diag-section" id="diagnostico">
   <div class="container">
-    <div class="center" style="margin-bottom:36px;">
+    <div class="center rv" style="margin-bottom:36px;">
       <span class="tag-label tag-light">Diagnóstico gratuito</span>
       <h2 class="sec-title" style="margin-top:14px;">Descubre cómo aplicar Contactvox en tu operación de cobranza</h2>
       <p class="sec-intro center">Solicita un diagnóstico gratuito y conversemos sobre los principales retos de tu operación, las oportunidades de automatización y la forma en que la inteligencia artificial puede apoyar tu gestión.</p>
     </div>
 
-    <div class="diag-box">
-      <form id="diagForm">
-        <div class="form-step" data-step="1">
-          <p class="step-title">Paso 1 de 2 — ¿Cuál es hoy tu principal desafío?</p>
-          <div class="reto-grid">
+    <div class="diag-box rv">
+      <form id="diagForm" novalidate>
+        <div class="progress-track" aria-hidden="true"><div class="progress-fill" id="progressFill"></div></div>
+        <p style="font-size:12.5px;color:var(--text-gray);margin-bottom:18px;" id="progressLabel" aria-live="polite">Paso 1 de 2</p>
+
+        <div class="form-step" data-step="1" id="step1">
+          <p class="step-title">¿Cuál es hoy tu principal desafío?</p>
+          <div class="reto-grid" role="radiogroup" aria-label="Principal desafío de tu operación">
             <div class="reto-opt"><input type="radio" name="reto" id="r1" value="Aumentar la recuperación"><label for="r1">Aumentar la recuperación</label></div>
             <div class="reto-opt"><input type="radio" name="reto" id="r2" value="Mejorar el seguimiento"><label for="r2">Mejorar el seguimiento</label></div>
             <div class="reto-opt"><input type="radio" name="reto" id="r3" value="Reducir tareas manuales"><label for="r3">Reducir tareas manuales</label></div>
@@ -408,30 +588,32 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
           <button type="button" id="toStep2" class="btn btn-primary btn-block" disabled>Continuar</button>
         </div>
 
-        <div class="form-step" data-step="2" style="display:none;">
-          <p class="step-title">Paso 2 de 2 — Datos de contacto</p>
+        <div class="form-step" data-step="2" id="step2" style="display:none;">
+          <p class="step-title">Datos de contacto</p>
           <div class="form-row-2">
-            <div class="field"><label for="nombre">Nombre y apellido</label><input type="text" id="nombre" required></div>
-            <div class="field"><label for="empresa">Empresa</label><input type="text" id="empresa" required></div>
+            <div class="field"><label for="nombre">Nombre y apellido</label><input type="text" id="nombre" required autocomplete="name"><span class="check" aria-hidden="true">✓</span><span class="fmsg">Ingresa tu nombre y apellido.</span></div>
+            <div class="field"><label for="empresa">Empresa</label><input type="text" id="empresa" required autocomplete="organization"><span class="check" aria-hidden="true">✓</span><span class="fmsg">Ingresa el nombre de tu empresa.</span></div>
           </div>
           <div class="form-row-2">
-            <div class="field"><label for="cargo">Cargo</label><input type="text" id="cargo" required></div>
-            <div class="field"><label for="pais">País</label><input type="text" id="pais" required></div>
+            <div class="field"><label for="cargo">Cargo</label><input type="text" id="cargo" required autocomplete="organization-title"><span class="check" aria-hidden="true">✓</span><span class="fmsg">Ingresa tu cargo.</span></div>
+            <div class="field"><label for="pais">País</label><input type="text" id="pais" required autocomplete="country-name"><span class="check" aria-hidden="true">✓</span><span class="fmsg">Ingresa tu país.</span></div>
           </div>
           <div class="form-row-2">
-            <div class="field"><label for="correo">Correo corporativo</label><input type="email" id="correo" required></div>
-            <div class="field"><label for="whatsapp">WhatsApp</label><input type="tel" id="whatsapp" required></div>
+            <div class="field"><label for="correo">Correo corporativo</label><input type="email" id="correo" required autocomplete="email"><span class="check" aria-hidden="true">✓</span><span class="fmsg">Ingresa un correo válido.</span></div>
+            <div class="field"><label for="whatsapp">WhatsApp</label><input type="tel" id="whatsapp" required autocomplete="tel" pattern="[0-9+()\s-]{7,}"><span class="check" aria-hidden="true">✓</span><span class="fmsg">Ingresa un número de WhatsApp válido.</span></div>
           </div>
-          <div class="field"><label for="agentes">Número aproximado de agentes (opcional)</label><input type="number" id="agentes" min="0"></div>
+          <div class="field"><label for="agentes">Número aproximado de agentes (opcional)</label><input type="number" id="agentes" min="0"><span class="check" aria-hidden="true">✓</span></div>
 
           <div class="form-nav">
-            <span class="link-back" id="toStep1">← Atrás</span>
+            <button type="button" class="link-back" id="toStep1">← Atrás</button>
             <button type="submit" class="btn btn-primary">Solicitar diagnóstico gratuito de mi operación</button>
           </div>
+          <p class="pre-submit">Gratuito, sin compromiso y enfocado en tu operación.</p>
         </div>
       </form>
 
       <div class="thanks-box" id="thanksBox">
+        <svg class="check-anim" viewBox="0 0 74 74" aria-hidden="true"><circle cx="37" cy="37" r="34"/><path d="M23 38.5 L33 48 L52 28"/></svg>
         <h3>Gracias. Preparemos un diagnóstico enfocado en tu operación.</h3>
         <p>Un asesor de Contactvox revisará la información y se pondrá en contacto para coordinar el siguiente paso.</p>
         <div class="thanks-ctas">
@@ -441,14 +623,14 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
       </div>
     </div>
 
-    <p class="obj-note">El diagnóstico es gratuito, no genera compromiso comercial y estará enfocado en comprender tu operación antes de recomendar una solución.</p>
+    <p class="obj-note rv">El diagnóstico es gratuito, no genera compromiso comercial y estará enfocado en comprender tu operación antes de recomendar una solución.</p>
   </div>
 </section>
 
 <section class="section-pad-sm sorteo">
   <div class="container">
-    <p class="lead">Solicita tu diagnóstico gratuito y participa por un premio tecnológico exclusivo para asistentes de COLCOB.</p>
-    <p class="fine">Conoce el valor de Contactvox, identifica el reto de tu empresa y solicita el diagnóstico. Participar en el sorteo es un beneficio adicional — condiciones y política de privacidad disponibles antes de confirmar tu registro.</p>
+    <p class="lead rv">Solicita tu diagnóstico gratuito y participa por un premio tecnológico exclusivo para asistentes de COLCOB.</p>
+    <p class="fine rv" style="--d:120ms;">Conoce el valor de Contactvox, identifica el reto de tu empresa y solicita el diagnóstico. Participar en el sorteo es un beneficio adicional — condiciones y política de privacidad disponibles antes de confirmar tu registro.</p>
   </div>
 </section>
 
@@ -456,7 +638,7 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
   <div class="container">
     <div class="footer-top">
       <div class="footer-brand">
-        <div class="logo">CONTACT<span style="color:var(--neon-green);">VOX</span></div>
+        <div class="logo" style="margin-bottom:8px;">CONTACT<span style="color:var(--neon-green);">VOX</span></div>
         <p>Customer Experience &amp; Conversational Data Platform.</p>
       </div>
       <div class="footer-links">
@@ -479,37 +661,205 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
 </footer>
 
 <script>
-var navToggle = document.getElementById('navToggle');
-var navLinks = document.getElementById('navLinks');
-navToggle.addEventListener('click', function () {
-  navLinks.classList.toggle('open');
-});
-navLinks.querySelectorAll('a').forEach(function (a) {
-  a.addEventListener('click', function () { navLinks.classList.remove('open'); });
-});
+(function () {
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-var retoInputs = document.querySelectorAll('input[name="reto"]');
-var toStep2 = document.getElementById('toStep2');
-retoInputs.forEach(function (r) {
-  r.addEventListener('change', function () { toStep2.disabled = false; });
-});
+  /* ---- Menú móvil ---- */
+  var navToggle = document.getElementById('navToggle');
+  var navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', function () {
+    var open = navLinks.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    navToggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+  });
+  navLinks.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      navLinks.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
 
-var step1 = document.querySelector('.form-step[data-step="1"]');
-var step2 = document.querySelector('.form-step[data-step="2"]');
-toStep2.addEventListener('click', function () {
-  step1.style.display = 'none';
-  step2.style.display = 'block';
-});
-document.getElementById('toStep1').addEventListener('click', function () {
-  step2.style.display = 'none';
-  step1.style.display = 'block';
-});
+  /* ---- Reveals on scroll ---- */
+  var rvEls = document.querySelectorAll('.rv');
+  if (reduced || !('IntersectionObserver' in window)) {
+    rvEls.forEach(function (el) { el.classList.add('on'); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add('on'); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    rvEls.forEach(function (el) { io.observe(el); });
+  }
 
-document.getElementById('diagForm').addEventListener('submit', function (e) {
-  e.preventDefault();
-  document.getElementById('diagForm').style.display = 'none';
-  document.getElementById('thanksBox').style.display = 'block';
-});
+  /* ---- Scrollspy ---- */
+  var sections = document.querySelectorAll('section[id]');
+  var navA = Array.prototype.slice.call(navLinks.querySelectorAll('a:not(.btn)'));
+  if ('IntersectionObserver' in window) {
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          var id = '#' + en.target.id;
+          navA.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === id); });
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    sections.forEach(function (s) { spy.observe(s); });
+  }
+
+  /* ---- CTA fijo móvil ---- */
+  var stickyCta = document.getElementById('stickyCta');
+  var hero = document.getElementById('inicio');
+  var diag = document.getElementById('diagnostico');
+  function updateSticky() {
+    if (window.innerWidth > 900) { stickyCta.classList.remove('show'); document.body.classList.remove('cta-visible'); return; }
+    var pastHero = window.scrollY > hero.offsetHeight * 0.55;
+    var diagRect = diag.getBoundingClientRect();
+    var diagVisible = diagRect.top < window.innerHeight * 0.75 && diagRect.bottom > 0;
+    var show = pastHero && !diagVisible;
+    stickyCta.classList.toggle('show', show);
+    document.body.classList.toggle('cta-visible', show);
+  }
+  window.addEventListener('scroll', updateSticky, { passive: true });
+  window.addEventListener('resize', updateSticky);
+  updateSticky();
+
+  /* ---- Tarjetas de capacidades ---- */
+  document.querySelectorAll('.cap-card').forEach(function (card) {
+    var head = card.querySelector('.cap-head');
+    var more = card.querySelector('.cap-more');
+    head.addEventListener('click', function () {
+      var isOpen = card.classList.contains('expanded');
+      document.querySelectorAll('.cap-card.expanded').forEach(function (c) {
+        if (c !== card) {
+          c.classList.remove('expanded');
+          c.querySelector('.cap-more').style.maxHeight = '0px';
+          c.querySelector('.cap-head').setAttribute('aria-expanded', 'false');
+        }
+      });
+      if (isOpen) {
+        card.classList.remove('expanded');
+        more.style.maxHeight = '0px';
+        head.setAttribute('aria-expanded', 'false');
+      } else {
+        card.classList.add('expanded');
+        more.style.maxHeight = more.scrollHeight + 'px';
+        head.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  /* ---- Demo IA: análisis progresivo ---- */
+  var iaDemo = document.getElementById('iaDemo');
+  var iaTimers = [];
+  function clearIa() { iaTimers.forEach(clearTimeout); iaTimers = []; }
+  function resetIa() {
+    clearIa();
+    iaDemo.querySelectorAll('.msg, .insight, .insight-action').forEach(function (el) { el.classList.remove('show'); });
+    iaDemo.querySelectorAll('.hl').forEach(function (el) {
+      el.classList.remove('lit-promise', 'lit-date', 'lit-obj');
+    });
+  }
+  function playIa() {
+    resetIa();
+    if (reduced) {
+      iaDemo.querySelectorAll('.msg, .insight, .insight-action').forEach(function (el) { el.classList.add('show'); });
+      iaDemo.querySelectorAll('.hl').forEach(function (el) { el.classList.add(el.getAttribute('data-hl')); });
+      return;
+    }
+    var stepDelay = 850;
+    for (var step = 0; step <= 8; step++) {
+      (function (s) {
+        iaTimers.push(setTimeout(function () {
+          iaDemo.querySelectorAll('.msg[data-step="' + s + '"], .insight[data-step="' + s + '"], .insight-action[data-step="' + s + '"]').forEach(function (el) { el.classList.add('show'); });
+          iaDemo.querySelectorAll('.hl[data-step="' + s + '"]').forEach(function (el) { el.classList.add(el.getAttribute('data-hl')); });
+        }, s * stepDelay));
+      })(step);
+    }
+  }
+  if ('IntersectionObserver' in window) {
+    var iaSeen = false;
+    var iaObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting && !iaSeen) { iaSeen = true; playIa(); iaObs.unobserve(iaDemo); }
+      });
+    }, { threshold: 0.35 });
+    iaObs.observe(iaDemo);
+  } else { playIa(); }
+  document.getElementById('iaReplay').addEventListener('click', playIa);
+
+  /* ---- Testimonios ---- */
+  var testiWrap = document.getElementById('testiWrap');
+  var testiCards = testiWrap.querySelectorAll('.testi-card');
+  var dotsWrap = testiWrap.querySelector('.testi-dots');
+  testiCards.forEach(function (c, i) {
+    var b = document.createElement('button');
+    b.setAttribute('aria-label', 'Ver testimonio ' + (i + 1));
+    if (i === 0) b.classList.add('active');
+    b.addEventListener('click', function () {
+      testiCards.forEach(function (cc, j) { cc.classList.toggle('active', j === i); });
+      dotsWrap.querySelectorAll('button').forEach(function (bb, j) { bb.classList.toggle('active', j === i); });
+    });
+    dotsWrap.appendChild(b);
+  });
+
+  /* ---- Formulario progresivo ---- */
+  var step1 = document.getElementById('step1');
+  var step2 = document.getElementById('step2');
+  var toStep2 = document.getElementById('toStep2');
+  var toStep1 = document.getElementById('toStep1');
+  var progressFill = document.getElementById('progressFill');
+  var progressLabel = document.getElementById('progressLabel');
+
+  document.querySelectorAll('input[name="reto"]').forEach(function (r) {
+    r.addEventListener('change', function () { toStep2.disabled = false; });
+  });
+  toStep2.addEventListener('click', function () {
+    step1.style.display = 'none';
+    step2.style.display = 'block';
+    progressFill.style.width = '100%';
+    progressLabel.textContent = 'Paso 2 de 2';
+    var first = step2.querySelector('input');
+    if (first) first.focus();
+  });
+  toStep1.addEventListener('click', function () {
+    step2.style.display = 'none';
+    step1.style.display = 'block';
+    progressFill.style.width = '50%';
+    progressLabel.textContent = 'Paso 1 de 2';
+  });
+
+  function validateField(input) {
+    var field = input.closest('.field');
+    if (!input.required && input.value.trim() === '') { field.classList.remove('ok', 'err'); return true; }
+    var valid = input.checkValidity() && input.value.trim() !== '';
+    field.classList.toggle('ok', valid);
+    field.classList.toggle('err', !valid);
+    return valid;
+  }
+  step2.querySelectorAll('input').forEach(function (input) {
+    input.addEventListener('blur', function () { if (input.value.trim() !== '' || input.required) validateField(input); });
+    input.addEventListener('input', function () {
+      var field = input.closest('.field');
+      if (field.classList.contains('err')) validateField(input);
+    });
+  });
+
+  document.getElementById('diagForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var allValid = true;
+    var firstBad = null;
+    step2.querySelectorAll('input[required]').forEach(function (input) {
+      if (!validateField(input)) { allValid = false; if (!firstBad) firstBad = input; }
+    });
+    if (!allValid) { if (firstBad) firstBad.focus(); return; }
+    document.getElementById('diagForm').style.display = 'none';
+    var thanks = document.getElementById('thanksBox');
+    thanks.classList.add('visible');
+    thanks.setAttribute('tabindex', '-1');
+    thanks.focus({ preventScroll: false });
+  });
+})();
 </script>
 </body>
 </html>
