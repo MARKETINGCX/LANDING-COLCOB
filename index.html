@@ -679,33 +679,46 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
     });
   });
 
-  /* ---- Reveals on scroll ---- */
-  var rvEls = document.querySelectorAll('.rv');
-  if (reduced || !('IntersectionObserver' in window)) {
-    rvEls.forEach(function (el) { el.classList.add('on'); });
-  } else {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (en.isIntersecting) { en.target.classList.add('on'); io.unobserve(en.target); }
-      });
-    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-    rvEls.forEach(function (el) { io.observe(el); });
-  }
-
-  /* ---- Scrollspy ---- */
-  var sections = document.querySelectorAll('section[id]');
+  /* ---- Activación por scroll: reveals, scrollspy y demo IA ----
+     Basado en posición (getBoundingClientRect) en lugar de IntersectionObserver,
+     que no dispara en algunos webviews embebidos (apps con navegador interno). */
+  var rvPending = Array.prototype.slice.call(document.querySelectorAll('.rv'));
+  var sections = Array.prototype.slice.call(document.querySelectorAll('section[id]'));
   var navA = Array.prototype.slice.call(navLinks.querySelectorAll('a:not(.btn)'));
-  if ('IntersectionObserver' in window) {
-    var spy = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (en.isIntersecting) {
-          var id = '#' + en.target.id;
-          navA.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === id); });
+  var iaSeen = false;
+
+  function checkActivations() {
+    var vh = window.innerHeight;
+    if (reduced) {
+      rvPending.forEach(function (el) { el.classList.add('on'); });
+      rvPending = [];
+    } else {
+      for (var i = rvPending.length - 1; i >= 0; i--) {
+        var r = rvPending[i].getBoundingClientRect();
+        if (r.top < vh - 40 && r.bottom > 0) {
+          rvPending[i].classList.add('on');
+          rvPending.splice(i, 1);
         }
-      });
-    }, { rootMargin: '-40% 0px -55% 0px' });
-    sections.forEach(function (s) { spy.observe(s); });
+      }
+    }
+    var mid = window.scrollY + vh * 0.42;
+    var currentId = null;
+    sections.forEach(function (s) { if (s.offsetTop <= mid) currentId = '#' + s.id; });
+    navA.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === currentId); });
+    var iaDemoEl = document.getElementById('iaDemo');
+    if (!iaSeen && iaDemoEl) {
+      var ir = iaDemoEl.getBoundingClientRect();
+      if (ir.top < vh * 0.72 && ir.bottom > 0) { iaSeen = true; playIa(); }
+    }
   }
+  var rafTick = false;
+  function onScrollCheck() {
+    if (rafTick) return;
+    rafTick = true;
+    requestAnimationFrame(function () { rafTick = false; checkActivations(); });
+  }
+  window.addEventListener('scroll', onScrollCheck, { passive: true });
+  window.addEventListener('resize', onScrollCheck);
 
   /* ---- CTA fijo móvil ---- */
   var stickyCta = document.getElementById('stickyCta');
@@ -777,15 +790,6 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
       })(step);
     }
   }
-  if ('IntersectionObserver' in window) {
-    var iaSeen = false;
-    var iaObs = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (en.isIntersecting && !iaSeen) { iaSeen = true; playIa(); iaObs.unobserve(iaDemo); }
-      });
-    }, { threshold: 0.35 });
-    iaObs.observe(iaDemo);
-  } else { playIa(); }
   document.getElementById('iaReplay').addEventListener('click', playIa);
 
   /* ---- Testimonios ---- */
@@ -859,6 +863,11 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
     thanks.setAttribute('tabindex', '-1');
     thanks.focus({ preventScroll: false });
   });
+
+  /* ---- Chequeo inicial (elementos ya visibles sin scroll) ---- */
+  checkActivations();
+  setTimeout(checkActivations, 450);
+  window.addEventListener('load', checkActivations);
 })();
 </script>
 </body>
