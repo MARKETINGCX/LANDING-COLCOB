@@ -711,11 +711,15 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
       if (ir.top < vh * 0.72 && ir.bottom > 0) { iaSeen = true; playIa(); }
     }
   }
-  var rafTick = false;
+  var lastCheck = 0, trailing = null;
   function onScrollCheck() {
-    if (rafTick) return;
-    rafTick = true;
-    requestAnimationFrame(function () { rafTick = false; checkActivations(); });
+    var now = Date.now();
+    if (now - lastCheck > 90) {
+      lastCheck = now;
+      checkActivations();
+    } else if (!trailing) {
+      trailing = setTimeout(function () { trailing = null; lastCheck = Date.now(); checkActivations(); }, 110);
+    }
   }
   window.addEventListener('scroll', onScrollCheck, { passive: true });
   window.addEventListener('resize', onScrollCheck);
