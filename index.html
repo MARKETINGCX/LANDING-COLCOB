@@ -723,6 +723,12 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
   }
   window.addEventListener('scroll', onScrollCheck, { passive: true });
   window.addEventListener('resize', onScrollCheck);
+  /* Red de seguridad: algunos webviews embebidos no despachan eventos de scroll.
+     Poll ligero (4x/s) que solo actúa si la posición cambió. */
+  var lastY = -1;
+  setInterval(function () {
+    if (window.scrollY !== lastY) { lastY = window.scrollY; checkActivations(); updateSticky(); }
+  }, 250);
 
   /* ---- CTA fijo móvil ---- */
   var stickyCta = document.getElementById('stickyCta');
