@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "motion": "^13.1.0",
+    "qrcode": "^1.5.4"
+  }
+}
