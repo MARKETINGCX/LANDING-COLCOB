@@ -92,6 +92,7 @@ h1,h2,h3 { font-family: var(--font-head); color: var(--text-dark); }
 .logo { display: inline-flex; align-items: center; }
 .logo-full { height: 40px; width: auto; display: block; }
 .nav-inner .logo-full { height: 54px; }
+.footer-brand .logo-full { height: 60px; }
 .nav-links { display: flex; gap: 26px; align-items: center; }
 .nav-links a:not(.btn) { font-size: 14px; font-weight: 600; color: var(--text-muted); transition: color 0.18s; position: relative; padding: 4px 0; }
 .nav-links a:not(.btn)::after { content: ""; position: absolute; left: 0; right: 100%; bottom: -2px; height: 2px; background: var(--neon-green); transition: right 0.25s var(--ease-out); }
@@ -162,6 +163,24 @@ h1,h2,h3 { font-family: var(--font-head); color: var(--text-dark); }
 .flow-wrap { max-width: 900px; margin: 0 auto; position: relative; }
 .ia-band { position: sticky; top: 84px; z-index: 5; text-align: center; background: linear-gradient(90deg, rgba(139,92,246,0.95), rgba(0,212,255,0.85)); border-radius: var(--r-lg); padding: 13px 20px; margin-bottom: 28px; font-family: var(--font-head); font-weight: 700; font-size: 13px; letter-spacing: 0.4px; color: #fff; text-transform: uppercase; box-shadow: 0 8px 24px rgba(139,92,246,0.25); }
 .ia-band .ia-pulse { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #fff; margin-right: 9px; vertical-align: 1px; animation: iaPulse 2s ease-in-out infinite; }
+
+/* ---- 5 Capas: overview + activación por scroll ---- */
+.capas-grid { display: grid; grid-template-columns: 240px 1fr; gap: 44px; max-width: 1080px; margin: 0 auto; align-items: start; }
+.capas-grid .flow-wrap { max-width: none; margin: 0; }
+@media (max-width: 900px) { .capas-grid { grid-template-columns: 1fr; gap: 16px; } }
+.layers-overview { position: sticky; top: 96px; display: flex; flex-direction: column; padding: 16px; background: var(--bg-white); border: 1.5px solid rgba(17,24,39,0.08); border-radius: var(--r-card); box-shadow: var(--shadow-card); }
+@media (max-width: 900px) { .layers-overview { position: relative; top: 0; flex-direction: row; overflow-x: auto; gap: 8px; padding: 12px; -webkit-overflow-scrolling: touch; } }
+.lo-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 10px; transition: background 0.35s ease, transform 0.35s var(--ease-out); flex-shrink: 0; }
+.lo-item + .lo-item { margin-top: 2px; }
+@media (max-width: 900px) { .lo-item + .lo-item { margin-top: 0; } }
+.lo-num { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 7px; background: rgba(17,24,39,0.06); color: var(--text-gray); font-weight: 700; font-size: 12.5px; font-family: var(--font-head); transition: background 0.35s ease, color 0.35s ease, transform 0.35s var(--ease-out); flex-shrink: 0; }
+.lo-label { font-size: 13.5px; font-weight: 600; color: var(--text-gray); transition: color 0.35s ease; white-space: nowrap; }
+.lo-item.active { background: rgba(0,212,255,0.09); }
+.lo-item.active .lo-num { background: var(--aqua); color: var(--midnight); transform: scale(1.05); }
+.lo-item.active .lo-label { color: var(--enterprise); }
+.layer-card { transition: border-color 0.5s ease, box-shadow 0.5s ease, transform 0.5s var(--ease-out); }
+.layer-card.active { border-color: var(--aqua); box-shadow: 0 18px 42px rgba(0,212,255,0.14), 0 0 0 4px rgba(0,212,255,0.12); transform: translateY(-3px); }
+.layer-card.active .layer-num { background: rgba(0,212,255,0.18); color: var(--aqua); }
 @keyframes iaPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.5); } 50% { box-shadow: 0 0 0 7px rgba(255,255,255,0); } }
 .layer-card { background: var(--bg-white); border: 1.5px solid rgba(17,24,39,0.08); border-radius: var(--r-card); box-shadow: var(--shadow-card); padding: 28px 30px; transition: border-color 0.5s ease, box-shadow 0.5s ease; }
 .layer-card.on { border-color: rgba(52,226,122,0.55); box-shadow: 0 12px 35px rgba(15,23,42,0.08), 0 0 0 4px rgba(52,226,122,0.07); }
@@ -193,9 +212,53 @@ h1,h2,h3 { font-family: var(--font-head); color: var(--text-dark); }
 .cap-head h3 .chev { font-size: 13px; color: var(--text-gray); transition: transform 0.3s var(--ease-out); flex-shrink: 0; }
 .cap-card.expanded .chev { transform: rotate(180deg); }
 .cap-head p { font-size: 14.5px; color: var(--text-gray); font-family: var(--font-body); font-weight: 400; }
-.cap-more { max-height: 0; overflow: hidden; }
-.cap-more-inner { padding: 0 24px 24px; border-top: 1px dashed rgba(17,24,39,0.1); }
-.cap-more-inner p { font-size: 14px; color: var(--text-gray); padding-top: 14px; margin-bottom: 14px; }
+.cap-more { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.4s var(--ease-out); }
+.cap-more > .cap-more-wrap { overflow: hidden; min-height: 0; }
+.cap-card.expanded .cap-more { grid-template-rows: 1fr; }
+.cap-more-inner { padding: 14px 24px 22px; border-top: 1px dashed rgba(17,24,39,0.1); display: grid; gap: 10px; }
+.cap-more-inner p { font-size: 14px; color: var(--text-gray); margin: 0; line-height: 1.55; }
+.cap-more-inner p strong { color: var(--enterprise); font-weight: 700; margin-right: 6px; }
+.cap-more-inner .cap-benefit { padding: 10px 12px; background: rgba(52,226,122,0.09); border-radius: 8px; color: #0f2a20; font-weight: 500; }
+.cap-more-inner .cap-benefit strong { color: #0a7a3e; }
+
+/* ---- Capturas del producto ---- */
+.captura { margin: 0; }
+.captura-frame { position: relative; aspect-ratio: 16/9; background: linear-gradient(135deg, rgba(0,212,255,0.09), rgba(52,226,122,0.05)); border: 1.5px dashed rgba(17,24,39,0.16); border-radius: var(--r-card); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 20px; text-align: center; overflow: hidden; transition: border-color 0.25s, background 0.25s, transform 0.25s var(--ease-out); }
+.captura:hover .captura-frame { border-color: var(--aqua); background: linear-gradient(135deg, rgba(0,212,255,0.16), rgba(52,226,122,0.09)); transform: translateY(-3px); }
+.captura-frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: calc(var(--r-card) - 1px); }
+.captura-label { font-family: var(--font-head); font-weight: 700; font-size: 20px; color: var(--enterprise); letter-spacing: -0.2px; }
+.captura-pending { font-size: 11px; color: var(--text-gray); text-transform: uppercase; letter-spacing: 0.6px; font-weight: 700; padding: 3px 10px; border-radius: 20px; background: rgba(17,24,39,0.06); }
+.captura figcaption { margin-top: 12px; font-size: 13.5px; color: var(--text-gray); text-align: center; line-height: 1.5; }
+.captura figcaption strong { color: var(--enterprise); font-weight: 700; }
+
+/* ---- Cifras (banda oscura con contadores) ---- */
+.cifras-band { background: var(--enterprise); color: var(--text-white); padding: 64px 0; position: relative; overflow: hidden; }
+.cifras-band::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 20% 20%, rgba(52,226,122,0.08), transparent 45%), radial-gradient(circle at 80% 80%, rgba(0,212,255,0.06), transparent 45%); pointer-events: none; }
+.cifras-band .container { position: relative; z-index: 1; }
+.cifras-band .sec-title { color: var(--text-white); }
+.cifras-band .sec-intro { color: var(--text-muted); }
+.cifras-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px 24px; max-width: 1000px; margin: 36px auto 0; }
+@media (max-width: 900px) { .cifras-grid { grid-template-columns: repeat(2, 1fr); gap: 24px 20px; } }
+@media (max-width: 500px) { .cifras-grid { grid-template-columns: 1fr; } }
+.cifra { text-align: center; padding: 10px; }
+.cifra-num { display: block; font-family: var(--font-head); font-weight: 800; font-size: clamp(38px, 5vw, 54px); line-height: 1.05; letter-spacing: -1px; background: linear-gradient(90deg, var(--neon-green), var(--aqua)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px; font-variant-numeric: tabular-nums; }
+.cifra-label { font-size: 13px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; line-height: 1.4; }
+
+/* ---- LATAM (mapa con países iluminados + pins) ---- */
+.latam-section { background: var(--bg-light); }
+.latam-wrap { max-width: 780px; margin: 30px auto 0; position: relative; padding: 0 12px; }
+.latam-svg { width: 100%; height: auto; display: block; }
+.latam-svg .continent { fill: rgba(17,24,39,0.05); stroke: rgba(17,24,39,0.12); stroke-width: 1; }
+.latam-svg .country { fill: rgba(17,24,39,0.08); stroke: rgba(17,24,39,0.15); stroke-width: 0.6; transition: fill 0.7s ease, filter 0.7s ease; }
+.latam-svg .country.lit { fill: rgba(52,226,122,0.55); filter: drop-shadow(0 0 8px rgba(52,226,122,0.5)); animation: countryBreathe 4s ease-in-out infinite; }
+@keyframes countryBreathe { 0%, 100% { fill: rgba(52,226,122,0.5); } 50% { fill: rgba(52,226,122,0.72); } }
+.latam-pin { position: absolute; transform: translate(-50%, -100%); pointer-events: none; opacity: 0; transition: opacity 0.55s var(--ease-out), transform 0.55s var(--ease-out); transform-origin: 50% 100%; }
+.latam-pin.lit { opacity: 1; }
+.latam-pin-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--neon-green); box-shadow: 0 0 0 4px rgba(52,226,122,0.22), 0 0 18px rgba(52,226,122,0.65); margin: 0 auto; position: relative; }
+.latam-pin-dot::after { content: ""; position: absolute; top: 50%; left: 50%; width: 14px; height: 14px; border-radius: 50%; background: rgba(52,226,122,0.5); transform: translate(-50%,-50%); animation: pinPulse 2.5s ease-out infinite; }
+@keyframes pinPulse { 0% { transform: translate(-50%,-50%) scale(1); opacity: 0.6; } 100% { transform: translate(-50%,-50%) scale(3.2); opacity: 0; } }
+.latam-pin-label { margin-top: 8px; font-size: 12px; font-weight: 700; color: var(--enterprise); background: var(--bg-white); padding: 4px 10px; border-radius: 6px; box-shadow: 0 4px 12px rgba(15,23,42,0.15); white-space: nowrap; font-family: var(--font-head); }
+@media (max-width: 500px) { .latam-pin-label { font-size: 11px; padding: 3px 7px; } .latam-pin-dot { width: 11px; height: 11px; } .latam-pin-dot::after { width: 11px; height: 11px; } }
 .cap-shot { height: 120px; border: 1.5px dashed rgba(17,24,39,0.15); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 12.5px; color: var(--text-gray); background: var(--bg-light); }
 
 /* ---- IA DEMO ---- */
@@ -232,6 +295,23 @@ h1,h2,h3 { font-family: var(--font-head); color: var(--text-dark); }
 .ia-replay { margin-top: 18px; background: none; border: 1px solid rgba(255,255,255,0.25); color: var(--text-muted); font-size: 13px; font-weight: 600; padding: 9px 18px; border-radius: 20px; cursor: pointer; transition: color 0.18s, border-color 0.18s; }
 .ia-replay:hover { color: var(--text-white); border-color: rgba(255,255,255,0.6); }
 .ia-quote { border-left: 3px solid var(--neon-green); padding-left: 18px; font-size: 16px; color: var(--text-white); font-style: italic; margin: 36px auto 0; max-width: 720px; }
+
+/* ---- Speech Analytics — variantes agente/cliente ---- */
+.tag-sub { display: inline-block; margin-left: 8px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 3px 9px; border-radius: 20px; background: rgba(255,255,255,0.08); color: var(--text-muted); border: 1px solid rgba(255,255,255,0.15); vertical-align: middle; }
+.chat-panel .panel-title { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.chat-panel .panel-title .meta { font-weight: 500; font-size: 11px; letter-spacing: 0; text-transform: none; color: var(--text-muted); opacity: 0.75; }
+.insight-group { margin-bottom: 14px; }
+.insight-group:last-of-type { margin-bottom: 0; }
+.insight-group-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-muted); margin: 0 0 8px 4px; font-family: var(--font-head); display: flex; align-items: center; gap: 8px; opacity: 0.85; }
+.insight-group-title::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; opacity: 0.6; }
+.insight-group.g-agent .insight-group-title { color: #93C5FD; }
+.insight-group.g-client .insight-group-title { color: var(--neon-green); }
+.k-agent-script { background: rgba(65,107,169,0.28); color: #93C5FD; }
+.k-agent-tone { background: rgba(139,92,246,0.25); color: #C4B5FD; }
+.k-agent-close { background: rgba(22,167,74,0.25); color: var(--neon-green); }
+.msg .hl.lit-script { background: rgba(65,107,169,0.42); color: #fff; }
+.msg .hl.lit-empathy { background: rgba(139,92,246,0.4); color: #fff; }
+.msg .hl.lit-close { background: rgba(22,167,74,0.42); color: #fff; }
 
 /* ---- BENEFICIOS ---- */
 .benefit-card { background: var(--bg-white); border: 1.5px solid rgba(17,24,39,0.08); border-radius: var(--r-card); padding: 26px 24px; box-shadow: var(--shadow-card); }
@@ -330,19 +410,18 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
     <a href="#inicio" class="logo" aria-label="Contactvox — ir al inicio"><img src="/logo-full-dark.png" alt="Contactvox CX" class="logo-full"></a>
     <ul class="nav-links" id="navLinks">
       <li><a href="#inicio">Inicio</a></li>
-      <li><a href="#como-funciona">Cómo funciona</a></li>
-      <li><a href="#plataforma">Plataforma</a></li>
-      <li><a href="#inteligencia-artificial">Inteligencia Artificial</a></li>
+      <li><a href="#speech-analytics">Speech Analytics</a></li>
+      <li><a href="#capas">Capas</a></li>
+      <li><a href="#funcionalidades">Funcionalidades</a></li>
       <li><a href="#beneficios">Beneficios</a></li>
-      <li><a href="#clientes">Clientes</a></li>
-      <li><a href="#diagnostico" class="btn btn-primary" style="padding:10px 20px;">Agendar presentación</a></li>
+      <li><a href="#diagnostico" class="btn btn-primary" style="padding:10px 20px;">Agenda una reunión</a></li>
     </ul>
     <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navLinks">☰</button>
   </div>
 </nav>
 
 <div class="sticky-cta" id="stickyCta">
-  <a href="#diagnostico" class="btn btn-primary">Agendar presentación</a>
+  <a href="#diagnostico" class="btn btn-primary">Agenda una reunión</a>
 </div>
 
 <section class="hero" id="inicio">
@@ -354,20 +433,10 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
       <h1 class="hero-entrance" style="--hd:120ms;">Conecta, gestiona, automatiza y analiza toda tu operación de cobranza</h1>
       <p class="sub hero-entrance" style="--hd:280ms;">Integra todos tus canales, construye una vista 360° de cada cliente y automatiza procesos desde una sola plataforma. Con inteligencia artificial transversal, Contactvox convierte cada interacción en conocimiento, acciones concretas y mejores resultados de recuperación.</p>
       <div class="hero-ctas hero-entrance" style="--hd:430ms;">
-        <a href="#diagnostico" class="btn btn-primary">Agendar presentación de mi operación</a>
-        <a href="#como-funciona" class="btn btn-outline">Conocer cómo funciona</a>
+        <a href="#diagnostico" class="btn btn-primary">Agenda una reunión</a>
+        <a href="#capas" class="btn btn-outline">Conocer cómo funciona</a>
       </div>
       <p class="hero-micro hero-entrance" style="--hd:530ms;">Sin costo · Sin compromiso · Enfocado en los retos reales de tu operación</p>
-      <div class="chip-row hero-entrance" style="--hd:650ms;">
-        <span class="chip">Omnicanalidad</span>
-        <span class="chip">Vista 360°</span>
-        <span class="chip">CRM</span>
-        <span class="chip">Call Center</span>
-        <span class="chip">Bots</span>
-        <span class="chip">Automatización</span>
-        <span class="chip">Analítica conversacional</span>
-        <span class="chip">Auditoría IA</span>
-      </div>
       <div class="scroll-hint hero-entrance" style="--hd:900ms;" aria-hidden="true"></div>
     </div>
 
@@ -420,175 +489,279 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
   </div>
 </section>
 
-<section class="section-pad" id="como-funciona">
-  <div class="container">
-    <div class="center rv" style="margin-bottom:44px;">
-      <span class="tag-label tag-light">Ecosistema Contactvox</span>
-      <h2 class="sec-title" style="margin-top:14px;">De cada interacción a una acción que mejora tus resultados</h2>
-      <p class="sec-intro center">Contactvox conecta los diferentes componentes de la operación para que la información no permanezca separada en múltiples herramientas. Cada interacción alimenta una visión completa del cliente y permite automatizar decisiones, seguimientos y procesos.</p>
-    </div>
-
-    <div class="flow-wrap">
-      <div class="ia-band rv"><span class="ia-pulse" aria-hidden="true"></span>Inteligencia artificial — presente en todas las capas</div>
-
-      <div class="layer-card rv">
-        <span class="layer-num">1</span>
-        <h3>Canales — conecta todas tus conversaciones</h3>
-        <p class="desc">Centraliza las interacciones provenientes de llamadas, WhatsApp, chat web, correo electrónico, SMS, redes sociales y otros canales integrables.</p>
-        <div class="layer-value">Evita que la información de cobranza quede dispersa entre diferentes sistemas, equipos o proveedores.</div>
-      </div>
-      <div class="flow-connector rv" aria-hidden="true"></div>
-
-      <div class="layer-card rv">
-        <span class="layer-num">2</span>
-        <h3>Vista 360° — comprende el contexto completo</h3>
-        <p class="desc">Consolida datos del cliente, historial de conversaciones, gestiones anteriores, compromisos de pago, casos, campañas e interacciones por canal.</p>
-        <div class="layer-value">Cada agente, supervisor o responsable accede al contexto necesario antes de tomar una acción.</div>
-      </div>
-      <div class="flow-connector rv" aria-hidden="true"></div>
-
-      <div class="layer-card rv">
-        <span class="layer-num">3</span>
-        <h3>Automatización — flujos inteligentes</h3>
-        <p class="desc">Automatiza recordatorios, notificaciones, seguimientos, asignaciones, actualización de estados, registro de compromisos y escalamiento de casos.</p>
-        <div class="layer-value">Reduce tareas manuales y permite que los equipos se concentren en los casos que requieren intervención humana.</div>
-      </div>
-
-      <div class="result-flow">
-        <span class="rf-item rv" style="--d:0ms;">Interacciones</span>
-        <span class="rf-sep rv" style="--d:80ms;" aria-hidden="true">→</span>
-        <span class="rf-item rv" style="--d:160ms;">Información centralizada</span>
-        <span class="rf-sep rv" style="--d:240ms;" aria-hidden="true">→</span>
-        <span class="rf-item rv" style="--d:320ms;">Conocimiento</span>
-        <span class="rf-sep rv" style="--d:400ms;" aria-hidden="true">→</span>
-        <span class="rf-item rv" style="--d:480ms;">Acción</span>
-        <span class="rf-sep rv" style="--d:560ms;" aria-hidden="true">→</span>
-        <span class="rf-item final rv" style="--d:640ms;">Mejores resultados</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section-pad" id="plataforma" style="background:var(--bg-light);">
+<section class="section-pad ia-section" id="speech-analytics">
   <div class="container">
     <div class="center rv" style="margin-bottom:36px;">
-      <span class="tag-label tag-light">Plataforma</span>
-      <h2 class="sec-title" style="margin-top:14px;">Todo lo que tu operación necesita, conectado en un solo ecosistema</h2>
-      <p class="sec-intro center">Contactvox cuenta con soluciones propias que trabajan de manera integrada y se adaptan a las necesidades de cada organización. Toca cada tarjeta para conocer más.</p>
-    </div>
-    <div class="grid grid-3" id="capGrid">
-      <div class="cap-card rv" style="--d:0ms;">
-        <button class="cap-head" aria-expanded="false">
-          <span class="icon-badge" aria-hidden="true">Om</span>
-          <h3>Omnicanalidad <span class="chev" aria-hidden="true">▼</span></h3>
-          <p>Centraliza conversaciones y gestiona diferentes canales desde una misma interfaz.</p>
-        </button>
-        <div class="cap-more">
-          <div class="cap-more-inner">
-            <p>Unifica WhatsApp, llamadas, chat web, correo, SMS y redes sociales. Cada conversación queda registrada en el historial del cliente, sin importar por dónde llegó.</p>
-            <div class="cap-shot">Captura del módulo (pendiente)</div>
-          </div>
-        </div>
-      </div>
-      <div class="cap-card rv" style="--d:70ms;">
-        <button class="cap-head" aria-expanded="false">
-          <span class="icon-badge" aria-hidden="true">CR</span>
-          <h3>CRM adaptable <span class="chev" aria-hidden="true">▼</span></h3>
-          <p>Organiza contactos, casos, campañas, compromisos y seguimientos según tu operación.</p>
-        </button>
-        <div class="cap-more">
-          <div class="cap-more-inner">
-            <p>Estructura la información de cartera a tu medida: estados, etapas de gestión, compromisos de pago y responsables, con procesos configurables por tipo de operación.</p>
-            <div class="cap-shot">Captura del módulo (pendiente)</div>
-          </div>
-        </div>
-      </div>
-      <div class="cap-card rv" style="--d:140ms;">
-        <button class="cap-head" aria-expanded="false">
-          <span class="icon-badge" aria-hidden="true">CC</span>
-          <h3>Call Center <span class="chev" aria-hidden="true">▼</span></h3>
-          <p>Gestiona llamadas entrantes y salientes, campañas, agentes y supervisión.</p>
-        </button>
-        <div class="cap-more">
-          <div class="cap-more-inner">
-            <p>Operación telefónica completa: marcación, campañas salientes, colas de entrada, monitoreo en vivo y grabación integrada al historial del cliente.</p>
-            <div class="cap-shot">Captura del módulo (pendiente)</div>
-          </div>
-        </div>
-      </div>
-      <div class="cap-card rv" style="--d:0ms;">
-        <button class="cap-head" aria-expanded="false">
-          <span class="icon-badge" aria-hidden="true">BS</span>
-          <h3>Bot Studio <span class="chev" aria-hidden="true">▼</span></h3>
-          <p>Crea, entrena y administra robots inteligentes de voz y texto.</p>
-        </button>
-        <div class="cap-more">
-          <div class="cap-more-inner">
-            <p>Diseña voicebots y chatbots para procesos preventivos, informativos o de seguimiento, entrenados con el contexto de tu operación y conectados a tus flujos.</p>
-            <div class="cap-shot">Captura del módulo (pendiente)</div>
-          </div>
-        </div>
-      </div>
-      <div class="cap-card rv" style="--d:70ms;">
-        <button class="cap-head" aria-expanded="false">
-          <span class="icon-badge" aria-hidden="true">AC</span>
-          <h3>Analítica conversacional <span class="chev" aria-hidden="true">▼</span></h3>
-          <p>Convierte llamadas y chats en información estructurada.</p>
-        </button>
-        <div class="cap-more">
-          <div class="cap-more-inner">
-            <p>Identifica patrones, oportunidades, riesgos y comportamientos a partir de las conversaciones reales de tu operación, sin revisar interacción por interacción.</p>
-            <div class="cap-shot">Captura del módulo (pendiente)</div>
-          </div>
-        </div>
-      </div>
-      <div class="cap-card rv" style="--d:140ms;">
-        <button class="cap-head" aria-expanded="false">
-          <span class="icon-badge" aria-hidden="true">IA</span>
-          <h3>Auditoría con IA <span class="chev" aria-hidden="true">▼</span></h3>
-          <p>Analiza interacciones y apoya la evaluación de calidad.</p>
-        </button>
-        <div class="cap-more">
-          <div class="cap-more-inner">
-            <p>Evalúa la calidad de las gestiones de agentes y bots con criterios consistentes, y obtén una visión amplia de lo que ocurre en toda la operación.</p>
-            <div class="cap-shot">Captura del módulo (pendiente)</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <p class="center rv" style="margin-top:26px;font-size:14px;color:var(--text-gray);max-width:640px;">Además, Contactvox cuenta con equipo de desarrollo y plataformas propias, lo que permite adaptar procesos, integraciones y funcionalidades a los requerimientos de cada cliente.</p>
-  </div>
-</section>
-
-<section class="section-pad ia-section" id="inteligencia-artificial">
-  <div class="container">
-    <div class="center rv" style="margin-bottom:36px;">
-      <span class="tag-label" style="background:rgba(255,255,255,0.1);color:var(--text-white);border:1px solid rgba(255,255,255,0.2);">Inteligencia Artificial</span>
-      <h2 class="sec-title" style="margin-top:14px;">Una IA que entiende el contexto de cada conversación</h2>
-      <p class="sec-intro center" style="color:var(--text-muted);">Mira cómo una conversación real de cobranza se convierte en conocimiento y en una acción concreta.</p>
+      <span class="tag-label" style="background:rgba(255,255,255,0.1);color:var(--text-white);border:1px solid rgba(255,255,255,0.2);">Speech Analytics<span class="tag-sub">Solo llamadas</span></span>
+      <h2 class="sec-title" style="margin-top:14px;">Audita cada llamada. Analiza al agente y al cliente en tiempo real.</h2>
+      <p class="sec-intro center" style="color:var(--text-muted);">Contactvox transcribe la conversación, evalúa el desempeño del agente frente al guion y extrae señales del cliente — intención, objeciones, promesas y fechas. Sobre el 100% de las llamadas, no sobre una muestra.</p>
     </div>
 
     <div class="ia-demo rv" id="iaDemo">
       <div class="chat-panel">
-        <div class="panel-title">Conversación de gestión</div>
-        <div class="msg agent" data-step="0">Buenas tardes, le saluda Laura de Servicios Financieros. ¿Hablo con el señor Ramírez?</div>
+        <div class="panel-title">
+          <span>Transcripción de la llamada</span>
+          <span class="meta">Cliente en mora · Cartera vencida</span>
+        </div>
+        <div class="msg agent" data-step="0"><span class="hl" data-hl="lit-script" data-step="1">Buenas tardes, señor Ramírez. Le saluda Laura de Servicios Financieros.</span> Le llamo por su obligación pendiente.</div>
         <div class="msg client" data-step="1">Sí, con él. Ya sé por qué me llaman…</div>
-        <div class="msg agent" data-step="2">Le llamo por su obligación pendiente. ¿Podemos revisar juntos una alternativa de pago?</div>
-        <div class="msg client" data-step="3">Mire, <span class="hl" data-hl="lit-obj" data-step="4">este mes tuve una emergencia médica</span>, pero <span class="hl" data-hl="lit-promise" data-step="5">puedo pagar la mitad</span> <span class="hl" data-hl="lit-date" data-step="6">el 15 de agosto</span>.</div>
+        <div class="msg agent" data-step="2"><span class="hl" data-hl="lit-empathy" data-step="3">Entiendo que puede ser un momento complicado.</span> ¿Podemos revisar juntos una alternativa de pago que se ajuste a su situación?</div>
+        <div class="msg client" data-step="3">Mire, <span class="hl" data-hl="lit-obj" data-step="4">este mes tuve una emergencia médica</span>, no pude cubrir la cuota completa.</div>
+        <div class="msg agent" data-step="4">Comprendo. ¿Qué monto podría cubrir en este momento?</div>
+        <div class="msg client" data-step="5">Podría pagar <span class="hl" data-hl="lit-promise" data-step="6">la mitad de la cuota</span> <span class="hl" data-hl="lit-date" data-step="7">el 15 de agosto</span>.</div>
+        <div class="msg agent" data-step="6">Perfecto. Dejo registrado el compromiso. ¿Le confirmo por WhatsApp?</div>
+        <div class="msg client" data-step="7">Sí, por favor.</div>
+        <div class="msg agent" data-step="8"><span class="hl" data-hl="lit-close" data-step="9">Muchas gracias por su tiempo, señor Ramírez. Que tenga muy buena tarde.</span></div>
       </div>
       <div class="insight-panel">
         <div class="panel-title"><span class="dot" aria-hidden="true"></span>Análisis en tiempo real</div>
-        <div class="insight" data-step="4"><span class="k k-int">Intención</span><span class="v">Cliente dispuesto a negociar un acuerdo de pago</span></div>
-        <div class="insight" data-step="4"><span class="k k-obj">Objeción</span><span class="v">Emergencia médica — dificultad temporal de pago</span></div>
-        <div class="insight" data-step="5"><span class="k k-pro">Promesa de pago</span><span class="v">Pago parcial del 50% de la obligación</span></div>
-        <div class="insight" data-step="6"><span class="k k-fec">Fecha comprometida</span><span class="v">15 de agosto</span></div>
-        <div class="insight" data-step="7"><span class="k k-res">Resumen</span><span class="v">Cliente colaborativo, compromiso de pago parcial con fecha definida</span></div>
-        <div class="insight-action" data-step="8"><strong>Próxima acción — automatizada</strong>Recordatorio programado para el 13 de agosto y compromiso registrado en la vista 360° del cliente.</div>
+
+        <div class="insight-group g-agent">
+          <div class="insight-group-title">Análisis del agente</div>
+          <div class="insight" data-step="1"><span class="k k-agent-script">Guion</span><span class="v">Saludo e identificación cumplen el estándar</span></div>
+          <div class="insight" data-step="3"><span class="k k-agent-tone">Tono</span><span class="v">Empatía activa ante la situación del cliente</span></div>
+          <div class="insight" data-step="9"><span class="k k-agent-close">Cierre</span><span class="v">Despedida cortés y compromiso confirmado</span></div>
+        </div>
+
+        <div class="insight-group g-client">
+          <div class="insight-group-title">Análisis del cliente</div>
+          <div class="insight" data-step="4"><span class="k k-obj">Objeción</span><span class="v">Emergencia médica — dificultad temporal</span></div>
+          <div class="insight" data-step="6"><span class="k k-pro">Promesa</span><span class="v">Pago parcial del 50% de la cuota</span></div>
+          <div class="insight" data-step="7"><span class="k k-fec">Fecha comprometida</span><span class="v">15 de agosto</span></div>
+          <div class="insight" data-step="7"><span class="k k-int">Intención</span><span class="v">Cliente colaborativo, dispuesto a pagar</span></div>
+        </div>
+
+        <div class="insight-action" data-step="10"><strong>Próxima acción — automatizada</strong>Recordatorio programado para el 13 de agosto y compromiso registrado en la vista 360° del cliente.</div>
         <button class="ia-replay" id="iaReplay" type="button">↻ Volver a reproducir el análisis</button>
       </div>
     </div>
 
     <p class="ia-quote rv">"Cada conversación puede generar información valiosa. Contactvox la convierte en conocimiento que tu operación puede utilizar."</p>
+  </div>
+</section>
+
+<section class="section-pad" id="capas">
+  <div class="container">
+    <div class="center rv" style="margin-bottom:40px;">
+      <span class="tag-label tag-light">Arquitectura Contactvox</span>
+      <h2 class="sec-title" style="margin-top:14px;">Las 5 capas que hacen funcionar Contactvox</h2>
+      <p class="sec-intro center">Contactvox no es una sola herramienta — es una plataforma organizada en cinco capas conectadas entre sí. Cada capa aporta una función distinta y todas están atravesadas por inteligencia artificial.</p>
+    </div>
+
+    <div class="capas-grid">
+      <aside class="layers-overview rv" id="layersOverview" aria-label="Mapa de las 5 capas">
+        <div class="lo-item" data-i="0"><span class="lo-num">1</span><span class="lo-label">Canales</span></div>
+        <div class="lo-item" data-i="1"><span class="lo-num">2</span><span class="lo-label">Gestión</span></div>
+        <div class="lo-item" data-i="2"><span class="lo-num">3</span><span class="lo-label">Datos conversacionales</span></div>
+        <div class="lo-item" data-i="3"><span class="lo-num">4</span><span class="lo-label">Experiencia</span></div>
+        <div class="lo-item" data-i="4"><span class="lo-num">5</span><span class="lo-label">Automatización</span></div>
+      </aside>
+
+      <div class="flow-wrap">
+        <div class="ia-band rv"><span class="ia-pulse" aria-hidden="true"></span>Inteligencia artificial — atraviesa las 5 capas</div>
+
+        <div class="layer-card rv" data-layer="0">
+          <span class="layer-num">1</span>
+          <h3>Canales de comunicación</h3>
+          <p class="desc">Centraliza todas las conversaciones — llamadas, WhatsApp, chat web, correo, SMS, redes sociales y otros canales integrables — en un único punto de entrada.</p>
+          <div class="layer-value">La operación deja de saltar entre herramientas y proveedores. Todo entra por Contactvox.</div>
+        </div>
+        <div class="flow-connector rv" data-connector="0" aria-hidden="true"></div>
+
+        <div class="layer-card rv" data-layer="1">
+          <span class="layer-num">2</span>
+          <h3>Gestión</h3>
+          <p class="desc">Los equipos gestionan cada interacción con las herramientas de trabajo diario: CRM, contact center, formularios de ventas/servicio/cobranza, bots, marcadores y campañas.</p>
+          <div class="layer-value">Un solo lugar para atender, registrar y hacer seguimiento — sin cambiar de sistema.</div>
+        </div>
+        <div class="flow-connector rv" data-connector="1" aria-hidden="true"></div>
+
+        <div class="layer-card rv" data-layer="2">
+          <span class="layer-num">3</span>
+          <h3>Datos conversacionales</h3>
+          <p class="desc">Cada llamada, chat y mensaje se convierte en datos estructurados: transcripción, intención, sentimiento, temas, adherencia al guion, promesas y compromisos.</p>
+          <div class="layer-value">La conversación deja de ser un archivo aislado y se convierte en información utilizable por toda la operación.</div>
+        </div>
+        <div class="flow-connector rv" data-connector="2" aria-hidden="true"></div>
+
+        <div class="layer-card rv" data-layer="3">
+          <span class="layer-num">4</span>
+          <h3>Experiencia</h3>
+          <p class="desc">Con la información consolidada, Contactvox construye una vista 360° por cliente y una experiencia consistente en cualquier canal — para el cliente y para el agente que lo atiende.</p>
+          <div class="layer-value">Cada persona recibe un trato coherente, sin importar cómo o cuándo se comunique.</div>
+        </div>
+        <div class="flow-connector rv" data-connector="3" aria-hidden="true"></div>
+
+        <div class="layer-card rv" data-layer="4">
+          <span class="layer-num">5</span>
+          <h3>Automatización</h3>
+          <p class="desc">Recordatorios, notificaciones, seguimientos, asignaciones, registro de compromisos, escalamientos y flujos completos — ejecutados automáticamente sobre la información de las capas anteriores.</p>
+          <div class="layer-value">Los equipos se enfocan en los casos que requieren criterio humano; el resto sucede solo.</div>
+        </div>
+
+        <div class="result-flow">
+          <span class="rf-item rv" style="--d:0ms;">Interacciones</span>
+          <span class="rf-sep rv" style="--d:80ms;" aria-hidden="true">→</span>
+          <span class="rf-item rv" style="--d:160ms;">Información centralizada</span>
+          <span class="rf-sep rv" style="--d:240ms;" aria-hidden="true">→</span>
+          <span class="rf-item rv" style="--d:320ms;">Conocimiento</span>
+          <span class="rf-sep rv" style="--d:400ms;" aria-hidden="true">→</span>
+          <span class="rf-item rv" style="--d:480ms;">Acción</span>
+          <span class="rf-sep rv" style="--d:560ms;" aria-hidden="true">→</span>
+          <span class="rf-item final rv" style="--d:640ms;">Mejores resultados</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad" id="funcionalidades" style="background:var(--bg-light);">
+  <div class="container">
+    <div class="center rv" style="margin-bottom:36px;">
+      <span class="tag-label tag-light">Funcionalidades</span>
+      <h2 class="sec-title" style="margin-top:14px;">Las capas, aterrizadas en el día a día de tu operación</h2>
+      <p class="sec-intro center">Estas son algunas de las funcionalidades que los equipos usan directamente sobre Contactvox. Toca cada tarjeta para ver qué hace y qué beneficio aporta.</p>
+    </div>
+    <div class="grid grid-3" id="capGrid">
+      <div class="cap-card rv" style="--d:0ms;">
+        <button class="cap-head" aria-expanded="false">
+          <span class="icon-badge" aria-hidden="true">WA</span>
+          <h3>Campañas por WhatsApp <span class="chev" aria-hidden="true">▼</span></h3>
+          <p>Envío masivo de comunicados segmentados por lista, cartera o campaña.</p>
+        </button>
+        <div class="cap-more">
+          <div class="cap-more-inner">
+            <p><strong>Qué hace:</strong> programa envíos a miles de contactos con plantillas aprobadas y variables personalizadas.</p>
+            <p class="cap-benefit"><strong>Beneficio:</strong> llega en minutos a toda una cartera y todas las respuestas quedan registradas en el historial del cliente.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cap-card rv" style="--d:70ms;">
+        <button class="cap-head" aria-expanded="false">
+          <span class="icon-badge" aria-hidden="true">MK</span>
+          <h3>Marcadores automáticos <span class="chev" aria-hidden="true">▼</span></h3>
+          <p>Marcación automática que entrega al agente solo llamadas conectadas.</p>
+        </button>
+        <div class="cap-more">
+          <div class="cap-more-inner">
+            <p><strong>Qué hace:</strong> marca por lotes, detecta contestadores y filtra números inválidos antes de pasar la llamada al agente.</p>
+            <p class="cap-benefit"><strong>Beneficio:</strong> elimina el tiempo muerto de marcación y multiplica las gestiones útiles por hora.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cap-card rv" style="--d:140ms;">
+        <button class="cap-head" aria-expanded="false">
+          <span class="icon-badge" aria-hidden="true">IV</span>
+          <h3>Contestadores automáticos <span class="chev" aria-hidden="true">▼</span></h3>
+          <p>IVR y flujos de autoatención para llamadas entrantes.</p>
+        </button>
+        <div class="cap-more">
+          <div class="cap-more-inner">
+            <p><strong>Qué hace:</strong> atiende llamadas con menús, autogestión, validaciones y enrutamiento inteligente hacia el agente indicado.</p>
+            <p class="cap-benefit"><strong>Beneficio:</strong> resuelve las consultas repetitivas sin agente y libera capacidad para los casos que sí requieren atención humana.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cap-card rv" style="--d:0ms;">
+        <button class="cap-head" aria-expanded="false">
+          <span class="icon-badge" aria-hidden="true">FV</span>
+          <h3>Formularios de ventas <span class="chev" aria-hidden="true">▼</span></h3>
+          <p>Captura estructurada de leads, calificación y cierre.</p>
+        </button>
+        <div class="cap-more">
+          <div class="cap-more-inner">
+            <p><strong>Qué hace:</strong> guía al asesor en cada etapa del proceso comercial y captura la información clave para calificar y cerrar la venta.</p>
+            <p class="cap-benefit"><strong>Beneficio:</strong> estandariza la gestión comercial y da visibilidad del embudo en tiempo real.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cap-card rv" style="--d:70ms;">
+        <button class="cap-head" aria-expanded="false">
+          <span class="icon-badge" aria-hidden="true">FS</span>
+          <h3>Formularios de servicio <span class="chev" aria-hidden="true">▼</span></h3>
+          <p>Solicitudes, casos, incidencias y seguimientos.</p>
+        </button>
+        <div class="cap-more">
+          <div class="cap-more-inner">
+            <p><strong>Qué hace:</strong> registra cada solicitud con los campos que tu operación necesita, con estado, responsable y SLA asociado.</p>
+            <p class="cap-benefit"><strong>Beneficio:</strong> toda la atención al cliente queda documentada, con trazabilidad clara y tiempos medibles.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cap-card rv" style="--d:140ms;">
+        <button class="cap-head" aria-expanded="false">
+          <span class="icon-badge" aria-hidden="true">FC</span>
+          <h3>Formularios de cobranza <span class="chev" aria-hidden="true">▼</span></h3>
+          <p>Gestión guiada de promesas, compromisos y negociaciones.</p>
+        </button>
+        <div class="cap-more">
+          <div class="cap-more-inner">
+            <p><strong>Qué hace:</strong> apoya al agente durante la gestión y registra promesas de pago, compromisos, negociaciones y estados con formato consistente.</p>
+            <p class="cap-benefit"><strong>Beneficio:</strong> homogeniza el discurso de cobranza y trazabiliza cada compromiso hasta su cumplimiento.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cap-card rv" style="--d:0ms;">
+        <button class="cap-head" aria-expanded="false">
+          <span class="icon-badge" aria-hidden="true">HG</span>
+          <h3>Historial de gestión <span class="chev" aria-hidden="true">▼</span></h3>
+          <p>Línea de tiempo con todas las interacciones por cliente.</p>
+        </button>
+        <div class="cap-more">
+          <div class="cap-more-inner">
+            <p><strong>Qué hace:</strong> muestra en una sola línea de tiempo cada interacción, canal, agente, resultado y compromiso asociado al cliente.</p>
+            <p class="cap-benefit"><strong>Beneficio:</strong> cualquier persona del equipo entiende el estado del cliente en segundos, sin preguntarle al agente anterior.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad" id="capturas">
+  <div class="container">
+    <div class="center rv" style="margin-bottom:36px;">
+      <span class="tag-label tag-light">Producto real</span>
+      <h2 class="sec-title" style="margin-top:14px;">Así se ve Contactvox por dentro</h2>
+      <p class="sec-intro center">Detrás de cada capa y funcionalidad hay una plataforma en producción, usada todos los días por operaciones reales.</p>
+    </div>
+    <div class="grid grid-3">
+      <figure class="captura rv" style="--d:0ms;">
+        <div class="captura-frame" role="img" aria-label="Captura del CRM — pendiente">
+          <span class="captura-label">CRM</span>
+          <span class="captura-pending">Captura pendiente</span>
+        </div>
+        <figcaption><strong>CRM</strong> — vista de contactos, cartera y casos</figcaption>
+      </figure>
+      <figure class="captura rv" style="--d:70ms;">
+        <div class="captura-frame" role="img" aria-label="Captura de la interfaz de telefonía — pendiente">
+          <span class="captura-label">Telefonía</span>
+          <span class="captura-pending">Captura pendiente</span>
+        </div>
+        <figcaption><strong>Telefonía</strong> — llamada activa con historial del cliente</figcaption>
+      </figure>
+      <figure class="captura rv" style="--d:140ms;">
+        <div class="captura-frame" role="img" aria-label="Captura del Bot Studio — pendiente">
+          <span class="captura-label">Bot Studio</span>
+          <span class="captura-pending">Captura pendiente</span>
+        </div>
+        <figcaption><strong>Bot Studio</strong> — diseñador visual de flujos conversacionales</figcaption>
+      </figure>
+      <figure class="captura rv" style="--d:0ms;">
+        <div class="captura-frame" role="img" aria-label="Captura del panel CDM — pendiente">
+          <span class="captura-label">CDM</span>
+          <span class="captura-pending">Captura pendiente</span>
+        </div>
+        <figcaption><strong>CDM</strong> — panel de datos conversacionales de la operación</figcaption>
+      </figure>
+      <figure class="captura rv" style="--d:70ms;">
+        <div class="captura-frame" role="img" aria-label="Captura de un ejemplo de bot — pendiente">
+          <span class="captura-label">Bot en acción</span>
+          <span class="captura-pending">Captura pendiente</span>
+        </div>
+        <figcaption><strong>Ejemplo de bot</strong> — conversación de WhatsApp automatizada</figcaption>
+      </figure>
+    </div>
   </div>
 </section>
 
@@ -611,33 +784,91 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
   </div>
 </section>
 
-<section class="section-pad" id="clientes" style="background:var(--bg-light);">
+<section class="cifras-band" id="cifras">
   <div class="container">
-    <div class="center rv" style="margin-bottom:32px;">
-      <span class="tag-label tag-light">Clientes</span>
-      <h2 class="sec-title" style="margin-top:14px;">Empresas que confían en Contactvox</h2>
-      <p class="sec-intro center">Organizaciones de diferentes sectores ya utilizan Contactvox para conectar sus canales, centralizar información, automatizar procesos y mejorar la gestión de sus clientes.</p>
+    <div class="center rv">
+      <span class="tag-label" style="background:rgba(255,255,255,0.1);color:var(--text-white);border:1px solid rgba(255,255,255,0.2);">Contactvox en cifras</span>
+      <h2 class="sec-title" style="margin-top:14px;">La escala real detrás de la plataforma</h2>
+      <p class="sec-intro center">Los números que respaldan la operación de Contactvox en LATAM.</p>
     </div>
-    <div class="logos-row">
-      <div class="logo-placeholder rv" style="--d:0ms;">Logo cliente (pendiente)</div>
-      <div class="logo-placeholder rv" style="--d:70ms;">Logo cliente (pendiente)</div>
-      <div class="logo-placeholder rv" style="--d:140ms;">Logo cliente (pendiente)</div>
-      <div class="logo-placeholder rv" style="--d:210ms;">Logo cliente (pendiente)</div>
+    <div class="cifras-grid">
+      <div class="cifra rv" style="--d:0ms;">
+        <span class="cifra-num" data-target="200" data-prefix="+" data-suffix="M">+0</span>
+        <span class="cifra-label">Llamadas gestionadas</span>
+      </div>
+      <div class="cifra rv" style="--d:80ms;">
+        <span class="cifra-num" data-target="10" data-prefix="+" data-suffix="M">+0</span>
+        <span class="cifra-label">Interacciones con chatbot</span>
+      </div>
+      <div class="cifra rv" style="--d:160ms;">
+        <span class="cifra-num" data-target="9" data-prefix="+" data-suffix="M">+0</span>
+        <span class="cifra-label">Chats procesados</span>
+      </div>
+      <div class="cifra rv" style="--d:240ms;">
+        <span class="cifra-num" data-target="10" data-prefix="+" data-suffix="k">+0</span>
+        <span class="cifra-label">Usuarios activos</span>
+      </div>
+      <div class="cifra rv" style="--d:320ms;">
+        <span class="cifra-num" data-target="18" data-prefix="+" data-suffix="">+0</span>
+        <span class="cifra-label">Años en el mercado</span>
+      </div>
+      <div class="cifra rv" style="--d:400ms;">
+        <span class="cifra-num" data-target="5" data-prefix="" data-suffix="">0</span>
+        <span class="cifra-label">Países en LATAM</span>
+      </div>
     </div>
-    <div class="testi-wrap rv" id="testiWrap">
-      <div class="testi-card active">
-        <p>"Espacio reservado para un testimonio real de cliente sobre experiencia, gestión o automatización."</p>
-        <div class="who">Testimonio pendiente de confirmación</div>
+  </div>
+</section>
+
+<section class="section-pad latam-section" id="latam">
+  <div class="container">
+    <div class="center rv" style="margin-bottom:12px;">
+      <span class="tag-label tag-light">Contactvox en LATAM</span>
+      <h2 class="sec-title" style="margin-top:14px;">Presentes donde tu operación necesita apoyo</h2>
+      <p class="sec-intro center">Operamos activamente en cinco países de la región, con equipos, infraestructura y experiencia local.</p>
+    </div>
+
+    <div class="latam-wrap" id="latamMap">
+      <svg class="latam-svg" viewBox="0 0 500 700" role="img" aria-label="Mapa de LATAM con los cinco países donde opera Contactvox">
+        <!-- Silueta continental base (LATAM aproximado) -->
+        <path class="continent" d="M 5 10 L 130 5 L 180 30 L 200 65 L 195 105 L 175 135 L 158 145 L 175 172 L 210 195 L 245 202 L 285 178 L 335 168 L 395 180 L 435 205 L 460 235 L 480 265 L 492 300 L 495 345 L 488 400 L 470 450 L 445 500 L 415 545 L 385 590 L 355 640 L 335 690 L 305 685 L 285 655 L 270 610 L 258 555 L 250 490 L 240 425 L 228 370 L 215 315 L 210 275 L 218 240 L 210 220 L 200 205 L 185 175 L 158 140 L 125 105 L 90 75 L 55 45 L 20 25 Z"/>
+
+        <!-- México -->
+        <path class="country" data-country="mx" d="M 5 10 L 130 5 L 180 30 L 200 65 L 195 105 L 175 135 L 145 130 L 115 115 L 85 95 L 60 70 L 30 45 L 12 25 Z"/>
+
+        <!-- Colombia -->
+        <path class="country" data-country="co" d="M 240 185 L 292 168 L 340 180 L 342 218 L 328 258 L 300 275 L 265 268 L 244 240 L 235 210 Z"/>
+
+        <!-- Ecuador -->
+        <path class="country" data-country="ec" d="M 210 268 L 258 262 L 268 288 L 254 308 L 226 310 L 210 292 Z"/>
+
+        <!-- Perú -->
+        <path class="country" data-country="pe" d="M 220 310 L 262 308 L 300 320 L 328 350 L 328 388 L 302 415 L 268 418 L 235 400 L 222 370 L 218 340 Z"/>
+
+        <!-- Bolivia -->
+        <path class="country" data-country="bo" d="M 300 385 L 355 380 L 395 400 L 402 435 L 380 462 L 340 465 L 310 445 L 300 415 Z"/>
+      </svg>
+
+      <div class="latam-pin" data-country="mx" style="left:22%;top:12%;--d:0ms;">
+        <div class="latam-pin-dot" aria-hidden="true"></div>
+        <div class="latam-pin-label">México</div>
       </div>
-      <div class="testi-card">
-        <p>"Espacio reservado para un segundo testimonio sobre resultados operativos o adopción de la plataforma."</p>
-        <div class="who">Testimonio pendiente de confirmación</div>
+      <div class="latam-pin" data-country="co" style="left:58%;top:30%;--d:180ms;">
+        <div class="latam-pin-dot" aria-hidden="true"></div>
+        <div class="latam-pin-label">Colombia</div>
       </div>
-      <div class="testi-card">
-        <p>"Espacio reservado para un tercer testimonio sobre acompañamiento, integración o soporte."</p>
-        <div class="who">Testimonio pendiente de confirmación</div>
+      <div class="latam-pin" data-country="ec" style="left:47%;top:40%;--d:360ms;">
+        <div class="latam-pin-dot" aria-hidden="true"></div>
+        <div class="latam-pin-label">Ecuador</div>
       </div>
-      <div class="testi-dots" role="tablist" aria-label="Testimonios"></div>
+      <div class="latam-pin" data-country="pe" style="left:55%;top:52%;--d:540ms;">
+        <div class="latam-pin-dot" aria-hidden="true"></div>
+        <div class="latam-pin-label">Perú</div>
+      </div>
+      <div class="latam-pin" data-country="bo" style="left:70%;top:60%;--d:720ms;">
+        <div class="latam-pin-dot" aria-hidden="true"></div>
+        <div class="latam-pin-label">Bolivia</div>
+      </div>
     </div>
   </div>
 </section>
@@ -645,9 +876,9 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
 <section class="section-pad diag-section" id="diagnostico">
   <div class="container">
     <div class="center rv" style="margin-bottom:36px;">
-      <span class="tag-label tag-light">Agendar presentación</span>
+      <span class="tag-label tag-light">Agenda una reunión</span>
       <h2 class="sec-title" style="margin-top:14px;">Descubre cómo aplicar Contactvox en tu operación de cobranza</h2>
-      <p class="sec-intro center">Agenda una presentación y conversemos sobre los principales retos de tu operación, las oportunidades de automatización y la forma en que la inteligencia artificial puede apoyar tu gestión.</p>
+      <p class="sec-intro center">Agenda una reunión y conversemos sobre los principales retos de tu operación, las oportunidades de automatización y la forma en que la inteligencia artificial puede apoyar tu gestión.</p>
     </div>
 
     <div class="diag-box rv">
@@ -689,7 +920,7 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
 
           <div class="form-nav">
             <button type="button" class="link-back" id="toStep1">← Atrás</button>
-            <button type="submit" class="btn btn-primary">Agendar presentación de mi operación</button>
+            <button type="submit" class="btn btn-primary">Agenda una reunión</button>
           </div>
           <p class="pre-submit">Gratuito, sin compromiso y enfocado en tu operación.</p>
         </div>
@@ -697,7 +928,7 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
 
       <div class="thanks-box" id="thanksBox">
         <svg class="check-anim" viewBox="0 0 74 74" aria-hidden="true"><circle cx="37" cy="37" r="34"/><path d="M23 38.5 L33 48 L52 28"/></svg>
-        <h3>Gracias. Preparemos una presentación enfocada en tu operación.</h3>
+        <h3>Gracias. Preparemos una reunión enfocada en tu operación.</h3>
         <p>Un asesor de Contactvox revisará la información y se pondrá en contacto para coordinar el siguiente paso.</p>
         <div class="thanks-ctas">
           <a href="#" class="btn btn-primary">Agendar una reunión</a>
@@ -706,14 +937,14 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
       </div>
     </div>
 
-    <p class="obj-note rv">La presentación es gratuita, no genera compromiso comercial y estará enfocada en comprender tu operación antes de recomendar una solución.</p>
+    <p class="obj-note rv">La reunión es gratuita, no genera compromiso comercial y estará enfocada en comprender tu operación antes de recomendar una solución.</p>
   </div>
 </section>
 
 <section class="section-pad-sm sorteo">
   <div class="container">
-    <p class="lead rv">Agenda tu presentación y participa por un premio tecnológico exclusivo para asistentes de COLCOB.</p>
-    <p class="fine rv" style="--d:120ms;">Conoce el valor de Contactvox, identifica el reto de tu empresa y agenda tu presentación. Participar en el sorteo es un beneficio adicional — condiciones y política de privacidad disponibles antes de confirmar tu registro.</p>
+    <p class="lead rv">Agenda tu reunión y participa por un premio tecnológico exclusivo para asistentes de COLCOB.</p>
+    <p class="fine rv" style="--d:120ms;">Conoce el valor de Contactvox, identifica el reto de tu empresa y agenda tu reunión. Participar en el sorteo es un beneficio adicional — condiciones y política de privacidad disponibles antes de confirmar tu registro.</p>
   </div>
 </section>
 
@@ -786,7 +1017,74 @@ import { animate } from "https://cdn.jsdelivr.net/npm/motion@13/+esm";
   var rvPending = Array.prototype.slice.call(document.querySelectorAll('.rv'));
   var sections = Array.prototype.slice.call(document.querySelectorAll('section[id]'));
   var navA = Array.prototype.slice.call(navLinks.querySelectorAll('a:not(.btn)'));
+  var layerCards = Array.prototype.slice.call(document.querySelectorAll('#capas .layer-card'));
+  var loItems = Array.prototype.slice.call(document.querySelectorAll('#layersOverview .lo-item'));
+  var layerConnectors = Array.prototype.slice.call(document.querySelectorAll('#capas .flow-connector'));
+  var counters = Array.prototype.slice.call(document.querySelectorAll('.cifra-num[data-target]'));
+  var latamMap = document.getElementById('latamMap');
+  var latamLit = false;
+  var activeLayerIdx = -1;
   var iaSeen = false;
+
+  function animateCounter(el) {
+    if (el.dataset.animated === '1') return;
+    el.dataset.animated = '1';
+    var target = parseFloat(el.getAttribute('data-target'));
+    var prefix = el.getAttribute('data-prefix') || '';
+    var suffix = el.getAttribute('data-suffix') || '';
+    if (reduced) { el.textContent = prefix + target + suffix; return; }
+    var duration = 1400;
+    var start = null;
+    function step(now) {
+      if (start === null) start = now;
+      var t = Math.min((now - start) / duration, 1);
+      if (t < 0) t = 0;
+      var eased = 1 - Math.pow(1 - t, 3);
+      var current = Math.max(0, target * eased);
+      var display = target < 25 ? Math.floor(current + 0.001) : Math.round(current);
+      el.textContent = prefix + display + suffix;
+      if (t < 1) requestAnimationFrame(step);
+      else el.textContent = prefix + target + suffix;
+    }
+    requestAnimationFrame(step);
+  }
+  function litLatam() {
+    if (latamLit || !latamMap) return;
+    latamLit = true;
+    var countries = latamMap.querySelectorAll('.country[data-country]');
+    var pins = latamMap.querySelectorAll('.latam-pin');
+    countries.forEach(function (c, i) {
+      setTimeout(function () { c.classList.add('lit'); }, i * 200);
+    });
+    pins.forEach(function (p, i) {
+      setTimeout(function () { p.classList.add('lit'); }, i * 200 + 220);
+    });
+  }
+
+  function updateActiveLayer(vh) {
+    if (!layerCards.length) return;
+    var target = vh * 0.42;
+    var bestIdx = -1;
+    var bestDist = Infinity;
+    for (var i = 0; i < layerCards.length; i++) {
+      var r = layerCards[i].getBoundingClientRect();
+      if (r.bottom < 0 || r.top > vh) continue;
+      var center = (r.top + r.bottom) / 2;
+      var d = Math.abs(center - target);
+      if (d < bestDist) { bestDist = d; bestIdx = i; }
+    }
+    if (bestIdx === activeLayerIdx) return;
+    activeLayerIdx = bestIdx;
+    for (var j = 0; j < layerCards.length; j++) {
+      layerCards[j].classList.toggle('active', j === bestIdx);
+    }
+    for (var k = 0; k < loItems.length; k++) {
+      loItems[k].classList.toggle('active', k === bestIdx);
+    }
+    for (var m = 0; m < layerConnectors.length; m++) {
+      layerConnectors[m].classList.toggle('on', bestIdx > m);
+    }
+  }
 
   function checkActivations() {
     var vh = window.innerHeight;
@@ -806,10 +1104,27 @@ import { animate } from "https://cdn.jsdelivr.net/npm/motion@13/+esm";
     var currentId = null;
     sections.forEach(function (s) { if (s.offsetTop <= mid) currentId = '#' + s.id; });
     navA.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === currentId); });
+    updateActiveLayer(vh);
     var iaDemoEl = document.getElementById('iaDemo');
     if (!iaSeen && iaDemoEl) {
       var ir = iaDemoEl.getBoundingClientRect();
       if (ir.top < vh * 0.72 && ir.bottom > 0) { iaSeen = true; playIa(); }
+    }
+    /* Al ver la parte superior del bloque cifras, animar TODOS a la vez (no en olas)
+       — así los de la segunda fila no quedan "sin activar" en desktop */
+    if (counters.length) {
+      var cifBand = document.getElementById('cifras');
+      if (cifBand) {
+        var cbr = cifBand.getBoundingClientRect();
+        if (cbr.top < vh * 0.75 && cbr.bottom > 0) {
+          counters.forEach(function (c) { animateCounter(c); });
+          counters = [];
+        }
+      }
+    }
+    if (!latamLit && latamMap) {
+      var lr = latamMap.getBoundingClientRect();
+      if (lr.top < vh * 0.72 && lr.bottom > 0) litLatam();
     }
   }
   var lastCheck = 0, trailing = null;
@@ -863,13 +1178,18 @@ import { animate } from "https://cdn.jsdelivr.net/npm/motion@13/+esm";
   /* ---- Tarjetas de capacidades ---- */
   function closeCapCard(c) {
     c.classList.remove('expanded');
-    var more = c.querySelector('.cap-more');
-    if (reduced) { more.style.maxHeight = '0px'; } else { animate(more, { maxHeight: '0px' }, SPRING); }
     c.querySelector('.cap-head').setAttribute('aria-expanded', 'false');
   }
   document.querySelectorAll('.cap-card').forEach(function (card) {
     var head = card.querySelector('.cap-head');
     var more = card.querySelector('.cap-more');
+    /* Envuelve el contenido para animar via grid-template-rows (0fr → 1fr) */
+    if (!more.querySelector(':scope > .cap-more-wrap')) {
+      var wrap = document.createElement('div');
+      wrap.className = 'cap-more-wrap';
+      while (more.firstChild) wrap.appendChild(more.firstChild);
+      more.appendChild(wrap);
+    }
     head.addEventListener('click', function () {
       var isOpen = card.classList.contains('expanded');
       document.querySelectorAll('.cap-card.expanded').forEach(function (c) {
@@ -879,7 +1199,6 @@ import { animate } from "https://cdn.jsdelivr.net/npm/motion@13/+esm";
         closeCapCard(card);
       } else {
         card.classList.add('expanded');
-        if (reduced) { more.style.maxHeight = more.scrollHeight + 'px'; } else { animate(more, { maxHeight: more.scrollHeight + 'px' }, SPRING); }
         head.setAttribute('aria-expanded', 'true');
       }
     });
@@ -893,7 +1212,8 @@ import { animate } from "https://cdn.jsdelivr.net/npm/motion@13/+esm";
     clearIa();
     iaDemo.querySelectorAll('.msg, .insight, .insight-action').forEach(function (el) { el.classList.remove('show'); });
     iaDemo.querySelectorAll('.hl').forEach(function (el) {
-      el.classList.remove('lit-promise', 'lit-date', 'lit-obj');
+      var hl = el.getAttribute('data-hl');
+      if (hl) el.classList.remove(hl);
     });
   }
   function playIa() {
@@ -903,8 +1223,13 @@ import { animate } from "https://cdn.jsdelivr.net/npm/motion@13/+esm";
       iaDemo.querySelectorAll('.hl').forEach(function (el) { el.classList.add(el.getAttribute('data-hl')); });
       return;
     }
-    var stepDelay = 850;
-    for (var step = 0; step <= 8; step++) {
+    var stepDelay = 700;
+    var maxStep = 0;
+    iaDemo.querySelectorAll('[data-step]').forEach(function (el) {
+      var s = parseInt(el.getAttribute('data-step'), 10);
+      if (!isNaN(s) && s > maxStep) maxStep = s;
+    });
+    for (var step = 0; step <= maxStep; step++) {
       (function (s) {
         iaTimers.push(setTimeout(function () {
           iaDemo.querySelectorAll('.msg[data-step="' + s + '"], .insight[data-step="' + s + '"], .insight-action[data-step="' + s + '"]').forEach(function (el) { el.classList.add('show'); });
@@ -948,25 +1273,27 @@ import { animate } from "https://cdn.jsdelivr.net/npm/motion@13/+esm";
     artStart();
   }
 
-  /* ---- Testimonios ---- */
+  /* ---- Testimonios (opcional — la sección puede no existir) ---- */
   var testiWrap = document.getElementById('testiWrap');
-  var testiCards = testiWrap.querySelectorAll('.testi-card');
-  var dotsWrap = testiWrap.querySelector('.testi-dots');
-  testiCards.forEach(function (c, i) {
-    var b = document.createElement('button');
-    b.setAttribute('aria-label', 'Ver testimonio ' + (i + 1));
-    if (i === 0) b.classList.add('active');
-    b.addEventListener('click', function () {
-      testiCards.forEach(function (cc, j) {
-        var wasActive = cc.classList.contains('active');
-        cc.classList.toggle('active', j === i);
-        if (reduced) { cc.style.opacity = j === i ? '1' : '0'; }
-        else if (wasActive !== (j === i)) { animate(cc, { opacity: j === i ? 1 : 0 }, SPRING); }
+  if (testiWrap) {
+    var testiCards = testiWrap.querySelectorAll('.testi-card');
+    var dotsWrap = testiWrap.querySelector('.testi-dots');
+    testiCards.forEach(function (c, i) {
+      var b = document.createElement('button');
+      b.setAttribute('aria-label', 'Ver testimonio ' + (i + 1));
+      if (i === 0) b.classList.add('active');
+      b.addEventListener('click', function () {
+        testiCards.forEach(function (cc, j) {
+          var wasActive = cc.classList.contains('active');
+          cc.classList.toggle('active', j === i);
+          if (reduced) { cc.style.opacity = j === i ? '1' : '0'; }
+          else if (wasActive !== (j === i)) { animate(cc, { opacity: j === i ? 1 : 0 }, SPRING); }
+        });
+        dotsWrap.querySelectorAll('button').forEach(function (bb, j) { bb.classList.toggle('active', j === i); });
       });
-      dotsWrap.querySelectorAll('button').forEach(function (bb, j) { bb.classList.toggle('active', j === i); });
+      dotsWrap.appendChild(b);
     });
-    dotsWrap.appendChild(b);
-  });
+  }
 
   /* ---- Formulario progresivo ---- */
   var step1 = document.getElementById('step1');
