@@ -248,17 +248,18 @@ h1,h2,h3 { font-family: var(--font-head); color: var(--text-dark); }
 .latam-section { background: var(--bg-light); }
 .latam-wrap { max-width: 780px; margin: 30px auto 0; position: relative; padding: 0 12px; }
 .latam-svg { width: 100%; height: auto; display: block; }
-.latam-svg .continent { fill: rgba(17,24,39,0.05); stroke: rgba(17,24,39,0.12); stroke-width: 1; }
-.latam-svg .country { fill: rgba(17,24,39,0.08); stroke: rgba(17,24,39,0.15); stroke-width: 0.6; transition: fill 0.7s ease, filter 0.7s ease; }
-.latam-svg .country.lit { fill: rgba(52,226,122,0.55); filter: drop-shadow(0 0 8px rgba(52,226,122,0.5)); animation: countryBreathe 4s ease-in-out infinite; }
-@keyframes countryBreathe { 0%, 100% { fill: rgba(52,226,122,0.5); } 50% { fill: rgba(52,226,122,0.72); } }
-.latam-pin { position: absolute; transform: translate(-50%, -100%); pointer-events: none; opacity: 0; transition: opacity 0.55s var(--ease-out), transform 0.55s var(--ease-out); transform-origin: 50% 100%; }
+.latam-svg .continent { fill: rgba(17,24,39,0.06); stroke: rgba(17,24,39,0.18); stroke-width: 1; stroke-linejoin: round; }
+.latam-svg .net-line { stroke: rgba(52,226,122,0.5); stroke-width: 1.4; stroke-dasharray: 4 4; opacity: 0; transition: opacity 0.6s var(--ease-out); }
+.latam-svg .net-line.lit { opacity: 1; animation: netFlow 3s linear infinite; }
+@keyframes netFlow { to { stroke-dashoffset: -16; } }
+.latam-pin { position: absolute; transform: translate(-50%, -100%); pointer-events: none; opacity: 0; transition: opacity 0.55s var(--ease-out), transform 0.55s var(--ease-out); transform-origin: 50% 100%; z-index: 2; }
 .latam-pin.lit { opacity: 1; }
-.latam-pin-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--neon-green); box-shadow: 0 0 0 4px rgba(52,226,122,0.22), 0 0 18px rgba(52,226,122,0.65); margin: 0 auto; position: relative; }
-.latam-pin-dot::after { content: ""; position: absolute; top: 50%; left: 50%; width: 14px; height: 14px; border-radius: 50%; background: rgba(52,226,122,0.5); transform: translate(-50%,-50%); animation: pinPulse 2.5s ease-out infinite; }
-@keyframes pinPulse { 0% { transform: translate(-50%,-50%) scale(1); opacity: 0.6; } 100% { transform: translate(-50%,-50%) scale(3.2); opacity: 0; } }
-.latam-pin-label { margin-top: 8px; font-size: 12px; font-weight: 700; color: var(--enterprise); background: var(--bg-white); padding: 4px 10px; border-radius: 6px; box-shadow: 0 4px 12px rgba(15,23,42,0.15); white-space: nowrap; font-family: var(--font-head); }
-@media (max-width: 500px) { .latam-pin-label { font-size: 11px; padding: 3px 7px; } .latam-pin-dot { width: 11px; height: 11px; } .latam-pin-dot::after { width: 11px; height: 11px; } }
+.latam-pin-dot { width: 18px; height: 18px; border-radius: 50%; background: var(--neon-green); box-shadow: 0 0 0 5px rgba(52,226,122,0.22), 0 0 24px rgba(52,226,122,0.7); margin: 0 auto; position: relative; }
+.latam-pin-dot::before { content: ""; position: absolute; top: 50%; left: 50%; width: 6px; height: 6px; border-radius: 50%; background: #fff; transform: translate(-50%,-50%); box-shadow: 0 0 6px rgba(255,255,255,0.9); }
+.latam-pin-dot::after { content: ""; position: absolute; top: 50%; left: 50%; width: 18px; height: 18px; border-radius: 50%; background: rgba(52,226,122,0.55); transform: translate(-50%,-50%); animation: pinPulse 2.6s ease-out infinite; }
+@keyframes pinPulse { 0% { transform: translate(-50%,-50%) scale(1); opacity: 0.6; } 100% { transform: translate(-50%,-50%) scale(3.5); opacity: 0; } }
+.latam-pin-label { margin-top: 10px; font-size: 12.5px; font-weight: 700; color: var(--enterprise); background: var(--bg-white); padding: 5px 11px; border-radius: 7px; box-shadow: 0 4px 14px rgba(15,23,42,0.18); white-space: nowrap; font-family: var(--font-head); }
+@media (max-width: 500px) { .latam-pin-label { font-size: 11px; padding: 4px 8px; } .latam-pin-dot { width: 14px; height: 14px; } .latam-pin-dot::after { width: 14px; height: 14px; } }
 .cap-shot { height: 120px; border: 1.5px dashed rgba(17,24,39,0.15); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 12.5px; color: var(--text-gray); background: var(--bg-light); }
 
 /* ---- IA DEMO ---- */
@@ -830,42 +831,36 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
 
     <div class="latam-wrap" id="latamMap">
       <svg class="latam-svg" viewBox="0 0 500 700" role="img" aria-label="Mapa de LATAM con los cinco países donde opera Contactvox">
-        <!-- Silueta continental base (LATAM aproximado) -->
-        <path class="continent" d="M 5 10 L 130 5 L 180 30 L 200 65 L 195 105 L 175 135 L 158 145 L 175 172 L 210 195 L 245 202 L 285 178 L 335 168 L 395 180 L 435 205 L 460 235 L 480 265 L 492 300 L 495 345 L 488 400 L 470 450 L 445 500 L 415 545 L 385 590 L 355 640 L 335 690 L 305 685 L 285 655 L 270 610 L 258 555 L 250 490 L 240 425 L 228 370 L 215 315 L 210 275 L 218 240 L 210 220 L 200 205 L 185 175 L 158 140 L 125 105 L 90 75 L 55 45 L 20 25 Z"/>
+        <!-- Silueta continental LATAM (coordenadas proyectadas de puntos costeros reales:
+             long -117 a -34, lat 32 a -56 → viewBox 500x700) -->
+        <path class="continent" d="M 2 3 L 60 20 L 113 47 L 126 102 L 182 86 L 173 108 L 171 130 L 187 128 L 204 135 L 205 175 L 220 190 L 250 172 L 274 170 L 302 170 L 331 170 L 354 200 L 390 215 L 397 254 L 438 274 L 473 284 L 495 319 L 473 357 L 445 436 L 412 474 L 397 494 L 366 531 L 358 556 L 313 594 L 288 664 L 293 690 L 299 699 L 277 677 L 265 585 L 265 548 L 274 517 L 281 442 L 281 402 L 276 395 L 261 381 L 240 350 L 231 327 L 220 283 L 218 262 L 225 247 L 241 223 L 238 205 L 208 187 L 194 178 L 167 147 L 148 138 L 103 120 L 64 70 L 37 33 L 21 8 Z M 43 72 L 40 63 L 13 11 L 2 3 L 5 40 L 20 60 L 35 75 Z"/>
 
-        <!-- México -->
-        <path class="country" data-country="mx" d="M 5 10 L 130 5 L 180 30 L 200 65 L 195 105 L 175 135 L 145 130 L 115 115 L 85 95 L 60 70 L 30 45 L 12 25 Z"/>
-
-        <!-- Colombia -->
-        <path class="country" data-country="co" d="M 240 185 L 292 168 L 340 180 L 342 218 L 328 258 L 300 275 L 265 268 L 244 240 L 235 210 Z"/>
-
-        <!-- Ecuador -->
-        <path class="country" data-country="ec" d="M 210 268 L 258 262 L 268 288 L 254 308 L 226 310 L 210 292 Z"/>
-
-        <!-- Perú -->
-        <path class="country" data-country="pe" d="M 220 310 L 262 308 L 300 320 L 328 350 L 328 388 L 302 415 L 268 418 L 235 400 L 222 370 L 218 340 Z"/>
-
-        <!-- Bolivia -->
-        <path class="country" data-country="bo" d="M 300 385 L 355 380 L 395 400 L 402 435 L 380 462 L 340 465 L 310 445 L 300 415 Z"/>
+        <!-- Líneas de conexión entre los 5 países (delgadas, se activan al scroll) -->
+        <g class="latam-network">
+          <line class="net-line" data-i="0" x1="95" y1="63" x2="260" y2="217"/>
+          <line class="net-line" data-i="1" x1="260" y1="217" x2="225" y2="259"/>
+          <line class="net-line" data-i="2" x1="225" y1="259" x2="260" y2="336"/>
+          <line class="net-line" data-i="3" x1="260" y1="336" x2="320" y2="385"/>
+        </g>
       </svg>
 
-      <div class="latam-pin" data-country="mx" style="left:22%;top:12%;--d:0ms;">
+      <div class="latam-pin" data-country="mx" style="left:19%;top:9%;--d:0ms;">
         <div class="latam-pin-dot" aria-hidden="true"></div>
         <div class="latam-pin-label">México</div>
       </div>
-      <div class="latam-pin" data-country="co" style="left:58%;top:30%;--d:180ms;">
+      <div class="latam-pin" data-country="co" style="left:52%;top:31%;--d:180ms;">
         <div class="latam-pin-dot" aria-hidden="true"></div>
         <div class="latam-pin-label">Colombia</div>
       </div>
-      <div class="latam-pin" data-country="ec" style="left:47%;top:40%;--d:360ms;">
+      <div class="latam-pin" data-country="ec" style="left:45%;top:37%;--d:360ms;">
         <div class="latam-pin-dot" aria-hidden="true"></div>
         <div class="latam-pin-label">Ecuador</div>
       </div>
-      <div class="latam-pin" data-country="pe" style="left:55%;top:52%;--d:540ms;">
+      <div class="latam-pin" data-country="pe" style="left:52%;top:48%;--d:540ms;">
         <div class="latam-pin-dot" aria-hidden="true"></div>
         <div class="latam-pin-label">Perú</div>
       </div>
-      <div class="latam-pin" data-country="bo" style="left:70%;top:60%;--d:720ms;">
+      <div class="latam-pin" data-country="bo" style="left:64%;top:55%;--d:720ms;">
         <div class="latam-pin-dot" aria-hidden="true"></div>
         <div class="latam-pin-label">Bolivia</div>
       </div>
@@ -1051,13 +1046,13 @@ import { animate } from "https://cdn.jsdelivr.net/npm/motion@13/+esm";
   function litLatam() {
     if (latamLit || !latamMap) return;
     latamLit = true;
-    var countries = latamMap.querySelectorAll('.country[data-country]');
     var pins = latamMap.querySelectorAll('.latam-pin');
-    countries.forEach(function (c, i) {
-      setTimeout(function () { c.classList.add('lit'); }, i * 200);
-    });
+    var lines = latamMap.querySelectorAll('.net-line');
     pins.forEach(function (p, i) {
-      setTimeout(function () { p.classList.add('lit'); }, i * 200 + 220);
+      setTimeout(function () { p.classList.add('lit'); }, i * 220);
+    });
+    lines.forEach(function (l, i) {
+      setTimeout(function () { l.classList.add('lit'); }, i * 220 + 320);
     });
   }
 
