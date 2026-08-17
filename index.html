@@ -1027,14 +1027,17 @@ import { animate } from "https://cdn.jsdelivr.net/npm/motion@13/+esm";
     });
   }
 
-  /* Ajustar el aspect-ratio del frame al video real + respetar reduced-motion */
+  /* Ajustar aspect-ratio real del video, bajar velocidad, respetar reduced-motion */
   var latamVideo = document.getElementById('latamVideo');
   var latamFrame = document.getElementById('latamVideoFrame');
   if (latamVideo && latamFrame) {
+    latamVideo.playbackRate = 0.6;
     latamVideo.addEventListener('loadedmetadata', function () {
+      latamVideo.playbackRate = 0.6;
       var w = latamVideo.videoWidth, h = latamVideo.videoHeight;
       if (w && h) latamFrame.style.aspectRatio = w + ' / ' + h;
     });
+    latamVideo.addEventListener('play', function () { latamVideo.playbackRate = 0.6; });
     if (reduced) latamVideo.pause();
   }
 
