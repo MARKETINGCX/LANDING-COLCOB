@@ -409,6 +409,15 @@ h1,h2,h3 { font-family: var(--font-head); color: var(--text-dark); }
 .diag-section { background: var(--bg-light); }
 .diag-box { max-width: 720px; margin: 0 auto; background: var(--bg-white); border-radius: var(--r-lg); box-shadow: var(--shadow-card); padding: 40px; }
 @media (max-width: 600px) { .diag-box { padding: 26px 20px; } }
+.contact-grid { display: grid; grid-template-columns: minmax(280px, 420px) 1fr; gap: 40px; align-items: start; max-width: 1080px; margin: 0 auto; }
+@media (max-width: 900px) { .contact-grid { grid-template-columns: 1fr; gap: 28px; max-width: 720px; } }
+.contact-grid .diag-box { max-width: none; margin: 0; padding: 32px; }
+@media (max-width: 600px) { .contact-grid .diag-box { padding: 24px 20px; } }
+.contact-grid .colcob-image { position: sticky; top: 130px; }
+@media (max-width: 900px) { .contact-grid .colcob-image { position: static; } }
+.contact-meta { padding-bottom: 20px; margin-bottom: 22px; border-bottom: 1px dashed rgba(17,24,39,0.12); }
+.contact-meta-line { margin: 12px 0 0; font-size: 13.5px; color: var(--text-gray); }
+.contact-meta-line strong { color: var(--enterprise); }
 .progress-track { height: 6px; border-radius: 3px; background: rgba(17,24,39,0.08); margin-bottom: 10px; overflow: hidden; }
 .progress-fill { height: 100%; width: 50%; border-radius: 3px; background: linear-gradient(90deg, var(--neon-green), var(--aqua)); transition: width 0.5s var(--ease-out); }
 .step-title { font-size: 15px; font-weight: 700; color: var(--enterprise); margin-bottom: 18px; font-family: var(--font-head); }
@@ -986,76 +995,66 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
       <p class="sec-intro center">Conoce Contactvox y descubre cómo estamos aplicando IA, automatización y datos conversacionales a operaciones reales.</p>
     </div>
 
-    <div class="diag-box rv">
-      <form id="diagForm" novalidate>
-        <div class="form-row-2">
-          <div class="field"><label for="nombre">Nombre y apellido</label><input type="text" id="nombre" name="nombre" required autocomplete="name"><span class="check" aria-hidden="true">✓</span><span class="fmsg">Ingresa tu nombre y apellido.</span></div>
-          <div class="field"><label for="empresa">Empresa</label><input type="text" id="empresa" name="empresa" required autocomplete="organization"><span class="check" aria-hidden="true">✓</span><span class="fmsg">Ingresa el nombre de tu empresa.</span></div>
-        </div>
-        <div class="form-row-2">
-          <div class="field"><label for="whatsapp">WhatsApp</label><input type="tel" id="whatsapp" name="whatsapp" required autocomplete="tel" pattern="[0-9+()\s-]{7,}"><span class="check" aria-hidden="true">✓</span><span class="fmsg">Ingresa un número de WhatsApp válido.</span></div>
-          <div class="field"><label for="correo">Correo corporativo</label><input type="email" id="correo" name="correo" required autocomplete="email"><span class="check" aria-hidden="true">✓</span><span class="fmsg">Ingresa un correo válido.</span></div>
-        </div>
-        <div class="field">
-          <label for="interes">¿Qué te interesa conocer? (opcional)</label>
-          <select id="interes" name="interes">
-            <option value="">Selecciona una opción</option>
-            <option value="Agentes IA de Texto">Agentes IA de Texto</option>
-            <option value="Agentes IA de Voz">Agentes IA de Voz</option>
-            <option value="Auditor IA / Speech Analytics">Auditor IA / Speech Analytics</option>
-            <option value="Bot Studio / Automatización">Bot Studio / Automatización</option>
-            <option value="Plataforma Contactvox">Plataforma Contactvox</option>
-            <option value="Todo lo anterior">Todo lo anterior</option>
-          </select>
-        </div>
-
-        <input type="hidden" name="source" value="COLCOB 2026">
-        <input type="hidden" name="utm_source" id="utm_source" value="">
-        <input type="hidden" name="utm_medium" id="utm_medium" value="">
-        <input type="hidden" name="utm_campaign" id="utm_campaign" value="">
-
-        <label class="form-consent">
-          <input type="checkbox" id="consent" name="consent" required>
-          <span>He leído y acepto la <a href="/politica-privacidad" target="_blank" rel="noopener">política de tratamiento de datos</a>.</span>
-        </label>
-
-        <button type="submit" class="btn btn-primary btn-block" id="submitBtn">Quiero conocer Contactvox</button>
-        <p class="form-error" id="formError" role="alert" aria-live="polite"></p>
-      </form>
-
-      <div class="thanks-box" id="thanksBox">
-        <svg class="check-anim" viewBox="0 0 74 74" aria-hidden="true"><circle cx="37" cy="37" r="34"/><path d="M23 38.5 L33 48 L52 28"/></svg>
-        <h3>Gracias. Nos pondremos en contacto pronto.</h3>
-        <p>Un asesor de Contactvox revisará la información y se pondrá en contacto para conversar sobre tu operación.</p>
-        <div class="thanks-ctas">
-          <a href="https://wa.me/593991916389" target="_blank" rel="noopener" class="btn btn-outline-dark">Hablar con un asesor por WhatsApp</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section-pad sorteo" id="colcob">
-  <div class="container">
-    <div class="colcob-grid">
-      <div class="colcob-image rv">
+    <div class="contact-grid">
+      <div class="colcob-image rv" id="colcob">
         <img src="/colcob-2026-sponsor.jpg" alt="Contactvox — Sponsor Oficial del 22° Congreso Internacional de Crédito, Cobranza y BPO, COLCOB 2026" loading="lazy">
       </div>
-      <div class="colcob-info">
-        <span class="colcob-tag rv">
-          <span class="colcob-tag-mark" aria-hidden="true">
-            <svg viewBox="0 0 12 12" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2h6v2a3 3 0 0 1-6 0V2Z"/><path d="M3 3H1.5A1.5 1.5 0 0 0 3 4.5"/><path d="M9 3h1.5A1.5 1.5 0 0 1 9 4.5"/><path d="M4.5 10h3"/><path d="M6 7v3"/></svg>
+
+      <div class="diag-box rv">
+        <div class="contact-meta">
+          <span class="colcob-tag">
+            <span class="colcob-tag-mark" aria-hidden="true">
+              <svg viewBox="0 0 12 12" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2h6v2a3 3 0 0 1-6 0V2Z"/><path d="M3 3H1.5A1.5 1.5 0 0 0 3 4.5"/><path d="M9 3h1.5A1.5 1.5 0 0 1 9 4.5"/><path d="M4.5 10h3"/><path d="M6 7v3"/></svg>
+            </span>
+            Sponsor Oficial · COLCOB 2026
           </span>
-          Sponsor Oficial · COLCOB 2026
-        </span>
-        <h3 class="rv" style="--d:80ms;">Nos vemos en el 22° Congreso Internacional de Crédito, Cobranza y BPO</h3>
-        <div class="colcob-meta rv" style="--d:160ms;">
-          <span class="colcob-meta-item"><strong>2 y 3 de septiembre</strong></span>
-          <span class="colcob-meta-item">·</span>
-          <span class="colcob-meta-item"><strong>Club El Nogal</strong> — Bogotá, Colombia</span>
+          <p class="contact-meta-line"><strong>2 y 3 de septiembre</strong> · <strong>Club El Nogal</strong> — Bogotá, Colombia</p>
         </div>
-        <p class="rv" style="--d:220ms;">Contactvox es Sponsor Oficial del evento donde convergen las organizaciones líderes del sector crediticio, cobranza y BPO en Colombia y LATAM. Agenda una reunión antes del evento y planifiquemos cómo aprovechar tu asistencia.</p>
-        <a href="#contacto" class="btn btn-primary rv" style="--d:280ms;">Agenda una reunión antes del evento</a>
+
+        <form id="diagForm" novalidate>
+          <div class="form-row-2">
+            <div class="field"><label for="nombre">Nombre y apellido</label><input type="text" id="nombre" name="nombre" required autocomplete="name"><span class="check" aria-hidden="true">✓</span><span class="fmsg">Ingresa tu nombre y apellido.</span></div>
+            <div class="field"><label for="empresa">Empresa</label><input type="text" id="empresa" name="empresa" required autocomplete="organization"><span class="check" aria-hidden="true">✓</span><span class="fmsg">Ingresa el nombre de tu empresa.</span></div>
+          </div>
+          <div class="form-row-2">
+            <div class="field"><label for="whatsapp">WhatsApp</label><input type="tel" id="whatsapp" name="whatsapp" required autocomplete="tel" pattern="[0-9+()\s-]{7,}"><span class="check" aria-hidden="true">✓</span><span class="fmsg">Ingresa un número de WhatsApp válido.</span></div>
+            <div class="field"><label for="correo">Correo corporativo</label><input type="email" id="correo" name="correo" required autocomplete="email"><span class="check" aria-hidden="true">✓</span><span class="fmsg">Ingresa un correo válido.</span></div>
+          </div>
+          <div class="field">
+            <label for="interes">¿Qué te interesa conocer? (opcional)</label>
+            <select id="interes" name="interes">
+              <option value="">Selecciona una opción</option>
+              <option value="Agentes IA de Texto">Agentes IA de Texto</option>
+              <option value="Agentes IA de Voz">Agentes IA de Voz</option>
+              <option value="Auditor IA / Speech Analytics">Auditor IA / Speech Analytics</option>
+              <option value="Bot Studio / Automatización">Bot Studio / Automatización</option>
+              <option value="Plataforma Contactvox">Plataforma Contactvox</option>
+              <option value="Todo lo anterior">Todo lo anterior</option>
+            </select>
+          </div>
+
+          <input type="hidden" name="source" value="COLCOB 2026">
+          <input type="hidden" name="utm_source" id="utm_source" value="">
+          <input type="hidden" name="utm_medium" id="utm_medium" value="">
+          <input type="hidden" name="utm_campaign" id="utm_campaign" value="">
+
+          <label class="form-consent">
+            <input type="checkbox" id="consent" name="consent" required>
+            <span>He leído y acepto la <a href="/politica-privacidad" target="_blank" rel="noopener">política de tratamiento de datos</a>.</span>
+          </label>
+
+          <button type="submit" class="btn btn-primary btn-block" id="submitBtn">Quiero conocer Contactvox</button>
+          <p class="form-error" id="formError" role="alert" aria-live="polite"></p>
+        </form>
+
+        <div class="thanks-box" id="thanksBox">
+          <svg class="check-anim" viewBox="0 0 74 74" aria-hidden="true"><circle cx="37" cy="37" r="34"/><path d="M23 38.5 L33 48 L52 28"/></svg>
+          <h3>Gracias. Nos pondremos en contacto pronto.</h3>
+          <p>Un asesor de Contactvox revisará la información y se pondrá en contacto para conversar sobre tu operación.</p>
+          <div class="thanks-ctas">
+            <a href="https://wa.me/593991916389" target="_blank" rel="noopener" class="btn btn-outline-dark">Hablar con un asesor por WhatsApp</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
