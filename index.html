@@ -66,6 +66,10 @@ button { font-family: inherit; }
 h1,h2,h3 { font-family: var(--font-head); color: var(--text-dark); }
 .tag-label { display: inline-block; font-family: var(--font-head); font-size: 12.5px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; padding: 7px 16px; border-radius: 30px; }
 .tag-dark { background: rgba(52,226,122,0.14); color: var(--neon-green); border: 1px solid rgba(52,226,122,0.35); }
+.tag-sponsor { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-head); font-size: 11.5px; font-weight: 700; letter-spacing: 0.55px; text-transform: uppercase; padding: 6px 14px 6px 6px; border-radius: 30px; background: linear-gradient(135deg, rgba(200,210,225,0.12), rgba(255,255,255,0.06)); border: 1px solid rgba(200,210,225,0.28); color: rgba(255,255,255,0.92); text-decoration: none; margin-bottom: 14px; transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s var(--ease-out); }
+.tag-sponsor:hover { background: linear-gradient(135deg, rgba(200,210,225,0.22), rgba(255,255,255,0.1)); border-color: rgba(200,210,225,0.5); transform: translateY(-1px); }
+.tag-sponsor-mark { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: linear-gradient(135deg, #E5E7EB 0%, #9CA3AF 100%); color: var(--midnight); flex-shrink: 0; box-shadow: 0 0 0 1px rgba(255,255,255,0.15), inset 0 1px 0 rgba(255,255,255,0.4); }
+@media (max-width: 640px) { .tag-sponsor { font-size: 10.5px; padding: 5px 12px 5px 5px; letter-spacing: 0.4px; } .tag-sponsor-mark { width: 20px; height: 20px; } }
 .tag-light { background: rgba(28,43,74,0.08); color: var(--enterprise); border: 1px solid rgba(28,43,74,0.18); }
 .sec-title { font-size: 30px; font-weight: 700; line-height: 1.3; margin-bottom: 14px; }
 .sec-intro { font-size: 16px; color: var(--text-gray); max-width: 680px; margin-bottom: 40px; }
@@ -447,7 +451,13 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
   <div class="hero-glow g2" aria-hidden="true"></div>
   <div class="container hero-grid">
     <div class="hero-text">
-      <span class="tag-label tag-dark hero-entrance" style="--hd:0ms;">IA conversacional para operaciones de cobranza</span>
+      <a href="#colcob" class="tag-sponsor hero-entrance" style="--hd:0ms;">
+        <span class="tag-sponsor-mark" aria-hidden="true">
+          <svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2h6v2a3 3 0 0 1-6 0V2Z"/><path d="M3 3H1.5A1.5 1.5 0 0 0 3 4.5"/><path d="M9 3h1.5A1.5 1.5 0 0 1 9 4.5"/><path d="M4.5 10h3"/><path d="M6 7v3"/></svg>
+        </span>
+        <span>Silver Sponsor · COLCOB 2026 · Bogotá · 2–3 Sept</span>
+      </a>
+      <span class="tag-label tag-dark hero-entrance" style="--hd:100ms;">IA conversacional para operaciones de cobranza</span>
       <h1 class="hero-entrance" style="--hd:120ms;">Conecta, gestiona, automatiza y analiza toda tu operación de cobranza</h1>
       <p class="sub hero-entrance" style="--hd:280ms;">Integra todos tus canales, construye una vista 360° de cada cliente y automatiza procesos desde una sola plataforma. Con inteligencia artificial transversal, Contactvox convierte cada interacción en conocimiento, acciones concretas y mejores resultados de recuperación.</p>
       <div class="hero-ctas hero-entrance" style="--hd:430ms;">
@@ -927,7 +937,7 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
   </div>
 </section>
 
-<section class="section-pad-sm sorteo">
+<section class="section-pad-sm sorteo" id="colcob">
   <div class="container">
     <p class="lead rv">Agenda tu reunión y participa por un premio tecnológico exclusivo para asistentes de COLCOB.</p>
     <p class="fine rv" style="--d:120ms;">Conoce el valor de Contactvox, identifica el reto de tu empresa y agenda tu reunión. Participar en el sorteo es un beneficio adicional — condiciones y política de privacidad disponibles antes de confirmar tu registro.</p>
