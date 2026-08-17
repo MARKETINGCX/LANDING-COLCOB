@@ -399,9 +399,21 @@ h1,h2,h3 { font-family: var(--font-head); color: var(--text-dark); }
 .obj-note { font-size: 13px; color: var(--text-gray); text-align: center; margin-top: 22px; max-width: 560px; margin-left: auto; margin-right: auto; }
 
 /* ---- SORTEO ---- */
-.sorteo { background: linear-gradient(120deg, var(--midnight), var(--enterprise)); color: var(--text-white); text-align: center; }
-.sorteo p.lead { font-size: 18px; font-weight: 600; max-width: 620px; margin: 0 auto 10px; }
-.sorteo .fine { font-size: 13px; color: var(--text-muted); max-width: 560px; margin: 14px auto 0; }
+.sorteo { background: linear-gradient(120deg, var(--midnight), var(--enterprise)); color: var(--text-white); }
+.sorteo .container { position: relative; }
+.colcob-grid { display: grid; grid-template-columns: minmax(240px, 340px) 1fr; gap: 44px; align-items: center; max-width: 960px; margin: 0 auto; }
+@media (max-width: 780px) { .colcob-grid { grid-template-columns: 1fr; gap: 26px; text-align: center; } }
+.colcob-image { position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 24px 60px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.08); }
+.colcob-image img { display: block; width: 100%; height: auto; }
+.colcob-info h3 { font-size: 26px; color: var(--text-white); margin: 0 0 12px; line-height: 1.25; }
+.colcob-meta { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 0 0 18px; font-size: 13.5px; color: rgba(255,255,255,0.82); }
+@media (max-width: 780px) { .colcob-meta { justify-content: center; } }
+.colcob-meta-item { display: inline-flex; align-items: center; gap: 6px; }
+.colcob-meta-item strong { color: var(--text-white); font-weight: 700; }
+.colcob-info p { font-size: 14.5px; color: rgba(255,255,255,0.75); margin: 0 0 22px; max-width: 480px; line-height: 1.6; }
+@media (max-width: 780px) { .colcob-info p { margin-left: auto; margin-right: auto; } }
+.colcob-tag { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-head); font-size: 11px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; padding: 5px 12px 5px 5px; border-radius: 30px; background: linear-gradient(135deg, rgba(200,210,225,0.16), rgba(255,255,255,0.08)); border: 1px solid rgba(200,210,225,0.35); color: rgba(255,255,255,0.95); margin-bottom: 14px; }
+.colcob-tag-mark { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: linear-gradient(135deg, #E5E7EB, #9CA3AF); color: var(--midnight); }
 
 /* ---- FOOTER ---- */
 footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 30px; }
@@ -455,7 +467,7 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
         <span class="tag-sponsor-mark" aria-hidden="true">
           <svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2h6v2a3 3 0 0 1-6 0V2Z"/><path d="M3 3H1.5A1.5 1.5 0 0 0 3 4.5"/><path d="M9 3h1.5A1.5 1.5 0 0 1 9 4.5"/><path d="M4.5 10h3"/><path d="M6 7v3"/></svg>
         </span>
-        <span>Silver Sponsor · COLCOB 2026 · Bogotá · 2–3 Sept</span>
+        <span>Sponsor Oficial · COLCOB 2026 · Bogotá · 2–3 Sept</span>
       </a>
       <span class="tag-label tag-dark hero-entrance" style="--hd:100ms;">IA conversacional para operaciones de cobranza</span>
       <h1 class="hero-entrance" style="--hd:120ms;">Conecta, gestiona, automatiza y analiza toda tu operación de cobranza</h1>
@@ -937,10 +949,29 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
   </div>
 </section>
 
-<section class="section-pad-sm sorteo" id="colcob">
+<section class="section-pad sorteo" id="colcob">
   <div class="container">
-    <p class="lead rv">Agenda tu reunión y participa por un premio tecnológico exclusivo para asistentes de COLCOB.</p>
-    <p class="fine rv" style="--d:120ms;">Conoce el valor de Contactvox, identifica el reto de tu empresa y agenda tu reunión. Participar en el sorteo es un beneficio adicional — condiciones y política de privacidad disponibles antes de confirmar tu registro.</p>
+    <div class="colcob-grid">
+      <div class="colcob-image rv">
+        <img src="/colcob-2026-sponsor.jpg" alt="Contactvox — Sponsor Oficial del 22° Congreso Internacional de Crédito, Cobranza y BPO, COLCOB 2026" loading="lazy">
+      </div>
+      <div class="colcob-info">
+        <span class="colcob-tag rv">
+          <span class="colcob-tag-mark" aria-hidden="true">
+            <svg viewBox="0 0 12 12" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2h6v2a3 3 0 0 1-6 0V2Z"/><path d="M3 3H1.5A1.5 1.5 0 0 0 3 4.5"/><path d="M9 3h1.5A1.5 1.5 0 0 1 9 4.5"/><path d="M4.5 10h3"/><path d="M6 7v3"/></svg>
+          </span>
+          Sponsor Oficial · COLCOB 2026
+        </span>
+        <h3 class="rv" style="--d:80ms;">Nos vemos en el 22° Congreso Internacional de Crédito, Cobranza y BPO</h3>
+        <div class="colcob-meta rv" style="--d:160ms;">
+          <span class="colcob-meta-item"><strong>2 y 3 de septiembre</strong></span>
+          <span class="colcob-meta-item">·</span>
+          <span class="colcob-meta-item"><strong>Club El Nogal</strong> — Bogotá, Colombia</span>
+        </div>
+        <p class="rv" style="--d:220ms;">Contactvox es Sponsor Oficial del evento donde convergen las organizaciones líderes del sector crediticio, cobranza y BPO en Colombia y LATAM. Agenda una reunión antes del evento y planifiquemos cómo aprovechar tu asistencia.</p>
+        <a href="#diagnostico" class="btn btn-primary rv" style="--d:280ms;">Agenda una reunión antes del evento</a>
+      </div>
+    </div>
   </div>
 </section>
 
