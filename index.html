@@ -225,21 +225,51 @@ h1,h2,h3 { font-family: var(--font-head); color: var(--text-dark); }
 .rf-item.final { background: var(--neon-green); color: var(--midnight); }
 .rf-sep { color: var(--text-gray); font-size: 16px; }
 
-/* --- Conversation Flow (sección "Todo lo que ocurre en una conversación") --- */
-.conv-flow { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; gap: 22px; align-items: stretch; max-width: 1140px; margin: 0 auto; }
-@media (max-width: 900px) { .conv-flow { grid-template-columns: 1fr; gap: 14px; } }
-.conv-step { background: var(--bg-white); border: 1.5px solid rgba(17,24,39,0.08); border-radius: var(--r-card); box-shadow: var(--shadow-card); padding: 22px 20px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; min-height: 100%; }
-.conv-step.center { background: linear-gradient(135deg, var(--midnight), var(--enterprise)); border-color: transparent; color: var(--text-white); box-shadow: 0 18px 40px rgba(15,23,42,0.18); }
-.conv-step-icon { width: 44px; height: 44px; border-radius: 10px; background: rgba(0,212,255,0.12); color: var(--enterprise); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.conv-step.center .conv-step-icon { background: rgba(52,226,122,0.22); color: var(--neon-green); }
-.conv-step-title { font-family: var(--font-head); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-gray); margin: 4px 0 0; }
-.conv-step.center .conv-step-title { color: rgba(255,255,255,0.7); }
-.conv-step-list { font-size: 13.5px; color: var(--text-dark); line-height: 1.55; margin: 0; }
-.conv-step.center .conv-step-list { color: var(--text-white); font-weight: 600; font-size: 15px; }
-.conv-step.final .conv-step-list { color: var(--enterprise); font-weight: 600; }
-.conv-arrow { display: flex; align-items: center; justify-content: center; color: rgba(17,24,39,0.35); flex-shrink: 0; }
-@media (max-width: 900px) { .conv-arrow { transform: rotate(90deg); margin: -4px auto; } }
-.conv-note { max-width: 720px; margin: 32px auto 0; font-size: 15px; color: var(--text-gray); text-align: center; line-height: 1.6; }
+/* --- Qué hace Contactvox (visual 3 paneles + 4 pasos) --- */
+.qh-visual { background: var(--bg-white); border: 1px solid rgba(17,24,39,0.08); border-radius: 20px; display: grid; grid-template-columns: 1fr 1px 1fr 1px 1fr; overflow: hidden; box-shadow: 0 4px 24px rgba(15,23,42,0.07); margin: 0 auto 36px; max-width: 1040px; }
+@media (max-width: 820px) { .qh-visual { grid-template-columns: 1fr; } }
+.qh-panel { padding: 32px 28px; display: flex; flex-direction: column; gap: 14px; }
+@media (max-width: 820px) { .qh-panel { padding: 24px 20px; } }
+.qh-divider { background: rgba(17,24,39,0.07); }
+@media (max-width: 820px) { .qh-divider { height: 1px; width: auto; } }
+.qh-label { font-family: var(--font-head); font-size: 10px; font-weight: 800; letter-spacing: 0.8px; text-transform: uppercase; color: rgba(17,24,39,0.35); margin: 0; }
+/* Panel izquierdo */
+.qh-panel-left { background: #F6F9FF; justify-content: center; }
+.qh-bubble-wrap { display: flex; flex-direction: column; gap: 7px; }
+.qh-bubble { padding: 10px 14px; border-radius: 14px; font-size: 13.5px; line-height: 1.5; }
+.qh-bubble.client { background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.07); align-self: flex-start; color: var(--enterprise); border-radius: 4px 14px 14px 14px; max-width: 92%; }
+.qh-bubble-sender { font-size: 10.5px; font-weight: 700; color: rgba(17,24,39,0.38); margin-bottom: 3px; }
+.qh-channel-dots { display: flex; gap: 5px; flex-wrap: wrap; }
+.qh-ch { font-size: 11px; font-weight: 600; font-family: var(--font-head); color: rgba(17,24,39,0.5); background: rgba(17,24,39,0.06); padding: 2px 8px; border-radius: 20px; }
+/* Panel central */
+.qh-panel-center { align-items: center; justify-content: center; text-align: center; gap: 14px; background: linear-gradient(160deg, #0D1C3D 0%, #070F24 100%); }
+.qh-nucleus-glow { width: 52px; height: 52px; border-radius: 50%; background: rgba(0,212,255,0.12); border: 1.5px solid rgba(0,212,255,0.22); display: flex; align-items: center; justify-content: center; }
+.qh-nucleus { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.qh-nucleus-logo { font-family: var(--font-head); font-size: 14px; font-weight: 900; color: #EFF6FF; line-height: 1.2; }
+.qh-nucleus-sub { font-size: 10px; color: rgba(255,255,255,0.4); font-weight: 600; letter-spacing: 0.4px; }
+.qh-caps { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; }
+.qh-cap { font-size: 10.5px; font-weight: 700; font-family: var(--font-head); padding: 3px 9px; border-radius: 20px; letter-spacing: 0.2px; }
+.qh-cap.c1 { background: rgba(0,212,255,0.15); color: #22D3EE; }
+.qh-cap.c2 { background: rgba(52,226,122,0.15); color: #34D399; }
+.qh-cap.c3 { background: rgba(139,92,246,0.18); color: #A78BFA; }
+.qh-cap.c4 { background: rgba(249,115,22,0.16); color: #FB923C; }
+.qh-cap.c5 { background: rgba(236,72,153,0.14); color: #F472B6; }
+/* Panel derecho */
+.qh-panel-right { background: #F0FBF6; justify-content: center; }
+.qh-result-head { display: flex; align-items: center; gap: 9px; }
+.qh-result-badge { width: 22px; height: 22px; border-radius: 50%; background: rgba(16,185,129,0.18); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.qh-result-title { font-family: var(--font-head); font-size: 13.5px; font-weight: 800; color: #065F46; }
+.qh-result-list { display: flex; flex-direction: column; gap: 5px; }
+.qh-result-item { font-size: 13px; color: var(--text-gray); display: flex; align-items: center; gap: 8px; line-height: 1.4; }
+.qh-result-item::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #10B981; flex-shrink: 0; }
+/* 4 pasos inferiores */
+.qh-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(17,24,39,0.08); border: 1px solid rgba(17,24,39,0.08); border-radius: 14px; overflow: hidden; max-width: 1040px; margin: 0 auto; }
+@media (max-width: 680px) { .qh-steps { grid-template-columns: repeat(2, 1fr); } }
+.qh-step { background: var(--bg-white); padding: 22px 20px; display: flex; flex-direction: column; gap: 6px; transition: background 0.2s; }
+.qh-step:hover { background: #F6F9FF; }
+.qh-step-num { font-family: var(--font-head); font-size: 10px; font-weight: 800; letter-spacing: 0.8px; color: var(--aqua); margin: 0; }
+.qh-step-title { font-family: var(--font-head); font-size: 14px; font-weight: 800; color: var(--enterprise); line-height: 1.3; margin: 0; }
+.qh-step-body { font-size: 12.5px; color: var(--text-gray); line-height: 1.55; margin: 0; }
 
 /* --- IA principal (4 tarjetas grandes) --- */
 /* IA carousel */
@@ -701,53 +731,88 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
   <div class="container">
     <div class="center rv" style="margin-bottom:44px;">
       <span class="tag-label tag-light">Qué hace Contactvox</span>
-      <h2 class="sec-title" style="margin-top:14px;">Todo lo que ocurre en una conversación, conectado.</h2>
-      <p class="sec-intro center">Una conversación deja de ser solamente una llamada o un mensaje. Contactvox puede entenderla, gestionarla, convertirla en datos y activar acciones a partir de ella.</p>
+      <h2 class="sec-title" style="margin-top:14px;">De una conversación a una acción.</h2>
+      <p class="sec-intro center">Contactvox conecta cada interacción con tus clientes, la convierte en información y permite que personas, IA y automatizaciones actúen sobre ella.</p>
     </div>
 
-    <div class="conv-flow rv">
-      <div class="conv-step">
-        <div class="conv-step-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4a4 4 0 0 0-4 4v3a4 4 0 0 0 8 0V8a4 4 0 0 0-4-4Z"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/><path d="M9 21h6"/></svg>
+    <!-- Bloque visual 3 paneles -->
+    <div class="qh-visual rv">
+      <div class="qh-panel qh-panel-left">
+        <p class="qh-label">La conversación entra</p>
+        <div class="qh-bubble-wrap">
+          <div class="qh-bubble client">
+            <p class="qh-bubble-sender">Cliente</p>
+            "Necesito cambiar mi cita del jueves, ¿me pueden ayudar?"
+          </div>
         </div>
-        <p class="conv-step-title">Canales</p>
-        <p class="conv-step-list">Voz · WhatsApp · Chat · Email · Redes sociales</p>
-      </div>
-
-      <div class="conv-arrow" aria-hidden="true">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
-      </div>
-
-      <div class="conv-step center">
-        <div class="conv-step-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+        <div class="qh-channel-dots">
+          <span class="qh-ch">WhatsApp</span>
+          <span class="qh-ch">Voz</span>
+          <span class="qh-ch">Chat</span>
+          <span class="qh-ch">Email</span>
+          <span class="qh-ch">Redes</span>
         </div>
-        <p class="conv-step-title">Plataforma</p>
-        <p class="conv-step-list">Contactvox CX&amp;CD</p>
       </div>
 
-      <div class="conv-arrow" aria-hidden="true">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
-      </div>
+      <div class="qh-divider" aria-hidden="true"></div>
 
-      <div class="conv-step">
-        <div class="conv-step-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a5 5 0 0 0-5 5v3a5 5 0 0 0 3 4.58V19a2 2 0 0 0 4 0v-3.42A5 5 0 0 0 17 11V8a5 5 0 0 0-5-5Z"/><path d="M9 9h6"/><path d="M9 12h6"/></svg>
+      <div class="qh-panel qh-panel-center">
+        <div class="qh-nucleus-glow" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="var(--aqua)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
         </div>
-        <p class="conv-step-title">Procesamiento</p>
-        <p class="conv-step-list">IA · Automatización · Datos conversacionales · Gestión · Experiencia</p>
-      </div>
-
-      <div class="conv-arrow" aria-hidden="true">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
-      </div>
-
-      <div class="conv-step final">
-        <div class="conv-step-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 15 5-5 4 4 5-9"/><path d="M15 5h5v5"/></svg>
+        <div class="qh-nucleus">
+          <p class="qh-nucleus-logo">Contactvox CX&amp;CD</p>
+          <p class="qh-nucleus-sub">Platform</p>
         </div>
-        <p class="conv-step-title">Resultado</p>
-        <p class="conv-step-list">Mejores experiencias · Clientes satisfechos · Operaciones eficientes</p>
+        <div class="qh-caps">
+          <span class="qh-cap c1">IA</span>
+          <span class="qh-cap c2">CRM</span>
+          <span class="qh-cap c3">Automatización</span>
+          <span class="qh-cap c4">Datos</span>
+          <span class="qh-cap c5">Integraciones</span>
+        </div>
+      </div>
+
+      <div class="qh-divider" aria-hidden="true"></div>
+
+      <div class="qh-panel qh-panel-right">
+        <p class="qh-label">La acción se ejecuta</p>
+        <div class="qh-result-head">
+          <div class="qh-result-badge">
+            <svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 4"/></svg>
+          </div>
+          <p class="qh-result-title">Gestión completada</p>
+        </div>
+        <div class="qh-result-list">
+          <p class="qh-result-item">Cita reagendada</p>
+          <p class="qh-result-item">Confirmación enviada</p>
+          <p class="qh-result-item">Historial actualizado</p>
+          <p class="qh-result-item">Seguimiento registrado</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4 pasos -->
+    <div class="qh-steps rv">
+      <div class="qh-step">
+        <p class="qh-step-num">01 · CONECTA</p>
+        <p class="qh-step-title">Todos tus canales en un solo flujo</p>
+        <p class="qh-step-body">Voz, WhatsApp, chat, email y redes sociales llegan a una misma plataforma.</p>
+      </div>
+      <div class="qh-step">
+        <p class="qh-step-num">02 · ENTIENDE</p>
+        <p class="qh-step-title">La conversación adquiere contexto</p>
+        <p class="qh-step-body">Identifica al cliente, interpreta la necesidad y utiliza historial, datos e inteligencia artificial.</p>
+      </div>
+      <div class="qh-step">
+        <p class="qh-step-num">03 · ACTÚA</p>
+        <p class="qh-step-title">La operación se activa</p>
+        <p class="qh-step-body">Consulta información, registra gestiones, activa automatizaciones o escala a un agente humano.</p>
+      </div>
+      <div class="qh-step">
+        <p class="qh-step-num">04 · RESULTADO</p>
+        <p class="qh-step-title">Cada conversación genera valor</p>
+        <p class="qh-step-body">Atención resuelta, datos útiles, seguimiento y una mejor experiencia para el cliente.</p>
       </div>
     </div>
   </div>
