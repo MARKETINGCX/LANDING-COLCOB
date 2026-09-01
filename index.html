@@ -1377,19 +1377,23 @@ import { animate } from "https://cdn.jsdelivr.net/npm/motion@13/+esm";
     var originalText = submitBtn.textContent;
     submitBtn.textContent = 'Enviando...';
 
+    var correoVal = diagForm.correo.value.trim();
+    var nombreVal = diagForm.nombre.value.trim();
     var data = {
-      nombre: diagForm.nombre.value.trim(),
+      access_key: 'b80d54a7-fec0-4b28-b38f-28e39def85e4',
+      subject: 'Nuevo contacto COLCOB 2026 — ' + nombreVal,
+      from_name: nombreVal,
+      email: correoVal,
+      nombre: nombreVal,
       empresa: diagForm.empresa.value.trim(),
       whatsapp: diagForm.whatsapp.value.trim(),
-      correo: diagForm.correo.value.trim(),
+      correo: correoVal,
       interes: diagForm.interes.value,
       source: 'COLCOB 2026',
       utm_source: document.getElementById('utm_source').value,
       utm_medium: document.getElementById('utm_medium').value,
       utm_campaign: document.getElementById('utm_campaign').value
     };
-
-    data.access_key = 'b80d54a7-fec0-4b28-b38f-28e39def85e4';
 
     fetch('https://api.web3forms.com/submit', {
       method: 'POST',
