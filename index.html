@@ -1036,6 +1036,7 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
             </select>
           </div>
 
+          <input type="hidden" name="access_key" value="b80d54a7-fec0-4b28-b38f-28e39def85e4">
           <input type="hidden" name="source" value="COLCOB 2026">
           <input type="hidden" name="utm_source" id="utm_source" value="">
           <input type="hidden" name="utm_medium" id="utm_medium" value="">
@@ -1488,39 +1489,35 @@ import { animate } from "https://cdn.jsdelivr.net/npm/motion@13/+esm";
       utm_campaign: document.getElementById('utm_campaign').value
     };
 
-    /* Registrar evento con GetResponse tracking (window.GrTracking expuesto por el snippet) */
-    try {
-      if (typeof window.GrTracking === 'function') {
-        window.GrTracking('addContact', {
-          email: data.correo,
-          name: data.nombre,
-          customFields: {
-            empresa: data.empresa,
-            whatsapp: data.whatsapp,
-            interes: data.interes,
-            source: data.source
-          }
-        });
-      }
-    } catch (_) {}
+    data.access_key = 'b80d54a7-fec0-4b28-b38f-28e39def85e4';
 
-    /* Éxito: mostrar thanks-box.
-       NOTA: La captura real de leads requiere confirmar el snippet embed
-       específico del formulario en el panel de GetResponse. Por ahora
-       el tracking del contact queda registrado vía GrTracking (si está
-       disponible) y el usuario ve el mensaje de éxito. */
-    setTimeout(function () {
-      diagForm.style.display = 'none';
-      var thanks = document.getElementById('thanksBox');
-      thanks.classList.add('visible');
-      thanks.setAttribute('tabindex', '-1');
-      thanks.focus({ preventScroll: false });
-      if (!reduced) {
-        animate(thanks, { opacity: [0, 1], scale: [0.94, 1] }, { type: 'spring', stiffness: 260, damping: 22 });
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(data)
+    })
+    .then(function (res) { return res.json().then(function (json) { return { ok: res.ok, json: json }; }); })
+    .then(function (result) {
+      if (result.ok && result.json.success) {
+        diagForm.style.display = 'none';
+        var thanks = document.getElementById('thanksBox');
+        thanks.classList.add('visible');
+        thanks.setAttribute('tabindex', '-1');
+        thanks.focus({ preventScroll: false });
+        if (!reduced) {
+          animate(thanks, { opacity: [0, 1], scale: [0.94, 1] }, { type: 'spring', stiffness: 260, damping: 22 });
+        }
+      } else {
+        formError.textContent = result.json.message || 'Hubo un error al enviar. Intenta nuevamente.';
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
       }
+    })
+    .catch(function () {
+      formError.textContent = 'No se pudo conectar. Verifica tu conexión e intenta nuevamente.';
       submitBtn.disabled = false;
       submitBtn.textContent = originalText;
-    }, 500);
+    });
   });
 
   /* ---- Chequeo inicial (elementos ya visibles sin scroll) ---- */
