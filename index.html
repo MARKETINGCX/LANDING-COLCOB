@@ -559,10 +559,7 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
         <div class="art-slide" data-i="2" data-title="Automatización sin código" data-desc="Diseña flujos de recordatorio y seguimiento que se ejecutan solos.">
           <div class="art-shot">Captura pendiente — Bot Studio / automatización</div>
         </div>
-        <div class="art-slide" data-i="3" data-title="Analítica en tiempo real" data-desc="Detecta objeciones, promesas de pago y oportunidades en cada conversación.">
-          <div class="art-shot">Captura pendiente — Analítica conversacional</div>
-        </div>
-        <div class="art-slide" data-i="4" data-title="Auditoría con IA" data-desc="Supervisa el 100% de las interacciones y evalúa el cumplimiento del guion.">
+        <div class="art-slide" data-i="3" data-title="Auditoría con IA" data-desc="Supervisa el 100% de las interacciones y evalúa el cumplimiento del guion.">
           <div class="art-shot art-shot-video">
             <video id="artVideo" src="auditoria-ia.mp4" muted loop playsinline preload="metadata" style="width:100%;height:100%;object-fit:cover;display:block;"></video>
           </div>
@@ -576,8 +573,7 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
         <button class="art-dot active" data-i="0" role="tab" aria-selected="true" aria-label="Pantalla 1: Bandeja omnicanal"></button>
         <button class="art-dot" data-i="1" role="tab" aria-selected="false" aria-label="Pantalla 2: Vista 360 y CRM"></button>
         <button class="art-dot" data-i="2" role="tab" aria-selected="false" aria-label="Pantalla 3: Bot Studio"></button>
-        <button class="art-dot" data-i="3" role="tab" aria-selected="false" aria-label="Pantalla 4: Analítica conversacional"></button>
-        <button class="art-dot" data-i="4" role="tab" aria-selected="false" aria-label="Pantalla 5: Auditoría IA"></button>
+        <button class="art-dot" data-i="3" role="tab" aria-selected="false" aria-label="Pantalla 4: Auditoría IA"></button>
       </div>
     </div>
   </div>
@@ -1265,7 +1261,7 @@ import { animate } from "https://cdn.jsdelivr.net/npm/motion@13/+esm";
     var artCaptionTitle = document.getElementById('artCaptionTitle');
     var artCaptionDesc = document.getElementById('artCaptionDesc');
     var artCaptionIcon = document.getElementById('artCaptionIcon');
-    var SLIDE_ICONS = ['◫', '◎', '⚡', '◈', '▶'];
+    var SLIDE_ICONS = ['◫', '◎', '⚡', '▶'];
     function artGo(i) {
       artIdx = (i + artSlides.length) % artSlides.length;
       artSlides.forEach(function (s, si) { s.classList.toggle('active', si === artIdx); });
