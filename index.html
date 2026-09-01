@@ -579,7 +579,9 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
           </div>
         </div>
         <div class="art-slide" data-i="4">
-          <div class="art-shot">Captura pendiente — Auditoría IA</div>
+          <div class="art-shot art-shot-video">
+            <video id="artVideo" src="auditoria-ia.mp4" muted loop playsinline preload="metadata" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:0 0 var(--r-card) var(--r-card);"></video>
+          </div>
           <div class="art-caption">
             <strong>Auditoría con IA</strong>
             <span>Supervisa el 100% de las interacciones y evalúa el cumplimiento del guion.</span>
@@ -1274,7 +1276,8 @@ import { animate } from "https://cdn.jsdelivr.net/npm/motion@13/+esm";
     var artDots = Array.prototype.slice.call(document.getElementById('artDots').querySelectorAll('.art-dot'));
     var artIdx = 0;
     var artTimer = null;
-    var ART_AUTOPLAY_MS = 3000;
+    var ART_AUTOPLAY_MS = 10000;
+    var artVideo = document.getElementById('artVideo');
     function artGo(i) {
       artIdx = (i + artSlides.length) % artSlides.length;
       artSlides.forEach(function (s, si) { s.classList.toggle('active', si === artIdx); });
@@ -1282,6 +1285,14 @@ import { animate } from "https://cdn.jsdelivr.net/npm/motion@13/+esm";
         d.classList.toggle('active', di === artIdx);
         d.setAttribute('aria-selected', di === artIdx ? 'true' : 'false');
       });
+      if (artVideo) {
+        if (artSlides[artIdx] && artSlides[artIdx].contains(artVideo)) {
+          artVideo.play().catch(function(){});
+        } else {
+          artVideo.pause();
+          artVideo.currentTime = 0;
+        }
+      }
     }
     function artStop() { if (artTimer) { clearInterval(artTimer); artTimer = null; } }
     function artStart() {
