@@ -703,66 +703,6 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
   </div>
 </section>
 
-<section class="section-pad ia-section" id="speech-analytics">
-  <div class="container">
-    <div class="center rv" style="margin-bottom:36px;">
-      <span class="tag-label" style="background:rgba(255,255,255,0.1);color:var(--text-white);border:1px solid rgba(255,255,255,0.2);">Auditor IA<span class="tag-sub">Solo llamadas</span></span>
-      <h2 class="sec-title" style="margin-top:14px;">Auditoría inteligente de conversaciones</h2>
-      <p class="sec-intro center" style="color:var(--text-muted);">Escucha y entiende cada conversación, no solamente una muestra. Puede auditar hasta el 100% de las conversaciones procesadas por Contactvox: transcribe, entiende, evalúa, extrae los datos clave y activa las acciones definidas.</p>
-    </div>
-
-    <div class="ia-demo rv" id="iaDemo">
-      <div class="chat-panel">
-        <div class="panel-title">
-          <span>Transcripción de la llamada</span>
-          <span class="meta">Cliente en mora · Cartera vencida</span>
-        </div>
-        <div class="msg agent" data-step="0"><span class="hl" data-hl="lit-script" data-step="1">Buenas tardes, señor Ramírez. Le saluda Laura de Servicios Financieros.</span> Le llamo por su obligación pendiente.</div>
-        <div class="msg client" data-step="1">Sí, con él. Ya sé por qué me llaman…</div>
-        <div class="msg agent" data-step="2"><span class="hl" data-hl="lit-empathy" data-step="3">Entiendo que puede ser un momento complicado.</span> ¿Podemos revisar juntos una alternativa de pago que se ajuste a su situación?</div>
-        <div class="msg client" data-step="3">Mire, <span class="hl" data-hl="lit-obj" data-step="4">este mes tuve una emergencia médica</span>, no pude cubrir la cuota completa.</div>
-        <div class="msg agent" data-step="4">Comprendo. ¿Qué monto podría cubrir en este momento?</div>
-        <div class="msg client" data-step="5">Podría pagar <span class="hl" data-hl="lit-promise" data-step="6">la mitad de la cuota</span> <span class="hl" data-hl="lit-date" data-step="7">el 15 de agosto</span>.</div>
-        <div class="msg agent" data-step="6">Perfecto. Dejo registrado el compromiso. ¿Le confirmo por WhatsApp?</div>
-        <div class="msg client" data-step="7">Sí, por favor.</div>
-        <div class="msg agent" data-step="8"><span class="hl" data-hl="lit-close" data-step="9">Muchas gracias por su tiempo, señor Ramírez. Que tenga muy buena tarde.</span></div>
-      </div>
-      <div class="insight-panel">
-        <div class="panel-title"><span class="dot" aria-hidden="true"></span>Análisis automático</div>
-
-        <div class="insight-group g-agent">
-          <div class="insight-group-title">Análisis del agente</div>
-          <div class="insight" data-step="1"><span class="k k-agent-script">Guion</span><span class="v">Saludo e identificación cumplen el estándar</span></div>
-          <div class="insight" data-step="3"><span class="k k-agent-tone">Tono</span><span class="v">Empatía activa ante la situación del cliente</span></div>
-          <div class="insight" data-step="9"><span class="k k-agent-close">Cierre</span><span class="v">Despedida cortés y compromiso confirmado</span></div>
-        </div>
-
-        <div class="insight-group g-client">
-          <div class="insight-group-title">Análisis del cliente</div>
-          <div class="insight" data-step="4"><span class="k k-obj">Objeción</span><span class="v">Emergencia médica — dificultad temporal</span></div>
-          <div class="insight" data-step="6"><span class="k k-pro">Promesa</span><span class="v">Pago parcial del 50% de la cuota</span></div>
-          <div class="insight" data-step="7"><span class="k k-fec">Fecha comprometida</span><span class="v">15 de agosto</span></div>
-          <div class="insight" data-step="7"><span class="k k-int">Intención</span><span class="v">Cliente colaborativo, dispuesto a pagar</span></div>
-        </div>
-
-        <div class="insight-action" data-step="10"><strong>Próxima acción — automatizada</strong>Recordatorio programado para el 13 de agosto y compromiso registrado en la vista 360° del cliente.</div>
-        <button class="ia-replay" id="iaReplay" type="button">↻ Volver a reproducir el análisis</button>
-      </div>
-    </div>
-
-    <div class="result-flow rv" style="margin-top:38px;">
-      <span class="rf-item">Transcribe</span>
-      <span class="rf-sep" aria-hidden="true">→</span>
-      <span class="rf-item">Entiende</span>
-      <span class="rf-sep" aria-hidden="true">→</span>
-      <span class="rf-item">Evalúa</span>
-      <span class="rf-sep" aria-hidden="true">→</span>
-      <span class="rf-item">Extrae datos</span>
-      <span class="rf-sep" aria-hidden="true">→</span>
-      <span class="rf-item final">Activa acciones</span>
-    </div>
-  </div>
-</section>
 
 <section class="section-pad" id="capas">
   <div class="container">
@@ -1140,7 +1080,6 @@ import { animate } from "https://cdn.jsdelivr.net/npm/motion@13/+esm";
   var latamMap = document.getElementById('latamMap');
   var latamLit = false;
   var activeLayerIdx = -1;
-  var iaSeen = false;
 
   function animateCounter(el) {
     if (el.dataset.animated === '1') return;
@@ -1232,11 +1171,7 @@ import { animate } from "https://cdn.jsdelivr.net/npm/motion@13/+esm";
     sections.forEach(function (s) { if (s.offsetTop <= mid) currentId = '#' + s.id; });
     navA.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === currentId); });
     updateActiveLayer(vh);
-    var iaDemoEl = document.getElementById('iaDemo');
-    if (!iaSeen && iaDemoEl) {
-      var ir = iaDemoEl.getBoundingClientRect();
-      if (ir.top < vh * 0.72 && ir.bottom > 0) { iaSeen = true; playIa(); }
-    }
+
     /* Al ver la parte superior del bloque cifras, animar TODOS a la vez (no en olas)
        — así los de la segunda fila no quedan "sin activar" en desktop */
     if (counters.length) {
@@ -1331,41 +1266,6 @@ import { animate } from "https://cdn.jsdelivr.net/npm/motion@13/+esm";
     });
   });
 
-  /* ---- Demo IA: análisis progresivo ---- */
-  var iaDemo = document.getElementById('iaDemo');
-  var iaTimers = [];
-  function clearIa() { iaTimers.forEach(clearTimeout); iaTimers = []; }
-  function resetIa() {
-    clearIa();
-    iaDemo.querySelectorAll('.msg, .insight, .insight-action').forEach(function (el) { el.classList.remove('show'); });
-    iaDemo.querySelectorAll('.hl').forEach(function (el) {
-      var hl = el.getAttribute('data-hl');
-      if (hl) el.classList.remove(hl);
-    });
-  }
-  function playIa() {
-    resetIa();
-    if (reduced) {
-      iaDemo.querySelectorAll('.msg, .insight, .insight-action').forEach(function (el) { el.classList.add('show'); });
-      iaDemo.querySelectorAll('.hl').forEach(function (el) { el.classList.add(el.getAttribute('data-hl')); });
-      return;
-    }
-    var stepDelay = 700;
-    var maxStep = 0;
-    iaDemo.querySelectorAll('[data-step]').forEach(function (el) {
-      var s = parseInt(el.getAttribute('data-step'), 10);
-      if (!isNaN(s) && s > maxStep) maxStep = s;
-    });
-    for (var step = 0; step <= maxStep; step++) {
-      (function (s) {
-        iaTimers.push(setTimeout(function () {
-          iaDemo.querySelectorAll('.msg[data-step="' + s + '"], .insight[data-step="' + s + '"], .insight-action[data-step="' + s + '"]').forEach(function (el) { el.classList.add('show'); });
-          iaDemo.querySelectorAll('.hl[data-step="' + s + '"]').forEach(function (el) { el.classList.add(el.getAttribute('data-hl')); });
-        }, s * stepDelay));
-      })(step);
-    }
-  }
-  document.getElementById('iaReplay').addEventListener('click', playIa);
 
   /* ---- Carrusel de arte (pantallas del sistema) ---- */
   var artFrame = document.getElementById('artFrame');
