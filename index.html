@@ -253,17 +253,17 @@ h1,h2,h3 { font-family: var(--font-head); color: var(--text-dark); }
 .ia-cards:hover .ia-track, .ia-cards:focus-within .ia-track { animation-play-state: paused; }
 @keyframes ia-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) { .ia-track { animation-play-state: paused; } }
-.ia-card { flex: 0 0 272px; background: var(--bg-white); border: 1.5px solid rgba(17,24,39,0.08); border-radius: var(--r-card); padding: 20px 18px 22px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 10px; transition: border-color 0.25s ease, transform 0.25s var(--ease-out), box-shadow 0.25s ease; cursor: default; }
-.ia-card:hover { border-color: var(--aqua); transform: translateY(-5px); box-shadow: 0 20px 44px rgba(0,212,255,0.13); }
+.ia-card { flex: 0 0 272px; background: linear-gradient(150deg, #0D1C3D 0%, #070F24 100%); border: 1.5px solid rgba(0,212,255,0.16); border-radius: var(--r-card); padding: 20px 18px 22px; box-shadow: 0 6px 24px rgba(0,0,0,0.28); display: flex; flex-direction: column; gap: 10px; transition: border-color 0.25s ease, transform 0.25s var(--ease-out), box-shadow 0.25s ease; cursor: default; }
+.ia-card:hover { border-color: var(--aqua); transform: translateY(-5px); box-shadow: 0 20px 44px rgba(0,212,255,0.18), 0 6px 24px rgba(0,0,0,0.35); }
 .ia-card-img { display: flex; align-items: center; justify-content: center; height: 175px; margin: 0 -6px 4px; overflow: hidden; }
-.ia-card-img img { height: 170px; width: auto; max-width: 100%; object-fit: contain; filter: drop-shadow(0 8px 20px rgba(0,0,0,0.09)); transition: transform 0.35s var(--ease-out); }
+.ia-card-img img { height: 170px; width: auto; max-width: 100%; object-fit: contain; filter: drop-shadow(0 8px 20px rgba(0,0,0,0.18)); transition: transform 0.35s var(--ease-out); }
 .ia-card:hover .ia-card-img img { transform: scale(1.06) translateY(-5px); }
-.ia-card h3 { font-size: 17px; color: var(--enterprise); margin: 0; line-height: 1.3; }
+.ia-card h3 { font-size: 17px; color: #EFF6FF; margin: 0; line-height: 1.3; }
 .ia-card .ia-verb { font-family: var(--font-head); font-size: 12px; font-weight: 700; color: var(--aqua); letter-spacing: 0.3px; margin: 0; text-transform: uppercase; }
-.ia-card.c-voice .ia-verb { color: #8B5CF6; }
-.ia-card.c-audit .ia-verb { color: #10B981; }
-.ia-card.c-bot .ia-verb { color: #EA580C; }
-.ia-card p.ia-body { font-size: 13.5px; color: var(--text-gray); margin: 0; line-height: 1.6; }
+.ia-card.c-voice .ia-verb { color: #A78BFA; }
+.ia-card.c-audit .ia-verb { color: #34D399; }
+.ia-card.c-bot .ia-verb { color: #FB923C; }
+.ia-card p.ia-body { font-size: 13.5px; color: rgba(255,255,255,0.58); margin: 0; line-height: 1.6; }
 .ia-note { max-width: 780px; margin: 28px auto 0; text-align: center; font-size: 13px; color: var(--text-gray); font-style: italic; }
 
 /* --- Funcionalidades (accordion cards) --- */
