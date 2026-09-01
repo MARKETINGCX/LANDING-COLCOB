@@ -51,7 +51,7 @@
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 body { font-family: var(--font-body); font-size: 17px; color: var(--text-dark); background: var(--bg-white); overflow-x: hidden; line-height: 1.65; }
 a { text-decoration: none; color: inherit; }
 img { max-width: 100%; }
@@ -178,7 +178,13 @@ h1,h2,h3 { font-family: var(--font-head); color: var(--text-dark); }
   .scroll-hint { margin-left: auto; margin-right: auto; }
   .hero-art { width: 100%; max-width: 480px; margin: 8px auto 0; }
 }
-@media (max-width: 640px) { .hero h1 { font-size: 30px; } .hero { padding-top: 168px; } .art-caption { max-width: none; } }
+@media (max-width: 640px) {
+  .hero h1 { font-size: 30px; }
+  .hero { padding-top: 168px; }
+  .art-caption { max-width: none; }
+  .hero-art { margin-left: -24px; margin-right: -24px; width: calc(100% + 48px); max-width: none; }
+  .art-frame { border-radius: 0; border-left: none; border-right: none; }
+}
 
 /* ---- ARQUITECTURA / FLOW ---- */
 .flow-wrap { max-width: 900px; margin: 0 auto; position: relative; }
@@ -256,10 +262,16 @@ h1,h2,h3 { font-family: var(--font-head); color: var(--text-dark); }
 .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; max-width: 900px; margin: 0 auto; }
 @media (max-width: 780px) { .feature-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 460px) { .feature-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; } }
-.feature-chip { background: var(--bg-white); border: 1.5px solid rgba(17,24,39,0.08); border-radius: 14px; padding: 18px 16px; display: flex; align-items: center; gap: 14px; box-shadow: 0 3px 10px rgba(15,23,42,0.04); transition: border-color 0.25s ease, transform 0.25s var(--ease-out), box-shadow 0.25s ease; }
-.feature-chip:hover { border-color: var(--aqua); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(15,23,42,0.08); }
+.feature-chip { background: var(--bg-white); border: 1.5px solid rgba(17,24,39,0.08); border-radius: 14px; padding: 18px 16px; display: flex; flex-direction: column; gap: 0; cursor: pointer; user-select: none; box-shadow: 0 3px 10px rgba(15,23,42,0.04); transition: border-color 0.25s ease, box-shadow 0.25s ease; }
+.feature-chip:hover { border-color: rgba(0,212,255,0.35); box-shadow: 0 8px 20px rgba(15,23,42,0.08); }
+.feature-chip.open { border-color: rgba(0,212,255,0.4); box-shadow: 0 8px 24px rgba(0,212,255,0.08); }
+.feature-chip-header { display: flex; align-items: center; gap: 14px; width: 100%; }
 .feature-chip-icon { width: 40px; height: 40px; border-radius: 10px; background: rgba(0,212,255,0.12); color: #0284a8; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.feature-chip-label { font-family: var(--font-head); font-size: 14px; font-weight: 700; color: var(--enterprise); line-height: 1.3; }
+.feature-chip-label { font-family: var(--font-head); font-size: 14px; font-weight: 700; color: var(--enterprise); line-height: 1.3; flex: 1; }
+.feature-chip-arrow { flex-shrink: 0; color: rgba(17,24,39,0.3); transition: transform 0.3s ease, color 0.25s ease; }
+.feature-chip.open .feature-chip-arrow { transform: rotate(180deg); color: var(--aqua); }
+.feature-chip-desc { font-size: 13.5px; color: var(--text-gray); line-height: 1.55; max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding-top 0.3s ease, margin-top 0.3s ease; padding-top: 0; margin-top: 0; }
+.feature-chip.open .feature-chip-desc { max-height: 150px; padding-top: 11px; margin-top: 11px; border-top: 1px solid rgba(17,24,39,0.07); }
 
 /* ---- CAPACIDADES (tarjetas expandibles) ---- */
 .grid { display: grid; gap: 20px; }
@@ -320,7 +332,12 @@ h1,h2,h3 { font-family: var(--font-head); color: var(--text-dark); }
 .latam-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 .latam-brand { position: absolute; right: 2%; bottom: 11%; z-index: 4; padding: 12px 18px; background: #D2D5DA; border-radius: 8px; box-shadow: 0 2px 12px rgba(15,23,42,0.1); pointer-events: none; }
 .latam-brand img { display: block; height: 24px; width: auto; }
-@media (max-width: 640px) { .latam-brand { padding: 8px 12px; } .latam-brand img { height: 16px; } }
+@media (max-width: 640px) {
+  .latam-brand { padding: 8px 12px; }
+  .latam-brand img { height: 16px; }
+  .latam-wrap { padding: 0; margin-left: -24px; margin-right: -24px; width: calc(100% + 48px); border-radius: 0; }
+  .latam-video-frame { border-radius: 0; }
+}
 .latam-pin { position: absolute; transform: translate(-50%, -100%); pointer-events: none; opacity: 0; transition: opacity 0.55s var(--ease-out), transform 0.55s var(--ease-out); transform-origin: 50% 100%; z-index: 3; }
 .latam-pin.lit { opacity: 1; }
 .latam-pin-dot { width: 18px; height: 18px; border-radius: 50%; background: var(--neon-green); box-shadow: 0 0 0 5px rgba(52,226,122,0.28), 0 0 26px rgba(52,226,122,0.85); margin: 0 auto; position: relative; }
@@ -746,44 +763,80 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
   <div class="container">
     <div class="center rv" style="margin-bottom:36px;">
       <span class="tag-label tag-light">Funcionalidades</span>
-      <h2 class="sec-title" style="margin-top:14px;">Y además, todo lo que tu operación necesita</h2>
+      <h2 class="sec-title" style="margin-top:14px;">Todo lo que incluye Contactvox CX</h2>
     </div>
-    <div class="feature-grid">
-      <div class="feature-chip rv" style="--d:0ms;">
-        <div class="feature-chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a13 13 0 0 1 0 18"/><path d="M12 3a13 13 0 0 0 0 18"/></svg></div>
-        <div class="feature-chip-label">Omnicanalidad</div>
+    <div class="feature-grid" id="featureGrid">
+      <div class="feature-chip rv" style="--d:0ms;" role="button" tabindex="0" aria-expanded="false">
+        <div class="feature-chip-header">
+          <div class="feature-chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a13 13 0 0 1 0 18"/><path d="M12 3a13 13 0 0 0 0 18"/></svg></div>
+          <div class="feature-chip-label">Omnicanalidad</div>
+          <svg class="feature-chip-arrow" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="feature-chip-desc">Gestiona todas las conversaciones desde una sola pantalla: llamadas, WhatsApp, chat web, email y redes sociales unificados.</div>
       </div>
-      <div class="feature-chip rv" style="--d:60ms;">
-        <div class="feature-chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2 1a11 11 0 0 0 5 5l1-2 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg></div>
-        <div class="feature-chip-label">Contact Center</div>
+      <div class="feature-chip rv" style="--d:60ms;" role="button" tabindex="0" aria-expanded="false">
+        <div class="feature-chip-header">
+          <div class="feature-chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2 1a11 11 0 0 0 5 5l1-2 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg></div>
+          <div class="feature-chip-label">Contact Center</div>
+          <svg class="feature-chip-arrow" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="feature-chip-desc">Consola para agentes con historial del cliente, transferencias, monitoreo en tiempo real y métricas de desempeño por agente y cola.</div>
       </div>
-      <div class="feature-chip rv" style="--d:120ms;">
-        <div class="feature-chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6l6-4 6 4v6"/><path d="M9 18v-4"/><path d="M15 8V4l6 4v10"/></svg></div>
-        <div class="feature-chip-label">Marcadores predictivos</div>
+      <div class="feature-chip rv" style="--d:120ms;" role="button" tabindex="0" aria-expanded="false">
+        <div class="feature-chip-header">
+          <div class="feature-chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6l6-4 6 4v6"/><path d="M9 18v-4"/><path d="M15 8V4l6 4v10"/></svg></div>
+          <div class="feature-chip-label">Marcadores predictivos</div>
+          <svg class="feature-chip-arrow" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="feature-chip-desc">Marca automáticamente listas de contactos y conecta al agente solo cuando hay una persona real al otro lado, maximizando el tiempo productivo.</div>
       </div>
-      <div class="feature-chip rv" style="--d:180ms;">
-        <div class="feature-chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-3.2-6.4L20 3l-.8 5.2"/><path d="M20 8h-4"/></svg></div>
-        <div class="feature-chip-label">WhatsApp Business API</div>
+      <div class="feature-chip rv" style="--d:180ms;" role="button" tabindex="0" aria-expanded="false">
+        <div class="feature-chip-header">
+          <div class="feature-chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-3.2-6.4L20 3l-.8 5.2"/><path d="M20 8h-4"/></svg></div>
+          <div class="feature-chip-label">WhatsApp Business API</div>
+          <svg class="feature-chip-arrow" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="feature-chip-desc">Conecta tu número WhatsApp Business verificado para atención al cliente, notificaciones transaccionales y campañas a escala.</div>
       </div>
-      <div class="feature-chip rv" style="--d:240ms;">
-        <div class="feature-chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h12l3-4v8l-3-4"/><path d="M18 4v16"/><path d="M21 4l-3 4"/></svg></div>
-        <div class="feature-chip-label">Campañas outbound</div>
+      <div class="feature-chip rv" style="--d:240ms;" role="button" tabindex="0" aria-expanded="false">
+        <div class="feature-chip-header">
+          <div class="feature-chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h12l3-4v8l-3-4"/><path d="M18 4v16"/><path d="M21 4l-3 4"/></svg></div>
+          <div class="feature-chip-label">Campañas outbound</div>
+          <svg class="feature-chip-arrow" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="feature-chip-desc">Programa y ejecuta campañas salientes por voz o texto con segmentación de listas, horarios configurables y seguimiento de resultados.</div>
       </div>
-      <div class="feature-chip rv" style="--d:300ms;">
-        <div class="feature-chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/><path d="M18 6l2 2 3-3"/></svg></div>
-        <div class="feature-chip-label">CRM</div>
+      <div class="feature-chip rv" style="--d:300ms;" role="button" tabindex="0" aria-expanded="false">
+        <div class="feature-chip-header">
+          <div class="feature-chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/><path d="M18 6l2 2 3-3"/></svg></div>
+          <div class="feature-chip-label">CRM integrado</div>
+          <svg class="feature-chip-arrow" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="feature-chip-desc">Ficha de cliente con historial completo de interacciones, etiquetas, notas, seguimiento y pipeline integrado en la misma plataforma.</div>
       </div>
-      <div class="feature-chip rv" style="--d:360ms;">
-        <div class="feature-chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8"/><path d="M8 12h8"/><path d="M8 16h5"/></svg></div>
-        <div class="feature-chip-label">Formularios inteligentes</div>
+      <div class="feature-chip rv" style="--d:360ms;" role="button" tabindex="0" aria-expanded="false">
+        <div class="feature-chip-header">
+          <div class="feature-chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8"/><path d="M8 12h8"/><path d="M8 16h5"/></svg></div>
+          <div class="feature-chip-label">Formularios inteligentes</div>
+          <svg class="feature-chip-arrow" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="feature-chip-desc">Captura leads y datos de clientes con formularios configurables que se integran directamente al flujo de atención y al CRM.</div>
       </div>
-      <div class="feature-chip rv" style="--d:420ms;">
-        <div class="feature-chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h2v2H8z"/><path d="M14 8h2v2h-2z"/><path d="M8 13h2v2H8z"/><path d="M14 13h2v2h-2z"/><path d="M11 18h2"/></svg></div>
-        <div class="feature-chip-label">IVR inteligente</div>
+      <div class="feature-chip rv" style="--d:420ms;" role="button" tabindex="0" aria-expanded="false">
+        <div class="feature-chip-header">
+          <div class="feature-chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h2v2H8z"/><path d="M14 8h2v2h-2z"/><path d="M8 13h2v2H8z"/><path d="M14 13h2v2h-2z"/><path d="M11 18h2"/></svg></div>
+          <div class="feature-chip-label">IVR inteligente</div>
+          <svg class="feature-chip-arrow" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="feature-chip-desc">Árbol de opciones configurable que entiende la intención del cliente y lo dirige al canal o agente correcto, sin necesidad de código.</div>
       </div>
-      <div class="feature-chip rv" style="--d:480ms;">
-        <div class="feature-chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 4-4 4 4 4"/><path d="m16 12 4 4-4 4"/><path d="m14 4-4 16"/></svg></div>
-        <div class="feature-chip-label">Integraciones API</div>
+      <div class="feature-chip rv" style="--d:480ms;" role="button" tabindex="0" aria-expanded="false">
+        <div class="feature-chip-header">
+          <div class="feature-chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 4-4 4 4 4"/><path d="m16 12 4 4-4 4"/><path d="m14 4-4 16"/></svg></div>
+          <div class="feature-chip-label">Integraciones API</div>
+          <svg class="feature-chip-arrow" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="feature-chip-desc">Conecta Contactvox con tu CRM, ERP, sistemas de pago o cualquier herramienta externa vía API REST o webhooks bidireccionales.</div>
       </div>
     </div>
   </div>
@@ -1482,6 +1535,23 @@ import { animate } from "https://cdn.jsdelivr.net/npm/motion@13/+esm";
       });
     });
   }
+  /* ---- Feature chips accordion ---- */
+  document.querySelectorAll('#featureGrid .feature-chip').forEach(function(chip) {
+    function toggle() {
+      var isOpen = chip.classList.contains('open');
+      document.querySelectorAll('#featureGrid .feature-chip.open').forEach(function(c) {
+        c.classList.remove('open');
+        c.setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        chip.classList.add('open');
+        chip.setAttribute('aria-expanded', 'true');
+      }
+    }
+    chip.addEventListener('click', toggle);
+    chip.addEventListener('keydown', function(e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+  });
+
 })();
 </script>
 </body>
