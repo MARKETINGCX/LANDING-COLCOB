@@ -163,14 +163,13 @@ h1,h2,h3 { font-family: var(--font-head); color: var(--text-dark); }
 .art-slide.active { opacity: 1; z-index: 1; }
 .art-shot { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; text-align: center; padding: 22px; font-size: 13.5px; color: var(--text-muted); background: linear-gradient(160deg, rgba(0,212,255,0.07), rgba(52,226,122,0.06)); }
 .art-shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.art-caption { display: flex; align-items: flex-start; gap: 12px; margin-top: 16px; background: rgba(8,10,41,0.82); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.12); border-radius: 14px; padding: 14px 18px; box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
-.art-caption-icon { width: 32px; height: 32px; border-radius: 8px; background: rgba(59,130,246,0.18); border: 1px solid rgba(59,130,246,0.25); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 14px; }
+.art-caption { display: flex; align-items: flex-start; gap: 0; margin-top: 16px; background: rgba(8,10,41,0.82); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.12); border-radius: 14px; padding: 14px 18px; box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+.art-caption-icon { display: none; }
 .art-caption strong { display: block; font-family: var(--font-head); font-size: 13.5px; color: var(--text-white); margin-bottom: 2px; }
 .art-caption span { display: block; font-size: 12.5px; color: var(--text-muted); line-height: 1.4; }
-.art-dots { display: flex; justify-content: center; gap: 8px; margin-top: 40px; }
-.art-dot { width: 8px; height: 8px; border-radius: 50%; border: none; padding: 0; background: rgba(255,255,255,0.25); cursor: pointer; transition: background 0.25s ease, width 0.25s var(--ease-out); }
-.art-dot:hover { background: rgba(255,255,255,0.45); }
-.art-dot.active { background: var(--neon-green); width: 22px; border-radius: 5px; }
+.art-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; }
+.art-arrow { width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.18); background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.72); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease; flex-shrink: 0; }
+.art-arrow:hover { background: rgba(0,212,255,0.12); border-color: rgba(0,212,255,0.55); color: var(--aqua); transform: scale(1.1); }
 @media (max-width: 980px) {
   .hero-grid { grid-template-columns: 1fr; text-align: center; }
   .hero p.sub { margin-left: auto; margin-right: auto; }
@@ -699,7 +698,9 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
           </div>
         </div>
         <div class="art-slide" data-i="1" data-title="Vista 360° del cliente" data-desc="Historial, promesas de pago y estado de cuenta en un solo perfil.">
-          <div class="art-shot">Captura pendiente — Vista 360° / CRM</div>
+          <div class="art-shot">
+            <img src="/crm-360.png" alt="Vista 360° del cliente — Contactvox CX" style="width:100%;height:100%;object-fit:cover;display:block;">
+          </div>
         </div>
         <div class="art-slide" data-i="2" data-title="Automatización sin código" data-desc="Diseña flujos de recordatorio y seguimiento que se ejecutan solos.">
           <div class="art-shot art-shot-video">
@@ -716,11 +717,9 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
         <div class="art-caption-icon" id="artCaptionIcon">▶</div>
         <div><strong id="artCaptionTitle">Bandeja unificada</strong><span id="artCaptionDesc" style="display:block;font-size:12.5px;color:var(--text-muted);margin-top:2px;line-height:1.4;">WhatsApp, correo, llamadas y chat en una sola vista, sin cambiar de pantalla.</span></div>
       </div>
-      <div class="art-dots" id="artDots" role="tablist" aria-label="Seleccionar pantalla">
-        <button class="art-dot active" data-i="0" role="tab" aria-selected="true" aria-label="Pantalla 1: Bandeja omnicanal"></button>
-        <button class="art-dot" data-i="1" role="tab" aria-selected="false" aria-label="Pantalla 2: Vista 360 y CRM"></button>
-        <button class="art-dot" data-i="2" role="tab" aria-selected="false" aria-label="Pantalla 3: Bot Studio"></button>
-        <button class="art-dot" data-i="3" role="tab" aria-selected="false" aria-label="Pantalla 4: Auditoría IA"></button>
+      <div class="art-nav" id="artNav" aria-label="Navegar pantallas">
+        <button class="art-arrow" id="artPrev" aria-label="Pantalla anterior"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button class="art-arrow" id="artNext" aria-label="Siguiente pantalla"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
       </div>
     </div>
   </div>
@@ -1593,26 +1592,18 @@ import { animate } from "https://cdn.jsdelivr.net/npm/motion@13/+esm";
   var artFrame = document.getElementById('artFrame');
   if (artFrame) {
     var artSlides = Array.prototype.slice.call(artFrame.querySelectorAll('.art-slide'));
-    var artDots = Array.prototype.slice.call(document.getElementById('artDots').querySelectorAll('.art-dot'));
     var artIdx = 0;
     var artTimer = null;
     var ART_AUTOPLAY_MS = 10000;
     var artVideos = Array.prototype.slice.call(artFrame.querySelectorAll('video'));
     var artCaptionTitle = document.getElementById('artCaptionTitle');
     var artCaptionDesc = document.getElementById('artCaptionDesc');
-    var artCaptionIcon = document.getElementById('artCaptionIcon');
-    var SLIDE_ICONS = ['▶', '◎', '⚡', '▶'];
     function artGo(i) {
       artIdx = (i + artSlides.length) % artSlides.length;
       artSlides.forEach(function (s, si) { s.classList.toggle('active', si === artIdx); });
-      artDots.forEach(function (d, di) {
-        d.classList.toggle('active', di === artIdx);
-        d.setAttribute('aria-selected', di === artIdx ? 'true' : 'false');
-      });
       var active = artSlides[artIdx];
       if (artCaptionTitle) artCaptionTitle.textContent = active.getAttribute('data-title') || '';
       if (artCaptionDesc) artCaptionDesc.textContent = active.getAttribute('data-desc') || '';
-      if (artCaptionIcon) artCaptionIcon.textContent = SLIDE_ICONS[artIdx] || '▶';
       artVideos.forEach(function(v) {
         if (active.contains(v)) { v.play().catch(function(){}); }
         else { v.pause(); v.currentTime = 0; }
@@ -1624,14 +1615,21 @@ import { animate } from "https://cdn.jsdelivr.net/npm/motion@13/+esm";
       if (reduced) return;
       artTimer = setInterval(function () { artGo(artIdx + 1); }, ART_AUTOPLAY_MS);
     }
-    artDots.forEach(function (d) {
-      d.addEventListener('click', function () {
-        artGo(parseInt(d.getAttribute('data-i'), 10));
-        artStart();
+    var artPrevBtn = document.getElementById('artPrev');
+    var artNextBtn = document.getElementById('artNext');
+    if (artPrevBtn) artPrevBtn.addEventListener('click', function() { artGo(artIdx - 1); artStart(); });
+    if (artNextBtn) artNextBtn.addEventListener('click', function() { artGo(artIdx + 1); artStart(); });
+    artFrame.addEventListener('mouseenter', function() {
+      artStop();
+      artVideos.forEach(function(v) { v.pause(); });
+    });
+    artFrame.addEventListener('mouseleave', function() {
+      artStart();
+      var active = artSlides[artIdx];
+      artVideos.forEach(function(v) {
+        if (active.contains(v)) { v.play().catch(function(){}); }
       });
     });
-    artFrame.addEventListener('mouseenter', artStop);
-    artFrame.addEventListener('mouseleave', artStart);
     artStart();
   }
 
