@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="facebook-domain-verification" content="of82pdnlloi4putggw780zsl11dh46" />
   <meta name="robots" content="noindex">
-  <title>Política de Tratamiento de Datos — Contactvox</title>
+  <title>Política de Tratamiento de Datos Personales — Contactvox</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
@@ -13,8 +13,6 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --navy: #04091A;
-      --navy-2: #070F24;
-      --navy-3: #0D1C3D;
       --sapphire: #3B82F6;
       --sapphire-light: #60A5FA;
       --emerald: #10B981;
@@ -29,163 +27,124 @@
       font-family: var(--font-body);
       background: var(--navy);
       color: var(--text-white);
-      line-height: 1.7;
+      line-height: 1.75;
       font-size: 16px;
     }
 
     /* Nav */
     .nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      position: sticky; top: 0; z-index: 100;
       background: rgba(4,9,26,0.92);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(255,255,255,0.06);
-      padding: 0 24px;
-      height: 60px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
+      padding: 0 24px; height: 60px;
+      display: flex; align-items: center; gap: 16px;
     }
-    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo { display: flex; align-items: center; text-decoration: none; }
     .nav-logo img { height: 32px; }
     .nav-back {
-      margin-left: auto;
-      font-size: 13.5px;
-      color: var(--text-muted);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      margin-left: auto; font-size: 13.5px; color: var(--text-muted);
+      text-decoration: none; display: flex; align-items: center; gap: 6px;
       transition: color 0.2s;
     }
     .nav-back:hover { color: var(--sapphire-light); }
 
-    /* Content */
-    .page-wrap {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 56px 24px 96px;
-    }
+    /* Page layout */
+    .page-wrap { max-width: 780px; margin: 0 auto; padding: 56px 24px 96px; }
+
     .page-tag {
-      display: inline-block;
-      font-size: 11.5px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      color: var(--emerald);
-      background: rgba(16,185,129,0.1);
-      border: 1px solid rgba(16,185,129,0.2);
-      border-radius: 20px;
-      padding: 4px 14px;
-      margin-bottom: 20px;
+      display: inline-block; font-size: 11.5px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.8px; color: var(--emerald);
+      background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.2);
+      border-radius: 20px; padding: 4px 14px; margin-bottom: 20px;
     }
     h1 {
-      font-family: var(--font-head);
-      font-size: clamp(28px, 4vw, 40px);
-      font-weight: 800;
-      line-height: 1.2;
-      color: var(--text-white);
-      margin-bottom: 12px;
+      font-family: var(--font-head); font-size: clamp(26px, 4vw, 38px);
+      font-weight: 800; line-height: 1.2; color: var(--text-white); margin-bottom: 10px;
     }
-    .updated {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-bottom: 48px;
+    .meta-line {
+      font-size: 13.5px; color: var(--text-muted); margin-bottom: 6px;
     }
+    .meta-line + .meta-line { margin-bottom: 44px; }
 
     /* Sections */
-    .policy-section {
-      margin-bottom: 40px;
-      padding: 28px 32px;
+    .ps {
+      margin-bottom: 28px; padding: 26px 30px;
       background: rgba(255,255,255,0.03);
       border: 1px solid rgba(255,255,255,0.07);
       border-radius: var(--r-card);
     }
-    .policy-section h2 {
-      font-family: var(--font-head);
-      font-size: 17px;
-      font-weight: 700;
-      color: var(--text-white);
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    .ps h2 {
+      font-family: var(--font-head); font-size: 16.5px; font-weight: 700;
+      color: var(--text-white); margin-bottom: 13px;
+      display: flex; align-items: center; gap: 10px;
     }
-    .policy-section h2 .num {
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      background: rgba(59,130,246,0.15);
-      border: 1px solid rgba(59,130,246,0.3);
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--sapphire-light);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
+    .ps h2 .n {
+      width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0;
+      background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.3);
+      font-size: 11px; font-weight: 700; color: var(--sapphire-light);
+      display: flex; align-items: center; justify-content: center;
     }
-    .policy-section p {
-      font-size: 15px;
-      color: rgba(240,244,255,0.78);
-      margin-bottom: 10px;
+    .ps p { font-size: 14.5px; color: rgba(240,244,255,0.76); margin-bottom: 10px; }
+    .ps p:last-child { margin-bottom: 0; }
+    .ps ul { list-style: none; padding: 0; margin: 8px 0 10px; }
+    .ps ul li {
+      font-size: 14.5px; color: rgba(240,244,255,0.76);
+      padding: 4px 0 4px 20px; position: relative;
     }
-    .policy-section p:last-child { margin-bottom: 0; }
-    .policy-section ul {
-      list-style: none;
-      padding: 0;
-      margin: 8px 0 10px;
+    .ps ul li::before {
+      content: ''; position: absolute; left: 0; top: 12px;
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--emerald); opacity: 0.7;
     }
-    .policy-section ul li {
-      font-size: 15px;
-      color: rgba(240,244,255,0.78);
-      padding: 5px 0 5px 20px;
-      position: relative;
+    .ps a { color: var(--sapphire-light); text-decoration: none; }
+    .ps a:hover { text-decoration: underline; }
+    .ps strong { color: var(--text-white); }
+
+    /* Highlight box */
+    .law-ref {
+      background: rgba(59,130,246,0.06); border: 1px solid rgba(59,130,246,0.2);
+      border-radius: 10px; padding: 14px 18px; margin-top: 12px;
+      font-size: 13.5px; color: rgba(240,244,255,0.65);
     }
-    .policy-section ul li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 13px;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--emerald);
-      opacity: 0.7;
+    .law-ref strong { color: var(--sapphire-light); }
+
+    /* Rights grid */
+    .rights-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+    .right-item {
+      padding: 12px 14px; border-radius: 10px;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
     }
-    .policy-section a {
-      color: var(--sapphire-light);
-      text-decoration: none;
+    .right-item .label {
+      font-size: 12px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.5px; color: var(--emerald); margin-bottom: 4px;
     }
-    .policy-section a:hover { text-decoration: underline; }
+    .right-item p { font-size: 13px; color: rgba(240,244,255,0.65); margin: 0; }
 
     /* Contact box */
     .contact-box {
-      background: rgba(59,130,246,0.06);
-      border: 1px solid rgba(59,130,246,0.2);
-      border-radius: var(--r-card);
-      padding: 24px 28px;
-      margin-top: 48px;
-      text-align: center;
+      background: rgba(59,130,246,0.06); border: 1px solid rgba(59,130,246,0.2);
+      border-radius: var(--r-card); padding: 28px 30px; margin-top: 44px;
     }
-    .contact-box p { font-size: 15px; color: rgba(240,244,255,0.75); margin-bottom: 8px; }
-    .contact-box strong { color: var(--text-white); }
+    .contact-box h3 {
+      font-family: var(--font-head); font-size: 16px; font-weight: 700;
+      color: var(--text-white); margin-bottom: 10px;
+    }
+    .contact-box p { font-size: 14.5px; color: rgba(240,244,255,0.72); margin-bottom: 6px; }
     .contact-box a { color: var(--sapphire-light); text-decoration: none; }
     .contact-box a:hover { text-decoration: underline; }
 
     /* Footer */
     .page-footer {
-      text-align: center;
-      padding: 32px 24px 40px;
-      font-size: 13px;
-      color: var(--text-muted);
+      text-align: center; padding: 28px 24px 40px;
+      font-size: 13px; color: var(--text-muted);
       border-top: 1px solid rgba(255,255,255,0.06);
     }
 
     @media (max-width: 600px) {
-      .policy-section { padding: 22px 20px; }
+      .ps { padding: 20px 18px; }
       .page-wrap { padding: 36px 16px 72px; }
+      .rights-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -193,30 +152,33 @@
 
 <nav class="nav">
   <a href="/" class="nav-logo" aria-label="Contactvox — inicio">
-    <img src="logo-full-light.png" alt="Contactvox CX">
+    <img src="logo-full-light.png" alt="Contactvox">
   </a>
-  <a href="/" class="nav-back" aria-label="Volver al inicio">
-    ← Volver al inicio
-  </a>
+  <a href="/" class="nav-back">← Volver al inicio</a>
 </nav>
 
 <main class="page-wrap">
   <span class="page-tag">Legal</span>
   <h1>Política de Tratamiento de Datos Personales</h1>
-  <p class="updated">Última actualización: agosto 2026</p>
+  <p class="meta-line">Responsable: <strong>Sidevox S.A.</strong> — Sistema Contactvox CX</p>
+  <p class="meta-line">Última actualización: agosto 2026 · Versión 1.0</p>
 
-  <div class="policy-section">
-    <h2><span class="num">1</span>Responsable del tratamiento</h2>
-    <p><strong>Contactvox S.A.C.</strong> (en adelante "Contactvox") es la empresa responsable del tratamiento de los datos personales que se recopilan a través de este sitio web y sus formularios de contacto.</p>
+  <div class="ps">
+    <h2><span class="n">1</span>Responsable del tratamiento</h2>
+    <p><strong>Sidevox S.A.</strong> (en adelante "Sidevox" o "Contactvox") es la empresa responsable del tratamiento de los datos personales que se recopilan a través del sitio web contactvoxsac.lat y sus formularios de contacto.</p>
     <ul>
       <li>Correo de contacto: <a href="mailto:ventas@contactvox.com">ventas@contactvox.com</a></li>
+      <li>Delegado de Protección de Datos: Ing. Carlos Ocampo M.sc</li>
       <li>Sitio web: <a href="https://contactvoxsac.lat/" target="_blank" rel="noopener">contactvoxsac.lat</a></li>
     </ul>
+    <div class="law-ref">
+      El tratamiento se realiza conforme a la <strong>Ley Orgánica de Protección de Datos Personales (LOPDP)</strong> y su reglamento, así como la normativa equivalente aplicable en los países donde Sidevox S.A. opera (Colombia, Perú, Bolivia, México).
+    </div>
   </div>
 
-  <div class="policy-section">
-    <h2><span class="num">2</span>Datos que recopilamos</h2>
-    <p>A través del formulario de contacto recopilamos únicamente los datos que tú nos proporcionas voluntariamente:</p>
+  <div class="ps">
+    <h2><span class="n">2</span>Datos que recopilamos</h2>
+    <p>A través del formulario de contacto recopilamos únicamente los datos que tú proporcionas de forma voluntaria:</p>
     <ul>
       <li>Nombre y apellido</li>
       <li>Nombre de la empresa</li>
@@ -224,68 +186,83 @@
       <li>Correo electrónico corporativo</li>
       <li>Área de interés (opcional)</li>
     </ul>
-    <p>También registramos automáticamente parámetros de origen (UTM) cuando accedes desde un enlace externo, con el fin de medir la efectividad de nuestras campañas.</p>
+    <p>Adicionalmente, registramos parámetros de origen (UTM) cuando el acceso proviene de un enlace externo, con el único fin de medir la efectividad de nuestras campañas de difusión.</p>
+    <p>No recopilamos datos sensibles, datos de menores de edad ni información financiera a través de este formulario.</p>
   </div>
 
-  <div class="policy-section">
-    <h2><span class="num">3</span>Finalidad del tratamiento</h2>
+  <div class="ps">
+    <h2><span class="n">3</span>Finalidad del tratamiento</h2>
     <p>Los datos recopilados se utilizan exclusivamente para:</p>
     <ul>
-      <li>Ponerse en contacto contigo para responder a tu solicitud de información</li>
-      <li>Agendar una presentación o reunión comercial sobre los servicios de Contactvox</li>
-      <li>Enviarte información relevante sobre nuestra plataforma cuando la hayas solicitado</li>
+      <li>Responder a tu solicitud de información sobre los servicios de Contactvox CX</li>
+      <li>Agendar una reunión, demo o presentación comercial</li>
+      <li>Realizar seguimiento al proceso comercial cuando existe un interés confirmado</li>
     </ul>
-    <p>No utilizamos tus datos para envíos masivos de publicidad no solicitada ni para fines distintos a los indicados.</p>
+    <p>Sidevox S.A. no utiliza estos datos para envíos masivos de publicidad no solicitada, ni los cede a terceros con fines comerciales propios ajenos a la prestación del servicio.</p>
   </div>
 
-  <div class="policy-section">
-    <h2><span class="num">4</span>Base legal del tratamiento</h2>
-    <p>El tratamiento se realiza sobre la base de tu <strong>consentimiento explícito</strong>, otorgado al marcar la casilla de aceptación en el formulario de contacto, de conformidad con la Ley N.° 29733 (Perú), la Ley 1581 de 2012 (Colombia) y normativa equivalente aplicable en los países donde operamos.</p>
+  <div class="ps">
+    <h2><span class="n">4</span>Base legal del tratamiento</h2>
+    <p>El tratamiento se realiza sobre la base de tu <strong>consentimiento libre, informado, específico e inequívoco</strong>, otorgado al marcar la casilla de aceptación en el formulario de contacto, conforme al artículo 7 y concordantes de la Ley Orgánica de Protección de Datos Personales.</p>
+    <p>Puedes revocar tu consentimiento en cualquier momento sin que ello afecte la licitud del tratamiento realizado con anterioridad.</p>
   </div>
 
-  <div class="policy-section">
-    <h2><span class="num">5</span>Transferencia a terceros</h2>
-    <p>Los datos del formulario son procesados a través de <strong>Web3Forms</strong> (web3forms.com), servicio que actúa como encargado del tratamiento y entrega el mensaje a nuestro correo interno. Web3Forms no almacena ni comercializa tus datos.</p>
-    <p>No compartimos, vendemos ni cedemos tus datos personales a terceros con fines comerciales propios.</p>
+  <div class="ps">
+    <h2><span class="n">5</span>Transferencia a encargados del tratamiento</h2>
+    <p>Para la transmisión de los datos del formulario utilizamos el servicio <strong>Web3Forms</strong> (web3forms.com), que actúa como encargado del tratamiento bajo instrucciones de Sidevox S.A. Web3Forms entrega el mensaje a nuestro correo interno y no almacena ni comercializa los datos para fines propios.</p>
+    <p>En la prestación de los servicios tecnológicos de Contactvox CX, Sidevox S.A. puede actuar a su vez como encargado del tratamiento de datos de los clientes finales de sus clientes, procesando información por cuenta y bajo instrucciones del responsable del tratamiento contratante, conforme a los artículos 34 y 47 de la LOPDP.</p>
+    <p>En ningún caso se realizan transferencias internacionales de datos sin las garantías adecuadas exigidas por la normativa aplicable.</p>
   </div>
 
-  <div class="policy-section">
-    <h2><span class="num">6</span>Conservación de los datos</h2>
-    <p>Conservamos tus datos durante el tiempo necesario para atender tu solicitud y, si se establece una relación comercial, durante la vigencia de dicha relación más el período exigido por la legislación aplicable.</p>
-    <p>Si no se concreta ninguna relación, los datos se eliminan en un plazo máximo de <strong>12 meses</strong> desde la recepción de tu formulario.</p>
-  </div>
-
-  <div class="policy-section">
-    <h2><span class="num">7</span>Tus derechos</h2>
-    <p>En cualquier momento puedes ejercer los siguientes derechos escribiéndonos a <a href="mailto:ventas@contactvox.com">ventas@contactvox.com</a>:</p>
+  <div class="ps">
+    <h2><span class="n">6</span>Medidas de seguridad</h2>
+    <p>Sidevox S.A. aplica medidas técnicas y organizativas orientadas a garantizar la confidencialidad, integridad y disponibilidad de los datos personales tratados, entre las que se incluyen:</p>
     <ul>
-      <li><strong>Acceso:</strong> conocer qué datos tenemos sobre ti</li>
-      <li><strong>Rectificación:</strong> corregir datos inexactos o incompletos</li>
-      <li><strong>Cancelación / Supresión:</strong> solicitar la eliminación de tus datos</li>
-      <li><strong>Oposición:</strong> oponerte al tratamiento para fines específicos</li>
-      <li><strong>Revocación del consentimiento:</strong> retirar tu consentimiento en cualquier momento sin efecto retroactivo</li>
+      <li>Controles de acceso a sistemas y plataformas</li>
+      <li>Transmisión de datos mediante conexión cifrada (HTTPS/TLS)</li>
+      <li>Prácticas de respaldo y recuperación de información</li>
+      <li>Cláusulas contractuales que regulan el rol de encargado del tratamiento con terceros proveedores</li>
+      <li>Capacitación del personal en protección de datos personales</li>
     </ul>
-    <p>Atenderemos tu solicitud en un plazo máximo de 15 días hábiles.</p>
   </div>
 
-  <div class="policy-section">
-    <h2><span class="num">8</span>Seguridad</h2>
-    <p>Aplicamos medidas técnicas y organizativas razonables para proteger tus datos frente a accesos no autorizados, pérdida o alteración. La transmisión de datos desde el formulario se realiza mediante conexión cifrada (HTTPS).</p>
+  <div class="ps">
+    <h2><span class="n">7</span>Conservación de los datos</h2>
+    <p>Los datos se conservan durante el tiempo necesario para atender tu solicitud y, en caso de establecerse una relación comercial, durante la vigencia de dicha relación más el período exigido por la legislación aplicable.</p>
+    <p>Si no se concreta ninguna relación comercial, los datos se eliminarán en un plazo máximo de <strong>12 meses</strong> contados desde la recepción del formulario, salvo que exista una obligación legal de conservarlos por un período mayor.</p>
   </div>
 
-  <div class="policy-section">
-    <h2><span class="num">9</span>Cambios en esta política</h2>
-    <p>Podemos actualizar esta política en cualquier momento. La versión vigente estará siempre disponible en esta página con la fecha de última actualización. Si los cambios son significativos, te lo comunicaremos por los medios disponibles.</p>
+  <div class="ps">
+    <h2><span class="n">8</span>Tus derechos</h2>
+    <p>Como titular de los datos, puedes ejercer en cualquier momento los siguientes derechos ante Sidevox S.A.:</p>
+    <div class="rights-grid">
+      <div class="right-item"><div class="label">Acceso</div><p>Conocer qué datos tenemos sobre ti y cómo los tratamos.</p></div>
+      <div class="right-item"><div class="label">Rectificación</div><p>Corregir datos inexactos o incompletos.</p></div>
+      <div class="right-item"><div class="label">Eliminación</div><p>Solicitar la supresión de tus datos cuando ya no sean necesarios.</p></div>
+      <div class="right-item"><div class="label">Oposición</div><p>Oponerte al tratamiento para finalidades específicas.</p></div>
+      <div class="right-item"><div class="label">Portabilidad</div><p>Recibir tus datos en formato estructurado y de uso común.</p></div>
+      <div class="right-item"><div class="label">Revocación</div><p>Retirar tu consentimiento sin efecto retroactivo.</p></div>
+    </div>
+    <p style="margin-top:14px;">Las solicitudes se atienden en un plazo máximo de <strong>15 días hábiles</strong> contados desde su recepción.</p>
+  </div>
+
+  <div class="ps">
+    <h2><span class="n">9</span>Cambios en esta política</h2>
+    <p>Sidevox S.A. puede actualizar esta política en cualquier momento para reflejar cambios normativos, operativos o de seguridad. La versión vigente estará siempre disponible en esta página con la fecha de última actualización indicada en el encabezado.</p>
+    <p>Si los cambios son materiales o afectan derechos de los titulares, se comunicarán por los medios disponibles con una anticipación razonable.</p>
   </div>
 
   <div class="contact-box">
-    <p>¿Tienes dudas sobre el tratamiento de tus datos?</p>
-    <p><a href="mailto:ventas@contactvox.com">ventas@contactvox.com</a></p>
+    <h3>Ejercicio de derechos y consultas</h3>
+    <p>Para ejercer tus derechos o resolver cualquier duda sobre el tratamiento de tus datos personales, comunícate con nuestro Delegado de Protección de Datos:</p>
+    <p><strong>Ing. Carlos Ocampo M.sc</strong> — Delegado de Protección de Datos Personales</p>
+    <p>Correo: <a href="mailto:ventas@contactvox.com">ventas@contactvox.com</a></p>
+    <p style="margin-top:10px;font-size:13px;color:rgba(240,244,255,0.45);">Si consideras que el tratamiento no se ajusta a la normativa vigente, tienes derecho a presentar una reclamación ante la autoridad de control competente en tu país.</p>
   </div>
 </main>
 
 <footer class="page-footer">
-  © 2026 Contactvox S.A.C. — Todos los derechos reservados.
+  © 2026 Sidevox S.A. — Contactvox CX &amp; CD Platform. Todos los derechos reservados.
 </footer>
 
 </body>
