@@ -269,6 +269,9 @@ h1,h2,h3 { font-family: var(--font-head); color: var(--text-dark); }
 .qh-step-num { font-family: var(--font-head); font-size: 10px; font-weight: 800; letter-spacing: 0.8px; color: var(--aqua); margin: 0; }
 .qh-step-title { font-family: var(--font-head); font-size: 14px; font-weight: 800; color: var(--enterprise); line-height: 1.3; margin: 0; }
 .qh-step-body { font-size: 12.5px; color: var(--text-gray); line-height: 1.55; margin: 0; }
+.qh-bubble.agent { background: #EBF5FF; color: var(--enterprise); border-radius: 14px 4px 14px 14px; align-self: flex-end; }
+.qh-commit-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 700; font-family: var(--font-head); color: #065F46; background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.22); border-radius: 8px; padding: 5px 10px; }
+.qh-cap.c6 { background: rgba(251,191,36,0.15); color: #D97706; }
 
 /* --- IA principal (4 tarjetas grandes) --- */
 /* IA carousel */
@@ -729,26 +732,33 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
   <div class="container">
     <div class="center rv" style="margin-bottom:44px;">
       <span class="tag-label tag-light">Qué hace Contactvox</span>
-      <h2 class="sec-title" style="margin-top:14px;">De una conversación a una acción.</h2>
-      <p class="sec-intro center">Contactvox conecta cada interacción con tus clientes, la convierte en información y permite que personas, IA y automatizaciones actúen sobre ella.</p>
+      <h2 class="sec-title" style="margin-top:14px;">De una conversación a una gestión de cobranza.</h2>
+      <p class="sec-intro center">Contactvox conecta cada interacción con el cliente, interpreta su contexto y permite activar acciones de cobranza, seguimiento y control desde una sola plataforma.</p>
     </div>
 
     <!-- Bloque visual 3 paneles -->
     <div class="qh-visual rv">
       <div class="qh-panel qh-panel-left">
-        <p class="qh-label">La conversación entra</p>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+          <p class="qh-label">La conversación entra</p>
+          <span class="qh-ch" style="background:rgba(37,211,102,0.13);color:#16A34A;font-size:10.5px;">● WhatsApp</span>
+        </div>
         <div class="qh-bubble-wrap">
           <div class="qh-bubble client">
-            <p class="qh-bubble-sender">Cliente</p>
-            "Necesito cambiar mi cita del jueves, ¿me pueden ayudar?"
+            <p class="qh-bubble-sender">Cliente · hace 2 min</p>
+            "No pude pagar a tiempo. ¿Puedo hacer un acuerdo de pago para esta semana?"
+          </div>
+          <div class="qh-bubble agent">
+            <p class="qh-bubble-sender">Contactvox</p>
+            Saldo pendiente: S/ 2,480. ¿Registramos un compromiso de pago para el viernes?
           </div>
         </div>
         <div class="qh-channel-dots">
-          <span class="qh-ch">WhatsApp</span>
           <span class="qh-ch">Voz</span>
-          <span class="qh-ch">Chat</span>
+          <span class="qh-ch">SMS</span>
           <span class="qh-ch">Email</span>
-          <span class="qh-ch">Redes</span>
+          <span class="qh-ch">Chat</span>
+          <span class="qh-ch">+canales</span>
         </div>
       </div>
 
@@ -762,26 +772,31 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
           <span class="qh-cap c1">IA</span>
           <span class="qh-cap c2">CRM</span>
           <span class="qh-cap c3">Automatización</span>
-          <span class="qh-cap c4">Datos</span>
+          <span class="qh-cap c4">Seguimiento</span>
           <span class="qh-cap c5">Integraciones</span>
+          <span class="qh-cap c6">Datos</span>
         </div>
       </div>
 
       <div class="qh-divider" aria-hidden="true"></div>
 
       <div class="qh-panel qh-panel-right">
-        <p class="qh-label">La acción se ejecuta</p>
+        <p class="qh-label">La gestión se ejecuta</p>
         <div class="qh-result-head">
           <div class="qh-result-badge">
             <svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 4"/></svg>
           </div>
-          <p class="qh-result-title">Gestión completada</p>
+          <p class="qh-result-title">Gestión de cobranza completada</p>
+        </div>
+        <div class="qh-commit-tag">
+          <svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="14" height="11" rx="2"/><path d="M1 7h14M5 1v4M11 1v4"/></svg>
+          Compromiso de pago — viernes 5
         </div>
         <div class="qh-result-list">
-          <p class="qh-result-item">Cita reagendada</p>
-          <p class="qh-result-item">Confirmación enviada</p>
-          <p class="qh-result-item">Historial actualizado</p>
-          <p class="qh-result-item">Seguimiento registrado</p>
+          <p class="qh-result-item">Saldo consultado: S/ 2,480</p>
+          <p class="qh-result-item">Compromiso registrado en CRM</p>
+          <p class="qh-result-item">Recordatorio automático programado</p>
+          <p class="qh-result-item">Caso actualizado con trazabilidad</p>
         </div>
       </div>
     </div>
@@ -790,23 +805,23 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
     <div class="qh-steps rv">
       <div class="qh-step">
         <p class="qh-step-num">01 · CONECTA</p>
-        <p class="qh-step-title">Todos tus canales en un solo flujo</p>
-        <p class="qh-step-body">Voz, WhatsApp, chat, email y redes sociales llegan a una misma plataforma.</p>
+        <p class="qh-step-title">Todos los canales de cobranza en un solo flujo</p>
+        <p class="qh-step-body">Voz, WhatsApp, chat, email y SMS centralizados para contactar y gestionar al cliente sin cambiar de sistema.</p>
       </div>
       <div class="qh-step">
         <p class="qh-step-num">02 · ENTIENDE</p>
-        <p class="qh-step-title">La conversación adquiere contexto</p>
-        <p class="qh-step-body">Identifica al cliente, interpreta la necesidad y utiliza historial, datos e inteligencia artificial.</p>
+        <p class="qh-step-title">Cada conversación tiene contexto de cartera</p>
+        <p class="qh-step-body">Identifica al cliente, consulta su deuda y detecta si hay intención de pago, objeción o necesidad de negociación.</p>
       </div>
       <div class="qh-step">
         <p class="qh-step-num">03 · ACTÚA</p>
-        <p class="qh-step-title">La operación se activa</p>
-        <p class="qh-step-body">Consulta información, registra gestiones, activa automatizaciones o escala a un agente humano.</p>
+        <p class="qh-step-title">La cobranza se ejecuta con apoyo de IA</p>
+        <p class="qh-step-body">Consulta saldo, registra compromisos, activa recordatorios, escala a un asesor y da continuidad al caso automáticamente.</p>
       </div>
       <div class="qh-step">
         <p class="qh-step-num">04 · RESULTADO</p>
-        <p class="qh-step-title">Cada conversación genera valor</p>
-        <p class="qh-step-body">Atención resuelta, datos útiles, seguimiento y una mejor experiencia para el cliente.</p>
+        <p class="qh-step-title">Control, seguimiento y trazabilidad total</p>
+        <p class="qh-step-body">Cada interacción se convierte en gestión registrada, próximos pasos definidos y datos útiles para supervisar la operación.</p>
       </div>
     </div>
   </div>
