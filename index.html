@@ -136,7 +136,7 @@ h1,h2,h3 { font-family: var(--font-head); color: var(--text-dark); }
 .hero::before { content: ""; position: absolute; inset: 0; background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.07) 1px, transparent 1.5px); background-size: 28px 28px; pointer-events: none; z-index: 0; -webkit-mask-image: radial-gradient(ellipse 85% 70% at 50% 40%, black 30%, transparent 100%); mask-image: radial-gradient(ellipse 85% 70% at 50% 40%, black 30%, transparent 100%); transform: translate3d(calc((var(--cursor-x) - 50%) * -0.05), calc((var(--cursor-y) - 50%) * -0.05), 0); transition: transform 0.35s ease-out; }
 /* Cursor spotlight */
 .hero::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle 420px at var(--cursor-x) var(--cursor-y), rgba(52,226,122,0.16), rgba(0,212,255,0.08) 40%, transparent 70%); pointer-events: none; z-index: 1; transition: background-position 0.15s ease-out; }
-.hero-grid { position: relative; z-index: 2; display: grid; grid-template-columns: 1.05fr 1fr; gap: 56px; align-items: center; text-align: left; }
+.hero-grid { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; align-items: center; text-align: left; }
 .hero-text { position: relative; }
 .hero h1 { font-size: 42px; font-weight: 800; color: var(--text-white); line-height: 1.22; margin: 20px 0 20px; }
 .hero h1.staggered { opacity: 1; transform: none; animation: none; }
@@ -155,16 +155,16 @@ h1,h2,h3 { font-family: var(--font-head); color: var(--text-dark); }
 @keyframes hintDot { 0% { transform: translateY(0); opacity: 1; } 60% { transform: translateY(14px); opacity: 0; } 100% { transform: translateY(0); opacity: 0; } }
 
 /* ---- HERO ART: carrusel interactivo de pantallas ---- */
-.hero-art { position: relative; padding-bottom: 56px; }
-.art-frame { position: relative; width: 100%; aspect-ratio: 16 / 11.5; border-radius: 18px; background: linear-gradient(160deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02)); border: 1px solid rgba(255,255,255,0.14); box-shadow: 0 30px 70px rgba(0,0,0,0.45); overflow: hidden; }
+.hero-art { position: relative; }
+.art-frame { position: relative; width: 100%; aspect-ratio: 16 / 10; border-radius: 18px; background: linear-gradient(160deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02)); border: 1px solid rgba(255,255,255,0.14); box-shadow: 0 30px 70px rgba(0,0,0,0.45); overflow: hidden; }
 .art-frame::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 32px; background: rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.08); z-index: 2; }
 .art-frame::after { content: "\2022 \2022 \2022"; position: absolute; left: 14px; top: 0; height: 32px; display: flex; align-items: center; letter-spacing: 4px; color: rgba(255,255,255,0.25); font-size: 11px; z-index: 3; }
 .art-slide { position: absolute; inset: 0; padding-top: 32px; opacity: 0; transition: opacity 0.3s var(--ease-out); }
 .art-slide.active { opacity: 1; z-index: 1; }
 .art-shot { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; text-align: center; padding: 22px; font-size: 13.5px; color: var(--text-muted); background: linear-gradient(160deg, rgba(0,212,255,0.07), rgba(52,226,122,0.06)); }
 .art-shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.art-caption { position: absolute; left: 18px; right: 18px; bottom: -20px; max-width: 320px; background: rgba(8,10,41,0.92); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.14); border-radius: 14px; padding: 12px 16px; opacity: 0; transform: translateY(8px); transition: opacity 0.3s var(--ease-out), transform 0.3s var(--ease-out); z-index: 4; box-shadow: 0 12px 30px rgba(0,0,0,0.35); }
-.art-slide.active .art-caption { opacity: 1; transform: none; }
+.art-caption { display: flex; align-items: flex-start; gap: 12px; margin-top: 16px; background: rgba(8,10,41,0.82); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.12); border-radius: 14px; padding: 14px 18px; box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+.art-caption-icon { width: 32px; height: 32px; border-radius: 8px; background: rgba(59,130,246,0.18); border: 1px solid rgba(59,130,246,0.25); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 14px; }
 .art-caption strong { display: block; font-family: var(--font-head); font-size: 13.5px; color: var(--text-white); margin-bottom: 2px; }
 .art-caption span { display: block; font-size: 12.5px; color: var(--text-muted); line-height: 1.4; }
 .art-dots { display: flex; justify-content: center; gap: 8px; margin-top: 40px; }
@@ -550,43 +550,27 @@ footer { background: var(--midnight); color: var(--text-muted); padding: 56px 0 
 
     <div class="hero-art hero-entrance" style="--hd:380ms;">
       <div class="art-frame" id="artFrame" role="group" aria-label="Vista previa interactiva de la plataforma Contactvox" aria-roledescription="carrusel">
-        <div class="art-slide active" data-i="0">
+        <div class="art-slide active" data-i="0" data-title="Bandeja unificada" data-desc="WhatsApp, correo, llamadas y chat en una sola vista, sin cambiar de pantalla.">
           <div class="art-shot">Captura pendiente — Bandeja omnicanal</div>
-          <div class="art-caption">
-            <strong>Bandeja unificada</strong>
-            <span>WhatsApp, correo, llamadas y chat en una sola vista, sin cambiar de pantalla.</span>
-          </div>
         </div>
-        <div class="art-slide" data-i="1">
+        <div class="art-slide" data-i="1" data-title="Vista 360° del cliente" data-desc="Historial, promesas de pago y estado de cuenta en un solo perfil.">
           <div class="art-shot">Captura pendiente — Vista 360° / CRM</div>
-          <div class="art-caption">
-            <strong>Vista 360° del cliente</strong>
-            <span>Historial, promesas de pago y estado de cuenta en un solo perfil.</span>
-          </div>
         </div>
-        <div class="art-slide" data-i="2">
+        <div class="art-slide" data-i="2" data-title="Automatización sin código" data-desc="Diseña flujos de recordatorio y seguimiento que se ejecutan solos.">
           <div class="art-shot">Captura pendiente — Bot Studio / automatización</div>
-          <div class="art-caption">
-            <strong>Automatización sin código</strong>
-            <span>Diseña flujos de recordatorio y seguimiento que se ejecutan solos.</span>
-          </div>
         </div>
-        <div class="art-slide" data-i="3">
+        <div class="art-slide" data-i="3" data-title="Analítica en tiempo real" data-desc="Detecta objeciones, promesas de pago y oportunidades en cada conversación.">
           <div class="art-shot">Captura pendiente — Analítica conversacional</div>
-          <div class="art-caption">
-            <strong>Analítica en tiempo real</strong>
-            <span>Detecta objeciones, promesas de pago y oportunidades en cada conversación.</span>
-          </div>
         </div>
-        <div class="art-slide" data-i="4">
+        <div class="art-slide" data-i="4" data-title="Auditoría con IA" data-desc="Supervisa el 100% de las interacciones y evalúa el cumplimiento del guion.">
           <div class="art-shot art-shot-video">
-            <video id="artVideo" src="auditoria-ia.mp4" muted loop playsinline preload="metadata" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:0 0 var(--r-card) var(--r-card);"></video>
-          </div>
-          <div class="art-caption">
-            <strong>Auditoría con IA</strong>
-            <span>Supervisa el 100% de las interacciones y evalúa el cumplimiento del guion.</span>
+            <video id="artVideo" src="auditoria-ia.mp4" muted loop playsinline preload="metadata" style="width:100%;height:100%;object-fit:cover;display:block;"></video>
           </div>
         </div>
+      </div>
+      <div class="art-caption" id="artCaption">
+        <div class="art-caption-icon" id="artCaptionIcon">▶</div>
+        <div><strong id="artCaptionTitle">Bandeja unificada</strong><span id="artCaptionDesc" style="display:block;font-size:12.5px;color:var(--text-muted);margin-top:2px;line-height:1.4;">WhatsApp, correo, llamadas y chat en una sola vista, sin cambiar de pantalla.</span></div>
       </div>
       <div class="art-dots" id="artDots" role="tablist" aria-label="Seleccionar pantalla">
         <button class="art-dot active" data-i="0" role="tab" aria-selected="true" aria-label="Pantalla 1: Bandeja omnicanal"></button>
@@ -1278,6 +1262,10 @@ import { animate } from "https://cdn.jsdelivr.net/npm/motion@13/+esm";
     var artTimer = null;
     var ART_AUTOPLAY_MS = 10000;
     var artVideo = document.getElementById('artVideo');
+    var artCaptionTitle = document.getElementById('artCaptionTitle');
+    var artCaptionDesc = document.getElementById('artCaptionDesc');
+    var artCaptionIcon = document.getElementById('artCaptionIcon');
+    var SLIDE_ICONS = ['◫', '◎', '⚡', '◈', '▶'];
     function artGo(i) {
       artIdx = (i + artSlides.length) % artSlides.length;
       artSlides.forEach(function (s, si) { s.classList.toggle('active', si === artIdx); });
@@ -1285,8 +1273,12 @@ import { animate } from "https://cdn.jsdelivr.net/npm/motion@13/+esm";
         d.classList.toggle('active', di === artIdx);
         d.setAttribute('aria-selected', di === artIdx ? 'true' : 'false');
       });
+      var active = artSlides[artIdx];
+      if (artCaptionTitle) artCaptionTitle.textContent = active.getAttribute('data-title') || '';
+      if (artCaptionDesc) artCaptionDesc.textContent = active.getAttribute('data-desc') || '';
+      if (artCaptionIcon) artCaptionIcon.textContent = SLIDE_ICONS[artIdx] || '◫';
       if (artVideo) {
-        if (artSlides[artIdx] && artSlides[artIdx].contains(artVideo)) {
+        if (active.contains(artVideo)) {
           artVideo.play().catch(function(){});
         } else {
           artVideo.pause();
